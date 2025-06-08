@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import './App.css';
 
@@ -12,7 +13,6 @@ function App() {
         <Link to="/contact">Contact</Link> |{' '}
         <Link to="/admin">Admin</Link>
       </nav>
-      
       <Outlet />
     </>
   );
