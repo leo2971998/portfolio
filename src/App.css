@@ -85,4 +85,14 @@
   display: inline-block;
   margin-top: 1rem;
   color: #646cff;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }

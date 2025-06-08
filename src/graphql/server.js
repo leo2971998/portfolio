@@ -7,6 +7,7 @@ import { PrismaClient } from '@prisma/client';
 import { createLoaders } from './dataloader.js';
 
 const prisma = new PrismaClient();
+
 export const yoga = createYoga({
 export const yoga = createServer({
   schema,
