@@ -33,8 +33,6 @@ export default function Home() {
     const sections = sectionsRef.current;
     const items = itemRefs.current;
     const allElements = [...sections, ...items];
-    const cards = document.querySelectorAll('.card');
-    const allElements = [...sections, ...cards];
     allElements.forEach((el) => el && observer.observe(el));
     return () => allElements.forEach((el) => el && observer.unobserve(el));
   }, []);
@@ -62,11 +60,6 @@ export default function Home() {
               key={item.title}
               ref={(el) => (itemRefs.current[idx] = el)}
               className={`item-row ${idx % 2 === 0 ? 'left' : 'right'}`}
-        <div className="grid">
-          {education.map((item) => (
-            <article
-              key={item.title}
-              className="card"
               onClick={() => {
                 setSelectedItem(item);
                 setModalOpen(true);
@@ -74,8 +67,6 @@ export default function Home() {
             >
               <h3>{item.title}</h3>
             </div>
-            {item.title}
-            </article>
           ))}
         </div>
       </section>
@@ -88,11 +79,6 @@ export default function Home() {
               key={item.title}
               ref={(el) => (itemRefs.current[idx + education.length] = el)}
               className={`item-row ${(idx + education.length) % 2 === 0 ? 'left' : 'right'}`}
-        <div className="grid">
-          {projects.map((item) => (
-            <article
-              key={item.title}
-              className="card"
               onClick={() => {
                 setSelectedItem(item);
                 setModalOpen(true);
