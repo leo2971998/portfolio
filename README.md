@@ -24,15 +24,3 @@ Run the development server for the frontend:
 ```bash
 npm run dev
 ```
-
-### Overwriting remote branches
-
-If you want to override the remote branch when pushing changes and avoid manual
-merge conflicts, you can force push your local branch:
-
-```bash
-git push --force origin main
-```
-
-Use this carefully because it discards any commits on the remote branch that are
-not in your local history.
