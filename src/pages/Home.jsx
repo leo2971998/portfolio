@@ -30,8 +30,10 @@ export default function Home() {
     );
 
     const sections = sectionsRef.current;
-    sections.forEach((section) => section && observer.observe(section));
-    return () => sections.forEach((section) => section && observer.unobserve(section));
+    const cards = document.querySelectorAll('.card');
+    const allElements = [...sections, ...cards];
+    allElements.forEach((el) => el && observer.observe(el));
+    return () => allElements.forEach((el) => el && observer.unobserve(el));
   }, []);
 
   return (
