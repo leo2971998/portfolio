@@ -30,6 +30,11 @@ body {
   border-radius: var(--radius);
   opacity: 0;
   transform: translateY(50px);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: start;
 }
 
 .section.in-view {
@@ -165,6 +170,39 @@ body {
     transform: translateY(0);
   }
 }
+/* ---------- Alternating item rows ---------- */
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem 0;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.item-row.left {
+  transform: translateX(-60px);
+}
+
+.item-row.right {
+  flex-direction: row-reverse;
+  transform: translateX(60px);
+}
+
+.item-row.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 640px) {
+  .item-row.left,
+  .item-row.right {
+    flex-direction: column;
+    transform: none;
+  }
+}
+
 /* ---------- Lists & bullets ---------- */
 .bullet-list {
   list-style: none;

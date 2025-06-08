@@ -3,6 +3,7 @@ import Modal from '../components/Modal.jsx';
 
 export default function Home() {
   const sectionsRef = useRef([]);
+  const itemRefs = useRef([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -30,6 +31,8 @@ export default function Home() {
     );
 
     const sections = sectionsRef.current;
+    const items = itemRefs.current;
+    const allElements = [...sections, ...items];
     const cards = document.querySelectorAll('.card');
     const allElements = [...sections, ...cards];
     allElements.forEach((el) => el && observer.observe(el));
@@ -53,6 +56,12 @@ export default function Home() {
         ref={(el) => (sectionsRef.current[1] = el)}
       >
         <h2>Education</h2>
+        <div>
+          {education.map((item, idx) => (
+            <div
+              key={item.title}
+              ref={(el) => (itemRefs.current[idx] = el)}
+              className={`item-row ${idx % 2 === 0 ? 'left' : 'right'}`}
         <div className="grid">
           {education.map((item) => (
             <article
@@ -63,7 +72,9 @@ export default function Home() {
                 setModalOpen(true);
               }}
             >
-              {item.title}
+              <h3>{item.title}</h3>
+            </div>
+            {item.title}
             </article>
           ))}
         </div>
@@ -71,6 +82,12 @@ export default function Home() {
 
       <section className="section" ref={(el) => (sectionsRef.current[2] = el)}>
         <h2>Projects</h2>
+        <div>
+          {projects.map((item, idx) => (
+            <div
+              key={item.title}
+              ref={(el) => (itemRefs.current[idx + education.length] = el)}
+              className={`item-row ${(idx + education.length) % 2 === 0 ? 'left' : 'right'}`}
         <div className="grid">
           {projects.map((item) => (
             <article
@@ -81,8 +98,8 @@ export default function Home() {
                 setModalOpen(true);
               }}
             >
-              {item.title}
-            </article>
+              <h3>{item.title}</h3>
+            </div>
           ))}
         </div>
       </section>
