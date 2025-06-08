@@ -19,7 +19,7 @@ body {
 /* container width already handled by #root; just tighten on large screens */
 @media (min-width: 1024px) {
   #root {
-    max-width: 960px;
+    width: 100%;
     padding-inline: 2.5rem;
   }
 }
@@ -122,6 +122,29 @@ body {
 .scroll-down:hover,
 .scroll-down:focus-visible {
   transform: translateY(3px);
+}
+
+/* ---------- Grid layout used for sections ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.card {
+  padding: 1rem;
+  border: 1px solid #e3e4f1;
+  border-radius: var(--radius);
+  background: #fff;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* ---------- Lists & bullets ---------- */

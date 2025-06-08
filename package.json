@@ -11,13 +11,14 @@
     "start:api": "node src/graphql/server.js"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "@graphql-yoga/node": "^3.0.1",
     "@graphql-tools/schema": "^10.0.0",
+    "@graphql-yoga/node": "^3.0.1",
     "@prisma/client": "^5.14.0",
     "dataloader": "^2.2.2",
     "jsonwebtoken": "^9.0.2",
+    "prop-types": "^15.8.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "react-router-dom": "^6.23.0"
   },
   "devDependencies": {
