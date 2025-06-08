@@ -1,44 +1,171 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* ---------- Global tweaks ---------- */
+html {
+  scroll-behavior: smooth;                /* anchor links glide */
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+:root {                                   /* easy theming */
+  --accent: #646cff;                      /* reuse this color */
+  --bg-alt: #f7f8ff;
+  --text: #1d1d1f;
+  --radius: 12px;
 }
 
-@keyframes logo-spin {
+body {
+  color: var(--text);
+  line-height: 1.45;
+  font-family: system-ui, sans-serif;
+}
+
+/* container width already handled by #root; just tighten on large screens */
+@media (min-width: 1024px) {
+  #root {
+    max-width: 960px;
+    padding-inline: 2.5rem;
+  }
+}
+
+/* ---------- Section layout ---------- */
+.section {
+  padding: 5rem 1rem;                     /* more breathing room */
+  border-radius: var(--radius);
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+.section.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s, transform 0.6s;
+}
+
+/* alternate subtle background stripes for readability */
+.section:nth-of-type(odd) {
+  background: var(--bg-alt);
+}
+
+/* slide-in directions alternate too */
+.section:not(.hero).in-view {
+  animation: slideFade 0.6s both;
+}
+@keyframes slideFade {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(50px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* ---------- Hero responsiveness ---------- */
+.hero {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-direction: row;
+}
+
+/* stack image/text on narrow screens */
+@media (max-width: 640px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+  }
+.hero-art,
+  .profile-pic {
+    width: 70%;
+    max-width: 240px;
   }
 }
 
-.card {
-  padding: 2em;
+/* default hero image sizing */
+.hero-art {
+  max-width: 300px;
+  width: 50%;
+  height: auto;
 }
 
-.read-the-docs {
-  color: #888;
+.profile-pic {
+  max-width: 200px;
+  width: 50%;
+  border-radius: 50%;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+}
+
+/* ---------- Scroll-down cue ---------- */
+.scroll-down {
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.25s;
+}
+
+.scroll-down:hover,
+.scroll-down:focus-visible {
+  transform: translateY(3px);
+}
+
+/* ---------- Lists & bullets ---------- */
+.bullet-list {
+  list-style: none;
+  padding-left: 0;
+}
+.bullet-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.bullet-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ---------- Simple project “card” look ---------- */
+.project-card {
+  border: 1px solid #e3e4f1;
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 4%);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgb(0 0 0 / 8%);
+}
+
+/* ---------- Certifications badges (tiny chips) ---------- */
+.badge {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  margin: 0.25rem;
+  animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 .hero {
