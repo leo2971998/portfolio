@@ -40,3 +40,50 @@
 .read-the-docs {
   color: #888;
 }
+
+.hero {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+}
+
+.hero-art {
+  max-width: 300px;
+  width: 50%;
+  height: auto;
+}
+
+.section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  margin: 4rem 0;
+}
+
+.section.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+.profile-pic {
+  max-width: 200px;
+  width: 50%;
+  border-radius: 50%;
+}
+
+.scroll-down {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #646cff;
+}
