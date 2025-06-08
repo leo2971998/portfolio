@@ -170,7 +170,6 @@ body {
     transform: translateY(0);
   }
 }
-
 /* ---------- Alternating item rows ---------- */
 .item-row {
   display: flex;
