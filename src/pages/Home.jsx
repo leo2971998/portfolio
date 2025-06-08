@@ -24,7 +24,7 @@ export default function Home() {
     <main>
       <section className="hero section" ref={(el) => (sectionsRef.current[0] = el)}>
         <img src="/hero.svg" alt="Developer" className="profile-pic" />
-        <div>
+        <div className="hero-content">
           <h1>About Me</h1>
           <p>Hello! I'm a developer passionate about building web apps.</p>
           <a href="#education" className="scroll-down">Scroll to learn more</a>

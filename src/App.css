@@ -63,9 +63,13 @@ body {
   margin-top: 2rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 2rem;
   flex-direction: row;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  color: #fff;
+  border-radius: var(--radius);
 }
 
 /* stack image/text on narrow screens */
@@ -92,6 +96,7 @@ body {
   max-width: 200px;
   width: 50%;
   border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .hero h1 {
@@ -101,6 +106,10 @@ body {
 
 .hero p {
   font-size: 1.25rem;
+}
+
+.hero-content {
+  max-width: 480px;
 }
 
 /* ---------- Scroll-down cue ---------- */
@@ -172,8 +181,12 @@ body {
   margin-top: 2rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 2rem;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  color: #fff;
+  border-radius: var(--radius);
 }
 
 .hero h1 {
@@ -206,6 +219,7 @@ body {
   max-width: 200px;
   width: 50%;
   border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .scroll-down {
