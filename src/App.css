@@ -40,3 +40,26 @@
 .read-the-docs {
   color: #888;
 }
+
+.hero {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+}
+
+.hero-art {
+  max-width: 300px;
+  width: 50%;
+  height: auto;
+}
