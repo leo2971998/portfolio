@@ -1,7 +1,22 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Modal from '../components/Modal.jsx';
 
 export default function Home() {
   const sectionsRef = useRef([]);
+  const itemRefs = useRef([]);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const education = [
+    { title: 'B.Sc. in Computer Science', details: 'Studied CS fundamentals and software engineering.' },
+    { title: 'M.Sc. in Software Engineering', details: 'Focused on large scale web application design.' },
+  ];
+
+  const projects = [
+    { title: 'Portfolio Website', details: 'A personal site built with React and Vite.' },
+    { title: 'Task Manager App', details: 'Full-stack project using GraphQL and Prisma.' },
+    { title: 'Blog Platform', details: 'Minimal Markdown-powered blogging system.' },
+  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -16,8 +31,10 @@ export default function Home() {
     );
 
     const sections = sectionsRef.current;
-    sections.forEach((section) => section && observer.observe(section));
-    return () => sections.forEach((section) => section && observer.unobserve(section));
+    const items = itemRefs.current;
+    const allElements = [...sections, ...items];
+    allElements.forEach((el) => el && observer.observe(el));
+    return () => allElements.forEach((el) => el && observer.unobserve(el));
   }, []);
 
   return (
@@ -37,21 +54,54 @@ export default function Home() {
         ref={(el) => (sectionsRef.current[1] = el)}
       >
         <h2>Education</h2>
-        <ul>
-          <li>B.Sc. in Computer Science</li>
-          <li>M.Sc. in Software Engineering</li>
-        </ul>
+        <div>
+          {education.map((item, idx) => (
+            <div
+              key={item.title}
+              ref={(el) => (itemRefs.current[idx] = el)}
+              className={`item-row ${idx % 2 === 0 ? 'left' : 'right'}`}
+              onClick={() => {
+                setSelectedItem(item);
+                setModalOpen(true);
+              }}
+            >
+              <h3>{item.title}</h3>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="section" ref={(el) => (sectionsRef.current[2] = el)}>
         <h2>Projects</h2>
-        <p>Here are some of my recent works.</p>
+        <div>
+          {projects.map((item, idx) => (
+            <div
+              key={item.title}
+              ref={(el) => (itemRefs.current[idx + education.length] = el)}
+              className={`item-row ${(idx + education.length) % 2 === 0 ? 'left' : 'right'}`}
+              onClick={() => {
+                setSelectedItem(item);
+                setModalOpen(true);
+              }}
+            >
+              <h3>{item.title}</h3>
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="section" ref={(el) => (sectionsRef.current[3] = el)}>
         <h2>Certifications</h2>
         <p>A list of my professional certifications.</p>
       </section>
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
+        {selectedItem && (
+          <div>
+            <h3>{selectedItem.title}</h3>
+            <p>{selectedItem.details}</p>
+          </div>
+        )}
+      </Modal>
     </main>
   );
 }
