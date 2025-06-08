@@ -3,7 +3,6 @@ import { Link, Outlet } from 'react-router-dom';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <>
@@ -14,11 +13,6 @@ function App() {
         <Link to="/contact">Contact</Link> |{' '}
         <Link to="/admin">Admin</Link>
       </nav>
-      <div className="card">
-        <button onClick={() => setCount((c) => c + 1)}>
-          count is {count}
-        </button>
-      </div>
       <Outlet />
     </>
   );
