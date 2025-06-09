@@ -103,10 +103,10 @@ export default function Home() {
         ref={(el) => (sectionsRef.current[1] = el)}
       >
         <h2>Education</h2>
-        <div>
-          {education.map((item, idx) => (            <Card
+        <div className="grid">
+        <div className="grid">
               key={item.title}
-              ref={(el) => (itemRefs.current[idx] = el)}
+        <div className="grid">
               className={`item-row ${idx % 2 === 0 ? 'left' : 'right'}`}
               onClick={() => {
                 setSelectedItem(item);
