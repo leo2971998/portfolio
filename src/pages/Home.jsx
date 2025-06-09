@@ -10,7 +10,8 @@ import {
   Chip,
   IconButton,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Divider
 } from '@mui/material';
 import {
   GitHub as GitHubIcon,
@@ -18,6 +19,13 @@ import {
   Email as EmailIcon,
   KeyboardArrowDown as ArrowDownIcon,
   Code as CodeIcon,
+  Cloud as CloudIcon,
+  Storage as DatabaseIcon,
+  Web as WebIcon,
+  Business as BusinessIcon,
+  School as EducationIcon,
+  Work as WorkIcon,
+  EmojiEvents as AchievementIcon,
   Lightbulb as LightbulbIcon,
   Rocket as RocketIcon
 } from '@mui/icons-material';
@@ -32,9 +40,59 @@ export default function Home() {
 
   const roles = [
     'Full-Stack Developer',
+    'Software Engineer',
+    'Cloud Solutions Architect',
     'React Specialist',
-    'UI/UX Enthusiast',
     'Problem Solver'
+  ];
+
+  // Static stats
+  const stats = [
+    { number: '25+', label: 'Projects Completed', icon: <CodeIcon /> },
+    { number: '3+', label: 'Years Experience', icon: <WorkIcon /> },
+    { number: '12+', label: 'Technologies', icon: <WebIcon /> },
+    { number: '8', label: 'Certifications', icon: <AchievementIcon /> }
+  ];
+
+  // Technologies from resume
+  const technologies = [
+    { name: 'React', category: 'Frontend', color: '#61DAFB' },
+    { name: 'Node.js', category: 'Backend', color: '#339933' },
+    { name: 'Python', category: 'Backend', color: '#3776AB' },
+    { name: 'JavaScript', category: 'Language', color: '#F7DF1E' },
+    { name: 'TypeScript', category: 'Language', color: '#3178C6' },
+    { name: 'AWS', category: 'Cloud', color: '#FF9900' },
+    { name: 'Azure', category: 'Cloud', color: '#0078D4' },
+    { name: 'MySQL', category: 'Database', color: '#4479A1' },
+    { name: 'MongoDB', category: 'Database', color: '#47A248' },
+    { name: 'Docker', category: 'DevOps', color: '#2496ED' },
+    { name: 'Git', category: 'Tools', color: '#F05032' },
+    { name: 'Spring Boot', category: 'Framework', color: '#6DB33F' }
+  ];
+
+  // Featured projects - using existing assets
+  const featuredProjects = [
+    {
+      title: 'Museum Management System',
+      description: 'Full-stack React, Node.js, and MySQL application for museum operations with comprehensive CRUD functionality',
+      tech: ['React', 'Node.js', 'MySQL', 'Azure'],
+      category: 'Full-Stack',
+      illustration: '/project.svg' // Using your existing asset
+    },
+    {
+      title: 'Azure Static Web App',
+      description: 'Production hosting solution with live demo deployment and CI/CD pipeline integration',
+      tech: ['Azure', 'Static Web Apps', 'CI/CD'],
+      category: 'Cloud',
+      illustration: '/project.svg' // Using your existing asset
+    },
+    {
+      title: 'MusicBot Application',
+      description: 'Python and Discord API integration for music management with queue controls and bot interaction',
+      tech: ['Python', 'Discord.py', 'APIs'],
+      category: 'Backend',
+      illustration: '/project.svg' // Using your existing asset
+    }
   ];
 
   // Typewriter effect
@@ -57,14 +115,14 @@ export default function Home() {
   }, [typedText, currentRole, roles]);
 
   const scrollToNext = () => {
-    document.getElementById('about-preview').scrollIntoView({
+    document.getElementById('stats-section').scrollIntoView({
       behavior: 'smooth'
     });
   };
 
   return (
       <div className="home-container">
-        {/* Hero Section */}
+        {/* Enhanced Hero Section */}
         <section className="hero-section">
           <Container maxWidth="lg">
             <Grid container spacing={4} alignItems="center" minHeight="100vh">
@@ -99,7 +157,7 @@ export default function Home() {
                         animation: 'slideInLeft 0.8s ease 0.2s forwards'
                       }}
                   >
-                    Leo
+                    Leo Nguyen
                   </Typography>
 
                   <Box className="typewriter-container" sx={{ minHeight: '60px', mb: 3 }}>
@@ -131,8 +189,9 @@ export default function Home() {
                         animation: 'slideInLeft 0.8s ease 0.6s forwards'
                       }}
                   >
-                    I craft beautiful, responsive web applications with modern technologies.
-                    Passionate about clean code, great UX, and solving complex problems.
+                    Computer Science graduate from University of Houston with 3+ years of experience
+                    building scalable web applications and cloud solutions. Passionate about clean code,
+                    modern frameworks, and solving complex business problems.
                   </Typography>
 
                   {/* Action Buttons */}
@@ -165,14 +224,14 @@ export default function Home() {
                           }
                         }}
                     >
-                      View My Work
+                      View My Projects
                     </Button>
 
                     <Button
                         variant="outlined"
                         size="large"
-                        component={Link}
-                        to="/contact"
+                        href="/resume.pdf"
+                        target="_blank"
                         className="cta-button secondary"
                         sx={{
                           px: 4,
@@ -188,7 +247,7 @@ export default function Home() {
                           }
                         }}
                     >
-                      Let's Talk
+                      Download Resume
                     </Button>
                   </Box>
 
@@ -219,7 +278,7 @@ export default function Home() {
                     </IconButton>
 
                     <IconButton
-                        href="https://linkedin.com/in/leo-chen"
+                        href="https://linkedin.com/in/leo-nguyen-8498821b"
                         target="_blank"
                         className="social-icon"
                         sx={{
@@ -235,7 +294,7 @@ export default function Home() {
                     </IconButton>
 
                     <IconButton
-                        href="mailto:leo.chen@example.com"
+                        href="mailto:leonguyen290798@gmail.com"
                         className="social-icon"
                         sx={{
                           backgroundColor: 'rgba(234, 67, 53, 0.1)',
@@ -254,14 +313,7 @@ export default function Home() {
 
               <Grid item xs={12} md={6}>
                 <Box className="hero-visual" sx={{ textAlign: 'center', position: 'relative' }}>
-                  {/* Animated Background Elements */}
-                  <Box className="floating-shapes">
-                    <Box className="shape shape-1"></Box>
-                    <Box className="shape shape-2"></Box>
-                    <Box className="shape shape-3"></Box>
-                  </Box>
-
-                  {/* Main Visual */}
+                  {/* Using your existing hero.svg */}
                   <Box
                       className="hero-image-container"
                       sx={{
@@ -273,11 +325,11 @@ export default function Home() {
                   >
                     <img
                         src="/hero.svg"
-                        alt="Developer Illustration"
+                        alt="Leo Nguyen - Full Stack Developer"
                         style={{
                           maxWidth: '100%',
                           height: 'auto',
-                          maxHeight: '400px'
+                          maxHeight: '450px'
                         }}
                     />
                   </Box>
@@ -291,13 +343,13 @@ export default function Home() {
                         color="primary"
                     />
                     <Chip
-                        icon={<LightbulbIcon />}
-                        label="JavaScript"
+                        icon={<CloudIcon />}
+                        label="AWS"
                         className="floating-tech tech-2"
                         color="secondary"
                     />
                     <Chip
-                        icon={<RocketIcon />}
+                        icon={<DatabaseIcon />}
                         label="Node.js"
                         className="floating-tech tech-3"
                         color="success"
@@ -335,36 +387,117 @@ export default function Home() {
           </Container>
         </section>
 
-        {/* Quick Preview Cards */}
-        <section id="about-preview" className="preview-section">
+        {/* Professional Stats Section */}
+        <section id="stats-section" className="stats-section" sx={{ py: 8, backgroundColor: 'grey.50' }}>
+          <Container maxWidth="lg">
+            <Grid container spacing={6} alignItems="center">
+              <Grid item xs={12} md={6}>
+                {/* Create a visual representation instead of external image */}
+                <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '400px',
+                      background: 'linear-gradient(135deg, #667eea20 0%, #764ba220 100%)',
+                      borderRadius: 4,
+                      position: 'relative',
+                      overflow: 'hidden'
+                    }}
+                >
+                  <Box
+                      sx={{
+                        textAlign: 'center',
+                        p: 4
+                      }}
+                  >
+                    <Typography variant="h2" sx={{ fontSize: '4rem', mb: 2 }}>
+                      📊
+                    </Typography>
+                    <Typography variant="h5" color="primary.main" fontWeight={600}>
+                      Professional Growth
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
+                      Continuous learning and development
+                    </Typography>
+                  </Box>
+                </Box>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Typography variant="h3" sx={{ mb: 4, fontWeight: 600 }}>
+                  Professional Journey
+                </Typography>
+                <Grid container spacing={3}>
+                  {stats.map((stat, index) => (
+                      <Grid item xs={6} key={stat.label}>
+                        <Box sx={{ textAlign: 'center' }}>
+                          <Box sx={{ mb: 2, color: 'primary.main' }}>
+                            {stat.icon}
+                          </Box>
+                          <Typography
+                              variant="h3"
+                              color="primary.main"
+                              fontWeight="bold"
+                              sx={{ mb: 1 }}
+                          >
+                            {stat.number}
+                          </Typography>
+                          <Typography variant="body1" color="text.secondary">
+                            {stat.label}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+            </Grid>
+          </Container>
+        </section>
+
+        {/* What I Do Section */}
+        <section className="services-section" sx={{ py: 8 }}>
           <Container maxWidth="lg">
             <Typography
                 variant="h3"
                 textAlign="center"
-                sx={{ mb: 6, fontWeight: 600 }}
+                sx={{ mb: 2, fontWeight: 600 }}
             >
               What I Do
+            </Typography>
+            <Typography
+                variant="h6"
+                textAlign="center"
+                color="text.secondary"
+                sx={{ mb: 8 }}
+            >
+              Full-stack development with modern technologies and cloud solutions
             </Typography>
 
             <Grid container spacing={4}>
               {[
                 {
                   title: 'Frontend Development',
-                  description: 'Creating beautiful, responsive interfaces with React, TypeScript, and modern CSS',
-                  icon: '🎨',
-                  color: '#667eea'
+                  description: 'Creating responsive, interactive UIs with React, TypeScript, and modern CSS frameworks',
+                  icon: <WebIcon sx={{ fontSize: '4rem' }} />,
+                  color: '#667eea',
+                  technologies: ['React', 'TypeScript', 'Material-UI', 'CSS3'],
+                  emoji: '🎨'
                 },
                 {
                   title: 'Backend Development',
-                  description: 'Building robust APIs and server-side applications with Node.js and databases',
-                  icon: '⚙️',
-                  color: '#764ba2'
+                  description: 'Building scalable APIs and server applications with Node.js, Python, and Spring Boot',
+                  icon: <CodeIcon sx={{ fontSize: '4rem' }} />,
+                  color: '#764ba2',
+                  technologies: ['Node.js', 'Python', 'Spring Boot', 'REST APIs'],
+                  emoji: '⚙️'
                 },
                 {
-                  title: 'Full-Stack Projects',
-                  description: 'End-to-end application development with modern tools and best practices',
-                  icon: '🚀',
-                  color: '#f093fb'
+                  title: 'Cloud & DevOps',
+                  description: 'Deploying and managing applications on AWS and Azure with CI/CD pipelines',
+                  icon: <CloudIcon sx={{ fontSize: '4rem' }} />,
+                  color: '#f093fb',
+                  technologies: ['AWS', 'Azure', 'Docker', 'CI/CD'],
+                  emoji: '☁️'
                 }
               ].map((service, index) => (
                   <Grid item xs={12} md={4} key={service.title}>
@@ -374,6 +507,7 @@ export default function Home() {
                           height: '100%',
                           background: `linear-gradient(135deg, ${service.color}15 0%, ${service.color}05 100%)`,
                           border: `1px solid ${service.color}20`,
+                          transition: 'all 0.3s ease',
                           '&:hover': {
                             transform: 'translateY(-10px)',
                             boxShadow: `0 20px 40px ${service.color}20`
@@ -381,12 +515,11 @@ export default function Home() {
                         }}
                     >
                       <CardContent sx={{ p: 4, textAlign: 'center' }}>
-                        <Typography
-                            variant="h2"
-                            sx={{ fontSize: '3rem', mb: 2 }}
-                        >
-                          {service.icon}
+                        {/* Large Emoji as illustration */}
+                        <Typography variant="h1" sx={{ fontSize: '6rem', mb: 2 }}>
+                          {service.emoji}
                         </Typography>
+
                         <Typography
                             variant="h5"
                             gutterBottom
@@ -397,15 +530,280 @@ export default function Home() {
                         <Typography
                             variant="body1"
                             color="text.secondary"
-                            sx={{ lineHeight: 1.6 }}
+                            sx={{ lineHeight: 1.6, mb: 3 }}
                         >
                           {service.description}
                         </Typography>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                          {service.technologies.map((tech) => (
+                              <Chip
+                                  key={tech}
+                                  label={tech}
+                                  size="small"
+                                  sx={{
+                                    backgroundColor: `${service.color}20`,
+                                    color: service.color,
+                                    fontWeight: 500
+                                  }}
+                              />
+                          ))}
+                        </Box>
                       </CardContent>
                     </Card>
                   </Grid>
               ))}
             </Grid>
+          </Container>
+        </section>
+
+        {/* Featured Projects Section */}
+        <section className="featured-projects" sx={{ py: 8, backgroundColor: 'grey.50' }}>
+          <Container maxWidth="lg">
+            <Box sx={{ textAlign: 'center', mb: 8 }}>
+              <Typography variant="h3" sx={{ mb: 2, fontWeight: 600 }}>
+                Featured Projects
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
+                A showcase of my recent work and technical expertise
+              </Typography>
+            </Box>
+
+            <Grid container spacing={4}>
+              {featuredProjects.map((project, index) => (
+                  <Grid item xs={12} md={4} key={project.title}>
+                    <Card
+                        sx={{
+                          height: '100%',
+                          transition: 'all 0.3s ease',
+                          '&:hover': {
+                            transform: 'translateY(-8px)',
+                            boxShadow: '0 16px 32px rgba(0,0,0,0.1)'
+                          }
+                        }}
+                    >
+                      {/* Using your existing project.svg */}
+                      <Box sx={{ p: 3, textAlign: 'center', backgroundColor: 'grey.50' }}>
+                        <img
+                            src={project.illustration}
+                            alt={project.title}
+                            style={{
+                              width: '100%',
+                              height: '150px',
+                              objectFit: 'contain'
+                            }}
+                        />
+                      </Box>
+
+                      <CardContent sx={{ p: 3 }}>
+                        <Chip
+                            label={project.category}
+                            size="small"
+                            color="primary"
+                            sx={{ mb: 2 }}
+                        />
+                        <Typography variant="h6" gutterBottom fontWeight={600}>
+                          {project.title}
+                        </Typography>
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ mb: 3, lineHeight: 1.6 }}
+                        >
+                          {project.description}
+                        </Typography>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                          {project.tech.map((tech) => (
+                              <Chip
+                                  key={tech}
+                                  label={tech}
+                                  size="small"
+                                  variant="outlined"
+                              />
+                          ))}
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+              ))}
+            </Grid>
+
+            <Box sx={{ textAlign: 'center', mt: 6 }}>
+              <Button
+                  component={Link}
+                  to="/projects"
+                  variant="contained"
+                  size="large"
+                  sx={{
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: 3,
+                    textTransform: 'none',
+                    fontSize: '1.1rem'
+                  }}
+              >
+                View All Projects
+              </Button>
+            </Box>
+          </Container>
+        </section>
+
+        {/* Technologies Section */}
+        <section className="technologies-section" sx={{ py: 8 }}>
+          <Container maxWidth="lg">
+            <Grid container spacing={6} alignItems="center">
+              <Grid item xs={12} md={6}>
+                <Typography variant="h3" sx={{ mb: 4, fontWeight: 600 }}>
+                  Technologies I Master
+                </Typography>
+                <Typography variant="body1" sx={{ mb: 4, color: 'text.secondary', fontSize: '1.1rem' }}>
+                  I work with cutting-edge technologies to build robust, scalable applications.
+                  From frontend frameworks to cloud platforms, I choose the right tools for each project.
+                </Typography>
+
+                <Grid container spacing={2}>
+                  {Object.entries(
+                      technologies.reduce((acc, tech) => {
+                        if (!acc[tech.category]) acc[tech.category] = [];
+                        acc[tech.category].push(tech);
+                        return acc;
+                      }, {})
+                  ).map(([category, techs]) => (
+                      <Grid item xs={12} sm={6} key={category}>
+                        <Box sx={{ mb: 2 }}>
+                          <Typography variant="h6" gutterBottom color="primary.main" fontWeight={600}>
+                            {category}
+                          </Typography>
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                            {techs.map((tech) => (
+                                <Chip
+                                    key={tech.name}
+                                    label={tech.name}
+                                    size="small"
+                                    sx={{
+                                      backgroundColor: `${tech.color}20`,
+                                      color: tech.color,
+                                      fontWeight: 500,
+                                      '&:hover': {
+                                        backgroundColor: `${tech.color}30`,
+                                        transform: 'scale(1.05)'
+                                      }
+                                    }}
+                                />
+                            ))}
+                          </Box>
+                        </Box>
+                      </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                {/* Tech stack visual representation */}
+                <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      height: '400px',
+                      background: 'linear-gradient(135deg, #667eea10 0%, #764ba210 100%)',
+                      borderRadius: 4,
+                      position: 'relative'
+                    }}
+                >
+                  <Box sx={{ textAlign: 'center' }}>
+                    <Typography variant="h1" sx={{ fontSize: '6rem', mb: 2 }}>
+                      💻
+                    </Typography>
+                    <Typography variant="h5" color="primary.main" fontWeight={600}>
+                      Tech Stack
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
+                      Modern tools for modern solutions
+                    </Typography>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+          </Container>
+        </section>
+
+        {/* Enhanced CTA Section */}
+        <section className="cta-section" sx={{ py: 8 }}>
+          <Container maxWidth="lg">
+            <Card sx={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              color: 'white',
+              overflow: 'hidden',
+              position: 'relative'
+            }}>
+              <Grid container spacing={0} alignItems="center">
+                <Grid item xs={12} md={8}>
+                  <Box sx={{ p: 6 }}>
+                    <Typography variant="h3" sx={{ mb: 2, fontWeight: 600 }}>
+                      Ready to Build Something Amazing?
+                    </Typography>
+                    <Typography variant="body1" sx={{ mb: 4, opacity: 0.9, fontSize: '1.1rem' }}>
+                      Let's discuss how my skills in full-stack development and cloud solutions
+                      can help bring your project to life. I'm always excited to work on new challenges!
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                      <Button
+                          variant="contained"
+                          size="large"
+                          component={Link}
+                          to="/contact"
+                          sx={{
+                            backgroundColor: 'white',
+                            color: 'primary.main',
+                            px: 4,
+                            py: 1.5,
+                            borderRadius: 3,
+                            textTransform: 'none',
+                            fontSize: '1.1rem',
+                            '&:hover': {
+                              backgroundColor: 'grey.100',
+                              transform: 'translateY(-2px)'
+                            }
+                          }}
+                      >
+                        Get In Touch
+                      </Button>
+                      <Button
+                          variant="outlined"
+                          size="large"
+                          component={Link}
+                          to="/projects"
+                          sx={{
+                            borderColor: 'white',
+                            color: 'white',
+                            px: 4,
+                            py: 1.5,
+                            borderRadius: 3,
+                            textTransform: 'none',
+                            fontSize: '1.1rem',
+                            borderWidth: 2,
+                            '&:hover': {
+                              borderColor: 'grey.300',
+                              backgroundColor: 'rgba(255,255,255,0.1)',
+                              borderWidth: 2,
+                              transform: 'translateY(-2px)'
+                            }
+                          }}
+                      >
+                        View Portfolio
+                      </Button>
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box sx={{ p: 3, textAlign: 'center' }}>
+                    <Typography variant="h1" sx={{ fontSize: '8rem', opacity: 0.7 }}>
+                      🚀
+                    </Typography>
+                  </Box>
+                </Grid>
+              </Grid>
+            </Card>
           </Container>
         </section>
       </div>
