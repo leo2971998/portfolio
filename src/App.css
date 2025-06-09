@@ -31,10 +31,12 @@ body {
   opacity: 0;
   transform: translateY(50px);
   min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .section.in-view {
@@ -181,6 +183,12 @@ body {
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
+.item-row img {
+  width: 160px;
+  height: auto;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
 .item-row.left {
   transform: translateX(-60px);
 }

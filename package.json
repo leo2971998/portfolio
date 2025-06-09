@@ -11,8 +11,12 @@
     "start:api": "node src/graphql/server.js"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@graphql-tools/schema": "^10.0.0",
     "@graphql-yoga/node": "^3.0.1",
+    "@mui/icons-material": "^7.1.1",
+    "@mui/material": "^7.1.1",
     "@prisma/client": "^5.14.0",
     "dataloader": "^2.2.2",
     "jsonwebtoken": "^9.0.2",
