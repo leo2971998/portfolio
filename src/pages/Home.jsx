@@ -70,31 +70,6 @@ export default function Home() {
         { name: 'Spring Boot', category: 'Framework', color: '#6DB33F' }
     ];
 
-    // Featured projects - using external illustrations
-    const featuredProjects = [
-        {
-            title: 'Museum Management System',
-            description: 'Full-stack React, Node.js, and MySQL application for museum operations with comprehensive CRUD functionality',
-            tech: ['React', 'Node.js', 'MySQL', 'Azure'],
-            category: 'Full-Stack',
-            illustration: 'https://via.placeholder.com/300x200/667eea/ffffff?text=Museum+System' // Placeholder image
-        },
-        {
-            title: 'Azure Static Web App',
-            description: 'Production hosting solution with live demo deployment and CI/CD pipeline integration',
-            tech: ['Azure', 'Static Web Apps', 'CI/CD'],
-            category: 'Cloud',
-            illustration: 'https://via.placeholder.com/300x200/0078D4/ffffff?text=Azure+Web+App' // Placeholder image
-        },
-        {
-            title: 'MusicBot Application',
-            description: 'Python and Discord API integration for music management with queue controls and bot interaction',
-            tech: ['Python', 'Discord.py', 'APIs'],
-            category: 'Backend',
-            illustration: 'https://via.placeholder.com/300x200/3776AB/ffffff?text=Music+Bot' // Placeholder image
-        }
-    ];
-
     // Typewriter effect
     useEffect(() => {
         let timeout;
@@ -120,7 +95,7 @@ export default function Home() {
         });
     };
 
-    // Inline SVG component for hero section
+    // SVG Components
     const HeroSVG = () => (
         <svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Background circle */}
@@ -151,6 +126,234 @@ export default function Home() {
             </defs>
         </svg>
     );
+
+    const MuseumSVG = () => (
+        <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Background */}
+            <rect width="300" height="200" fill="url(#museumGradient)" fillOpacity="0.1"/>
+
+            {/* Museum building */}
+            <rect x="50" y="80" width="200" height="80" fill="#667eea" fillOpacity="0.8"/>
+            <polygon points="50,80 150,40 250,80" fill="#667eea"/>
+
+            {/* Columns */}
+            <rect x="70" y="80" width="12" height="60" fill="#ffffff" fillOpacity="0.9"/>
+            <rect x="95" y="80" width="12" height="60" fill="#ffffff" fillOpacity="0.9"/>
+            <rect x="120" y="80" width="12" height="60" fill="#ffffff" fillOpacity="0.9"/>
+            <rect x="145" y="80" width="12" height="60" fill="#ffffff" fillOpacity="0.9"/>
+            <rect x="170" y="80" width="12" height="60" fill="#ffffff" fillOpacity="0.9"/>
+            <rect x="195" y="80" width="12" height="60" fill="#ffffff" fillOpacity="0.9"/>
+            <rect x="220" y="80" width="12" height="60" fill="#ffffff" fillOpacity="0.9"/>
+
+            {/* Door */}
+            <rect x="140" y="120" width="20" height="40" fill="#333333"/>
+
+            {/* Database symbols */}
+            <circle cx="30" cy="30" r="15" fill="#4479A1" fillOpacity="0.3"/>
+            <rect x="25" y="20" width="10" height="20" fill="#4479A1" fillOpacity="0.5"/>
+
+            <circle cx="270" cy="40" r="12" fill="#61DAFB" fillOpacity="0.3"/>
+            <rect x="266" y="32" width="8" height="16" fill="#61DAFB" fillOpacity="0.5"/>
+
+            <defs>
+                <linearGradient id="museumGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#667eea"/>
+                    <stop offset="100%" stopColor="#4479A1"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+
+    const AzureSVG = () => (
+        <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Background */}
+            <rect width="300" height="200" fill="url(#azureGradient)" fillOpacity="0.1"/>
+
+            {/* Cloud shapes */}
+            <ellipse cx="80" cy="80" rx="35" ry="20" fill="#0078D4" fillOpacity="0.6"/>
+            <ellipse cx="100" cy="75" rx="30" ry="18" fill="#0078D4" fillOpacity="0.6"/>
+            <ellipse cx="60" cy="85" rx="25" ry="15" fill="#0078D4" fillOpacity="0.6"/>
+
+            <ellipse cx="200" cy="60" rx="40" ry="25" fill="#0078D4" fillOpacity="0.4"/>
+            <ellipse cx="220" cy="55" rx="35" ry="20" fill="#0078D4" fillOpacity="0.4"/>
+            <ellipse cx="180" cy="65" rx="30" ry="18" fill="#0078D4" fillOpacity="0.4"/>
+
+            {/* Server/Data center representation */}
+            <rect x="120" y="120" width="60" height="40" rx="4" fill="#0078D4" fillOpacity="0.8"/>
+            <rect x="125" y="125" width="50" height="8" rx="2" fill="#ffffff" fillOpacity="0.8"/>
+            <rect x="125" y="135" width="50" height="8" rx="2" fill="#ffffff" fillOpacity="0.6"/>
+            <rect x="125" y="145" width="50" height="8" rx="2" fill="#ffffff" fillOpacity="0.4"/>
+
+            {/* Connection lines */}
+            <line x1="80" y1="100" x2="140" y2="120" stroke="#0078D4" strokeWidth="2" strokeDasharray="5,5"/>
+            <line x1="200" y1="85" x2="160" y2="120" stroke="#0078D4" strokeWidth="2" strokeDasharray="5,5"/>
+
+            {/* Floating icons */}
+            <circle cx="50" cy="150" r="12" fill="#00BCF2" fillOpacity="0.4"/>
+            <circle cx="250" cy="140" r="10" fill="#40E0D0" fillOpacity="0.4"/>
+
+            <defs>
+                <linearGradient id="azureGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#0078D4"/>
+                    <stop offset="100%" stopColor="#00BCF2"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+
+    const MusicBotSVG = () => (
+        <svg width="300" height="200" viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Background */}
+            <rect width="300" height="200" fill="url(#musicGradient)" fillOpacity="0.1"/>
+
+            {/* Discord-style chat bubbles */}
+            <rect x="40" y="40" width="120" height="30" rx="15" fill="#5865F2" fillOpacity="0.7"/>
+            <rect x="50" y="45" width="80" height="4" rx="2" fill="#ffffff" fillOpacity="0.8"/>
+            <rect x="50" y="52" width="60" height="4" rx="2" fill="#ffffff" fillOpacity="0.6"/>
+            <rect x="50" y="59" width="70" height="4" rx="2" fill="#ffffff" fillOpacity="0.4"/>
+
+            <rect x="180" y="80" width="100" height="25" rx="12" fill="#3776AB" fillOpacity="0.6"/>
+            <rect x="190" y="85" width="60" height="3" rx="1" fill="#ffffff" fillOpacity="0.8"/>
+            <rect x="190" y="90" width="45" height="3" rx="1" fill="#ffffff" fillOpacity="0.6"/>
+            <rect x="190" y="95" width="55" height="3" rx="1" fill="#ffffff" fillOpacity="0.4"/>
+
+            {/* Music notes */}
+            <circle cx="100" cy="130" r="8" fill="#FF6B6B"/>
+            <rect x="108" y="115" width="3" height="15" fill="#FF6B6B"/>
+            <path d="M108 115 Q115 110 122 115" stroke="#FF6B6B" strokeWidth="2" fill="none"/>
+
+            <circle cx="200" cy="140" r="6" fill="#4ECDC4"/>
+            <rect x="206" y="128" width="2" height="12" fill="#4ECDC4"/>
+
+            <circle cx="70" cy="160" r="5" fill="#FFE66D"/>
+            <rect x="75" y="150" width="2" height="10" fill="#FFE66D"/>
+
+            {/* Bot avatar */}
+            <circle cx="150" cy="50" r="20" fill="#36393F"/>
+            <circle cx="145" cy="45" r="3" fill="#ffffff"/>
+            <circle cx="155" cy="45" r="3" fill="#ffffff"/>
+            <rect x="147" y="52" width="6" height="3" rx="1" fill="#ffffff"/>
+
+            {/* Command symbols */}
+            <rect x="20" y="120" width="15" height="2" fill="#3776AB" fillOpacity="0.5"/>
+            <rect x="250" y="30" width="12" height="2" fill="#5865F2" fillOpacity="0.5"/>
+
+            <defs>
+                <linearGradient id="musicGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#3776AB"/>
+                    <stop offset="50%" stopColor="#5865F2"/>
+                    <stop offset="100%" stopColor="#FF6B6B"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+
+    const StatsVisualizationSVG = () => (
+        <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Background */}
+            <rect width="400" height="300" fill="url(#statsGradient)" fillOpacity="0.05"/>
+
+            {/* Chart bars */}
+            <rect x="80" y="180" width="40" height="80" fill="#667eea" fillOpacity="0.7"/>
+            <rect x="140" y="120" width="40" height="140" fill="#764ba2" fillOpacity="0.7"/>
+            <rect x="200" y="150" width="40" height="110" fill="#f093fb" fillOpacity="0.7"/>
+            <rect x="260" y="100" width="40" height="160" fill="#f5576c" fillOpacity="0.7"/>
+
+            {/* Chart labels */}
+            <circle cx="100" cy="170" r="3" fill="#667eea"/>
+            <circle cx="160" cy="110" r="3" fill="#764ba2"/>
+            <circle cx="220" cy="140" r="3" fill="#f093fb"/>
+            <circle cx="280" cy="90" r="3" fill="#f5576c"/>
+
+            {/* Growth arrow */}
+            <path d="M50 200 Q150 50 350 80" stroke="#667eea" strokeWidth="3" fill="none" strokeDasharray="8,4"/>
+            <polygon points="340,75 350,80 340,85" fill="#667eea"/>
+
+            {/* Floating metrics */}
+            <circle cx="60" cy="80" r="15" fill="#4ECDC4" fillOpacity="0.3"/>
+            <text x="60" y="85" textAnchor="middle" fill="#4ECDC4" fontSize="12" fontWeight="bold">+</text>
+
+            <circle cx="330" cy="50" r="12" fill="#FFE66D" fillOpacity="0.3"/>
+            <text x="330" y="55" textAnchor="middle" fill="#FFE66D" fontSize="10" fontWeight="bold">↗</text>
+
+            <defs>
+                <linearGradient id="statsGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#667eea"/>
+                    <stop offset="100%" stopColor="#764ba2"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+
+    const TechStackSVG = () => (
+        <svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Background */}
+            <rect width="400" height="300" fill="url(#techGradient)" fillOpacity="0.05"/>
+
+            {/* Layered tech stack */}
+            <rect x="100" y="200" width="200" height="30" rx="5" fill="#61DAFB" fillOpacity="0.6"/>
+            <text x="200" y="220" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">React Frontend</text>
+
+            <rect x="110" y="160" width="180" height="30" rx="5" fill="#339933" fillOpacity="0.6"/>
+            <text x="200" y="180" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">Node.js API</text>
+
+            <rect x="120" y="120" width="160" height="30" rx="5" fill="#4479A1" fillOpacity="0.6"/>
+            <text x="200" y="140" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">Database</text>
+
+            <rect x="130" y="80" width="140" height="30" rx="5" fill="#FF9900" fillOpacity="0.6"/>
+            <text x="200" y="100" textAnchor="middle" fill="#ffffff" fontSize="12" fontWeight="bold">Cloud</text>
+
+            {/* Connection lines */}
+            <line x1="200" y1="200" x2="200" y2="190" stroke="#667eea" strokeWidth="2"/>
+            <line x1="200" y1="160" x2="200" y2="150" stroke="#667eea" strokeWidth="2"/>
+            <line x1="200" y1="120" x2="200" y2="110" stroke="#667eea" strokeWidth="2"/>
+
+            {/* Tech icons around */}
+            <circle cx="50" cy="50" r="20" fill="#3776AB" fillOpacity="0.3"/>
+            <text x="50" y="55" textAnchor="middle" fill="#3776AB" fontSize="16">Py</text>
+
+            <circle cx="350" cy="60" r="18" fill="#F7DF1E" fillOpacity="0.3"/>
+            <text x="350" y="65" textAnchor="middle" fill="#F7DF1E" fontSize="14">JS</text>
+
+            <circle cx="70" cy="250" r="15" fill="#2496ED" fillOpacity="0.3"/>
+            <text x="70" y="255" textAnchor="middle" fill="#2496ED" fontSize="10">Docker</text>
+
+            <circle cx="330" cy="240" r="16" fill="#F05032" fillOpacity="0.3"/>
+            <text x="330" y="245" textAnchor="middle" fill="#F05032" fontSize="12">Git</text>
+
+            <defs>
+                <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#667eea"/>
+                    <stop offset="100%" stopColor="#764ba2"/>
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+
+    // Featured projects using SVG components
+    const featuredProjects = [
+        {
+            title: 'Museum Management System',
+            description: 'Full-stack React, Node.js, and MySQL application for museum operations with comprehensive CRUD functionality',
+            tech: ['React', 'Node.js', 'MySQL', 'Azure'],
+            category: 'Full-Stack',
+            component: <MuseumSVG />
+        },
+        {
+            title: 'Azure Static Web App',
+            description: 'Production hosting solution with live demo deployment and CI/CD pipeline integration',
+            tech: ['Azure', 'Static Web Apps', 'CI/CD'],
+            category: 'Cloud',
+            component: <AzureSVG />
+        },
+        {
+            title: 'MusicBot Application',
+            description: 'Python and Discord API integration for music management with queue controls and bot interaction',
+            tech: ['Python', 'Discord.py', 'APIs'],
+            category: 'Backend',
+            component: <MusicBotSVG />
+        }
+    ];
 
     return (
         <div className="home-container">
@@ -345,7 +548,7 @@ export default function Home() {
 
                         <Grid item xs={12} md={6}>
                             <Box className="hero-visual" sx={{ textAlign: 'center', position: 'relative' }}>
-                                {/* Using inline SVG instead of external file */}
+                                {/* Using custom SVG component */}
                                 <Box
                                     className="hero-image-container"
                                     sx={{
@@ -416,7 +619,7 @@ export default function Home() {
                 <Container maxWidth="lg">
                     <Grid container spacing={6} alignItems="center">
                         <Grid item xs={12} md={6}>
-                            {/* Create a visual representation instead of external image */}
+                            {/* Using custom StatsVisualizationSVG */}
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -429,22 +632,7 @@ export default function Home() {
                                     overflow: 'hidden'
                                 }}
                             >
-                                <Box
-                                    sx={{
-                                        textAlign: 'center',
-                                        p: 4
-                                    }}
-                                >
-                                    <Typography variant="h2" sx={{ fontSize: '4rem', mb: 2 }}>
-                                        📊
-                                    </Typography>
-                                    <Typography variant="h5" color="primary.main" fontWeight={600}>
-                                        Professional Growth
-                                    </Typography>
-                                    <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-                                        Continuous learning and development
-                                    </Typography>
-                                </Box>
+                                <StatsVisualizationSVG />
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={6}>
@@ -605,18 +793,9 @@ export default function Home() {
                                         }
                                     }}
                                 >
-                                    {/* Using placeholder images with proper styling */}
+                                    {/* Using custom SVG components */}
                                     <Box sx={{ p: 3, textAlign: 'center', backgroundColor: 'grey.50' }}>
-                                        <img
-                                            src={project.illustration}
-                                            alt={project.title}
-                                            style={{
-                                                width: '100%',
-                                                height: '150px',
-                                                objectFit: 'cover',
-                                                borderRadius: '8px'
-                                            }}
-                                        />
+                                        {project.component}
                                     </Box>
 
                                     <CardContent sx={{ p: 3 }}>
@@ -723,7 +902,7 @@ export default function Home() {
                         </Grid>
 
                         <Grid item xs={12} md={6}>
-                            {/* Tech stack visual representation */}
+                            {/* Using custom TechStackSVG */}
                             <Box
                                 sx={{
                                     display: 'flex',
@@ -735,17 +914,7 @@ export default function Home() {
                                     position: 'relative'
                                 }}
                             >
-                                <Box sx={{ textAlign: 'center' }}>
-                                    <Typography variant="h1" sx={{ fontSize: '6rem', mb: 2 }}>
-                                        💻
-                                    </Typography>
-                                    <Typography variant="h5" color="primary.main" fontWeight={600}>
-                                        Tech Stack
-                                    </Typography>
-                                    <Typography variant="body1" color="text.secondary" sx={{ mt: 1 }}>
-                                        Modern tools for modern solutions
-                                    </Typography>
-                                </Box>
+                                <TechStackSVG />
                             </Box>
                         </Grid>
                     </Grid>
