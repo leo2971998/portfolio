@@ -11,7 +11,8 @@ import {
     Button,
     useTheme,
     useMediaQuery,
-    LinearProgress
+    LinearProgress,
+    Tooltip
 } from '@mui/material';
 import {
     Menu as MenuIcon,
@@ -20,9 +21,12 @@ import {
     Work as WorkIcon,
     Article as ArticleIcon,
     ContactMail as ContactIcon,
-    Person as PersonIcon
+    Person as PersonIcon,
+    LightMode as LightModeIcon,
+    DarkMode as DarkModeIcon
 } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
+import { useThemeMode } from '../../contexts/ThemeContext.jsx';
 import './Navigation.css';
 
 const navigationItems = [
@@ -37,11 +41,14 @@ export default function Navigation() {
     const [mobileOpen, setMobileOpen] = useState(false);
     const [scrollProgress, setScrollProgress] = useState(0);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState('');
+
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const location = useLocation();
+    const { darkMode, toggleDarkMode } = useThemeMode();
 
-    // Handle scroll effects
+    // Handle scroll effects and section detection
     useEffect(() => {
         const handleScroll = () => {
             const scrolled = window.scrollY > 50;
@@ -51,11 +58,25 @@ export default function Navigation() {
             const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
             const progress = (window.scrollY / totalHeight) * 100;
             setScrollProgress(progress);
+
+            // Section-aware navigation (for single-page sections)
+            if (location.pathname === '/') {
+                const sections = ['hero', 'education', 'projects', 'certifications'];
+                const currentSection = sections.find(section => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                        const rect = element.getBoundingClientRect();
+                        return rect.top <= 100 && rect.bottom >= 100;
+                    }
+                    return false;
+                });
+                setActiveSection(currentSection || '');
+            }
         };
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    }, [location.pathname]);
 
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -86,6 +107,12 @@ export default function Navigation() {
                         <ListItemText primary={item.label} />
                     </ListItem>
                 ))}
+                <ListItem className="mobile-nav-item">
+                    <IconButton onClick={toggleDarkMode} className="theme-toggle-mobile">
+                        {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                    </IconButton>
+                    <ListItemText primary={darkMode ? 'Light Mode' : 'Dark Mode'} />
+                </ListItem>
             </List>
         </Box>
     );
@@ -117,6 +144,17 @@ export default function Navigation() {
                                     {item.label}
                                 </Button>
                             ))}
+
+                            {/* Theme Toggle */}
+                            <Tooltip title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
+                                <IconButton
+                                    onClick={toggleDarkMode}
+                                    className="theme-toggle"
+                                    color="inherit"
+                                >
+                                    {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
+                                </IconButton>
+                            </Tooltip>
                         </Box>
                     )}
 

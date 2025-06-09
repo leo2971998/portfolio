@@ -1,0 +1,252 @@
+/* Global Animations */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Home Container */
+.home-container {
+    overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: linear-gradient(135deg, #667eea08 0%, #764ba208 100%);
+}
+
+.hero-content {
+    z-index: 2;
+    position: relative;
+}
+
+/* Typewriter Effect */
+.typewriter-container {
+    position: relative;
+}
+
+.cursor {
+    opacity: 1;
+    animation: pulse 1s infinite;
+    color: #667eea;
+    font-weight: 300;
+}
+
+/* CTA Buttons */
+.cta-button {
+    transition: all 0.3s ease !important;
+    font-weight: 600 !important;
+}
+
+/* Social Links */
+.social-links .social-icon {
+    transition: all 0.3s ease;
+    margin-right: 8px;
+}
+
+/* Hero Visual Effects */
+.hero-visual {
+    position: relative;
+}
+
+.floating-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea20, #764ba220);
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    left: 10%;
+    animation-delay: -2s;
+}
+
+.shape-2 {
+    width: 60px;
+    height: 60px;
+    top: 60%;
+    right: 20%;
+    animation-delay: -4s;
+}
+
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    bottom: 20%;
+    left: 20%;
+    animation-delay: -1s;
+}
+
+/* Floating Tech Icons */
+.tech-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.floating-tech {
+    position: absolute;
+    animation: float 4s ease-in-out infinite;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tech-1 {
+    top: 15%;
+    right: 10%;
+    animation-delay: -1s;
+}
+
+.tech-2 {
+    top: 50%;
+    left: 5%;
+    animation-delay: -3s;
+}
+
+.tech-3 {
+    bottom: 25%;
+    right: 15%;
+    animation-delay: -2s;
+}
+
+/* Preview Section */
+.preview-section {
+    padding: 100px 0;
+    background: rgba(102, 126, 234, 0.02);
+}
+
+.service-card {
+    transition: all 0.4s ease;
+    border-radius: 16px !important;
+    backdrop-filter: blur(10px);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+    animation-fill-mode: both;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 60px 0;
+    }
+
+    .floating-shapes .shape {
+        display: none;
+    }
+
+    .floating-tech {
+        display: none;
+    }
+
+    .preview-section {
+        padding: 60px 0;
+    }
+}
+
+/* Dark Mode Support */
+[data-mui-color-scheme="dark"] .hero-section {
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+}
+
+[data-mui-color-scheme="dark"] .preview-section {
+    background: rgba(102, 126, 234, 0.05);
+}
+
+[data-mui-color-scheme="dark"] .shape {
+    background: linear-gradient(135deg, #667eea30, #764ba230);
+}
+
+/* Additional Interactive Elements */
+.hero-image-container::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.1;
+    filter: blur(20px);
+}
