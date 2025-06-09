@@ -172,7 +172,6 @@ body {
     transform: translateY(0);
   }
 }
-
 /* ---------- Alternating item rows ---------- */
 .item-row {
   display: flex;
@@ -190,7 +189,6 @@ body {
   border-radius: var(--radius);
   flex-shrink: 0;
 }
-
 .item-row.left {
   transform: translateX(-60px);
 }

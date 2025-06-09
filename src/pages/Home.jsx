@@ -104,8 +104,7 @@ export default function Home() {
       >
         <h2>Education</h2>
         <div>
-          {education.map((item, idx) => (
-            <Card
+          {education.map((item, idx) => (            <Card
               key={item.title}
               ref={(el) => (itemRefs.current[idx] = el)}
               className={`item-row ${idx % 2 === 0 ? 'left' : 'right'}`}
