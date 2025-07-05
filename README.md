@@ -24,3 +24,5 @@ Run the development server for the frontend:
 ```bash
 npm run dev
 ```
+
+The interface includes a light/dark mode switcher accessible from the navigation bar.

@@ -21,12 +21,11 @@ import {
     Work as WorkIcon,
     Article as ArticleIcon,
     ContactMail as ContactIcon,
-    Person as PersonIcon,
-    LightMode as LightModeIcon,
-    DarkMode as DarkModeIcon
+    Person as PersonIcon
 } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 import { useThemeMode } from '../../contexts/ThemeContext.jsx';
+import ThemeSwitch from '../ThemeSwitch/ThemeSwitch.jsx';
 import './Navigation.css';
 
 const navigationItems = [
@@ -108,9 +107,7 @@ export default function Navigation() {
                     </ListItem>
                 ))}
                 <ListItem className="mobile-nav-item">
-                    <IconButton onClick={toggleDarkMode} className="theme-toggle-mobile">
-                        {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
-                    </IconButton>
+                    <ThemeSwitch />
                     <ListItemText primary={darkMode ? 'Light Mode' : 'Dark Mode'} />
                 </ListItem>
             </List>
@@ -147,13 +144,7 @@ export default function Navigation() {
 
                             {/* Theme Toggle */}
                             <Tooltip title={darkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}>
-                                <IconButton
-                                    onClick={toggleDarkMode}
-                                    className="theme-toggle"
-                                    color="inherit"
-                                >
-                                    {darkMode ? <LightModeIcon /> : <DarkModeIcon />}
-                                </IconButton>
+                                <ThemeSwitch />
                             </Tooltip>
                         </Box>
                     )}

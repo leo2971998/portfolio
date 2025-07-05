@@ -94,17 +94,8 @@
 }
 
 /* Theme Toggle */
-.theme-toggle {
+.theme-switch {
     margin-left: 0.5rem;
-    transition: all 0.2s ease;
-}
-
-.theme-toggle:hover {
-    transform: rotate(20deg) scale(1.1);
-}
-
-.theme-toggle-mobile {
-    color: white !important;
 }
 
 /* Mobile Menu Button */
