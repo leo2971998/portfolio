@@ -1,0 +1,11 @@
+.theme-switch {
+    margin-left: 0.5rem;
+}
+
+.theme-switch .MuiSwitch-switchBase.Mui-checked {
+    color: #646cff;
+}
+
+.theme-switch .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+    background-color: #646cff;
+}
