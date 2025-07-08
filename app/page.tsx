@@ -304,7 +304,7 @@ export default function Page() {
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute left-0 md:left-1/2 w-0.5 bg-border md:-translate-x-1/2",
+                      "absolute left-1/2 w-0.5 bg-border -translate-x-1/2",
                       index === 0 ? "top-4" : "top-0",
                       "bottom-1/2",
                     )}
@@ -312,20 +312,20 @@ export default function Page() {
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute left-0 md:left-1/2 w-0.5 bg-border md:-translate-x-1/2",
+                      "absolute left-1/2 w-0.5 bg-border -translate-x-1/2",
                       index === experience.length - 1 ? "bottom-4" : "bottom-0",
                       "top-1/2",
                     )}
                   />
                   <div className="flex items-center mb-1">
                     {/* Timeline icon */}
-                    <div className="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground absolute left-0 top-6 md:left-1/2 md:-translate-x-1/2">
+                    <div className="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground absolute left-1/2 -translate-x-1/2 top-6">
                       <Briefcase className="h-4 w-4" />
                     </div>
                   </div>
                   <Card
                     className={`
-                      w-full ml-6 sm:ml-8 md:ml-0 md:w-[calc(50%_-_2rem)]
+                      w-full md:w-[calc(50%_-_2rem)]
                       ${index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"}
                       transition-shadow hover:shadow-xl
                     `}
