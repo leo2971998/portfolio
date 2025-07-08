@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Github, Linkedin, Mail, ArrowDown, School, ExternalLink, Briefcase, Award } from "lucide-react"
 import { FaAws, FaMicrosoft } from "react-icons/fa"
-import { SideNav } from "@/components/side-nav"
 import { cn } from "@/lib/utils"
 
 // --- DATA ---
@@ -204,12 +203,12 @@ export default function Page() {
 
   return (
     <>
-      <SideNav sections={sections} />
-      <main className="flex flex-col items-center md:pl-48">
+      <main className="flex flex-col items-center">
         {/* Hero Section */}
         <section id="hero" className="w-full min-h-[calc(100vh-3.5rem)] flex items-center justify-center text-center md:text-left px-4">
           <div className="container px-4">
-            <div className="max-w-3xl mx-auto md:mx-0">
+            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+              <div className="max-w-3xl mx-auto md:mx-0">
               <motion.h1
                 className="text-3xl sm:text-5xl md:text-6xl font-bold"
                 initial={{ opacity: 0, y: 20 }}
@@ -238,48 +237,39 @@ export default function Page() {
                 Neudesic, Techwave, and the University of Houston Enterprise Systems. Multiple AWS and Microsoft Azure
                 certifications demonstrate my commitment to cloud-native engineering and continuous learning.
               </motion.p>
+            </div>
+            <div className="flex flex-col items-center mt-8 md:mt-0">
+              <Image
+                src="/placeholder-user.jpg"
+                alt="Headshot"
+                width={256}
+                height={256}
+                className="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover"
+              />
               <motion.div
-                className="flex gap-4 mt-8 justify-center md:justify-start"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <Button
-                size="lg"
-                onClick={() => scrollTo("projects")}
-                className="btn-gradient"
-                >
-                View my work
-                </Button>
-                <Button size="lg" variant="outline" asChild className="btn-ghost-wipe bg-transparent">
-                  <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                    Download Resume
-                  </Link>
-                </Button>
-              </motion.div>
-              <motion.div
-                className="flex gap-2 mt-4 justify-center md:justify-start"
+                className="flex gap-4 mt-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.8 }}
               >
                 <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
                   <Link href="https://github.com/leo2971998" target="_blank" rel="noopener noreferrer">
-                    <Github className="h-4 w-4" />
+                    <Github className="h-6 w-6" />
                   </Link>
                 </Button>
                 <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
                   <Link href="https://linkedin.com/in/leo-nguyen-84098a219/" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-4 w-4" />
+                    <Linkedin className="h-6 w-6" />
                   </Link>
                 </Button>
                 <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
                   <Link href="mailto:nanhtu297@gmail.com">
-                    <Mail className="h-4 w-4" />
+                    <Mail className="h-6 w-6" />
                   </Link>
                 </Button>
               </motion.div>
             </div>
+          </div>
           </div>
           <Button
             variant="ghost"
@@ -297,12 +287,12 @@ export default function Page() {
             <h2 className="text-3xl font-bold text-center mb-12 flex items-center justify-center">
               <Briefcase className="mr-3 h-8 w-8 text-primary" /> Professional Experience
             </h2>
-            <div className="relative max-w-3xl mx-auto px-4 sm:px-8 space-y-10 sm:space-y-12">
-              {/* Timeline line - centered */}
-              <div className="absolute left-1/2 w-0.5 inset-y-0 bg-border -translate-x-1/2"></div>
+            <div className="relative max-w-3xl mx-auto pl-4 sm:pl-8 md:pl-0 space-y-10 sm:space-y-12">
+              {/* Timeline line - center on desktop, left on mobile */}
+              <div className="absolute left-0 md:left-1/2 w-0.5 inset-y-0 bg-border md:-translate-x-1/2"></div>
               {experience.map((job, index) => (
                 <motion.div
-                    key={`${job.role}-${job.company}`}
+                  key={`${job.role}-${job.company}`}
                   className="relative"
                   custom={index}
                   initial="hidden"
