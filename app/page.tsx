@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Github, Linkedin, Mail, ArrowDown, School, ExternalLink, Briefcase, Award } from "lucide-react"
 import { FaAws, FaMicrosoft } from "react-icons/fa"
-import { SideNav } from "@/components/side-nav"
 import { cn } from "@/lib/utils"
 
 // --- DATA ---
@@ -204,10 +203,9 @@ export default function Page() {
 
   return (
     <>
-      <SideNav sections={sections} />
-      <main className="flex flex-col items-center md:pl-48">
+      <main className="flex flex-col items-center">
         {/* Hero Section */}
-        <section id="hero" className="w-full min-h-[calc(100vh-3.5rem)] flex items-center text-center md:text-left px-4">
+        <section id="hero" className="w-full min-h-[calc(100vh-3.5rem)] flex items-center justify-center text-center md:text-left px-4">
           <div className="container px-4">
             <div className="max-w-3xl mx-auto md:mx-0">
               <motion.h1
@@ -297,9 +295,9 @@ export default function Page() {
             <h2 className="text-3xl font-bold text-center mb-12 flex items-center justify-center">
               <Briefcase className="mr-3 h-8 w-8 text-primary" /> Professional Experience
             </h2>
-              <div className="relative max-w-3xl mx-auto pl-4 sm:pl-8 md:pl-0 space-y-10 sm:space-y-12">
-              {/* Timeline line - center on desktop, left on mobile */}
-              <div className="absolute left-0 md:left-1/2 w-0.5 inset-y-0 bg-border md:-translate-x-1/2"></div>
+            <div className="relative max-w-3xl mx-auto px-4 sm:px-8 space-y-10 sm:space-y-12">
+              {/* Timeline line - centered */}
+              <div className="absolute left-1/2 w-0.5 inset-y-0 bg-border -translate-x-1/2"></div>
               {experience.map((job, index) => (
                 <motion.div
                     key={`${job.role}-${job.company}`}
@@ -314,7 +312,7 @@ export default function Page() {
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute left-0 md:left-1/2 w-0.5 bg-border md:-translate-x-1/2",
+                      "absolute left-1/2 w-0.5 bg-border -translate-x-1/2",
                       index === 0 ? "top-4" : "top-0",
                       "bottom-1/2",
                     )}
@@ -322,20 +320,20 @@ export default function Page() {
                   <span
                     aria-hidden
                     className={cn(
-                      "absolute left-0 md:left-1/2 w-0.5 bg-border md:-translate-x-1/2",
+                      "absolute left-1/2 w-0.5 bg-border -translate-x-1/2",
                       index === experience.length - 1 ? "bottom-4" : "bottom-0",
                       "top-1/2",
                     )}
                   />
                   <div className="flex items-center mb-1">
                     {/* Timeline icon */}
-                    <div className="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground absolute left-0 top-6 md:left-1/2 md:-translate-x-1/2">
+                    <div className="z-10 flex items-center justify-center w-8 h-8 rounded-full bg-primary text-primary-foreground absolute left-1/2 -translate-x-1/2 top-6">
                       <Briefcase className="h-4 w-4" />
                     </div>
                   </div>
                   <Card
                     className={`
-                      w-full ml-6 sm:ml-8 md:ml-0 md:w-[calc(50%_-_2rem)]
+                      w-full md:w-[calc(50%_-_2rem)]
                       ${index % 2 === 0 ? "md:mr-auto" : "md:ml-auto"}
                       transition-shadow hover:shadow-xl
                     `}
@@ -438,7 +436,18 @@ export default function Page() {
                       </CardHeader>
                     </Card>
                   )}
-                  icon={<School className="h-4 w-4" />}
+                  iconFn={(idx) => {
+                    const colors = ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]
+                    const color = colors[idx % colors.length]
+                    return (
+                      <div
+                        className="flex items-center justify-center w-8 h-8 rounded-full"
+                        style={{ backgroundColor: `hsl(var(--${color}))` }}
+                      >
+                        <School className="h-4 w-4" />
+                      </div>
+                    )
+                  }}
                 />
               </div>
 
@@ -469,17 +478,15 @@ export default function Page() {
                       </CardHeader>
                     </Card>
                   )}
-                  iconFn={(idx, group) => {
+                  iconFn={(idx) => {
                     const colors = ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]
                     const color = colors[idx % colors.length]
-                    const Icon = (group[0] as any).icon
-                    const brandColor = (group[0] as any).brandColor
                     return (
                       <div
                         className="flex items-center justify-center w-8 h-8 rounded-full"
                         style={{ backgroundColor: `hsl(var(--${color}))` }}
                       >
-                        <Icon className="h-4 w-4" style={{ color: brandColor }} />
+                        <Award className="h-4 w-4" />
                       </div>
                     )
                   }}
