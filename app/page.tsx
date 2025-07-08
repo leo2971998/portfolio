@@ -205,7 +205,7 @@ export default function Page() {
   return (
     <>
       <SideNav sections={sections} />
-      <main className="flex flex-col items-center">
+      <main className="flex flex-col items-center md:pl-48">
         {/* Hero Section */}
         <section id="hero" className="w-full min-h-[calc(100vh-3.5rem)] flex items-center text-center md:text-left px-4">
           <div className="container px-4">
