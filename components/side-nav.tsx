@@ -72,32 +72,34 @@ export function SideNav({ sections }: SideNavProps) {
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="hidden md:block fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-background/90 backdrop-blur border rounded-full px-6 py-2 shadow-lg"
+      className="hidden md:block fixed top-14 inset-x-0 z-50"
     >
-      <ul className="flex gap-6">
-        {sections.map((section, idx) => (
-          <motion.li
-            key={section.id}
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
-            className="relative"
-          >
-            <Link
-              href={`#${section.id}`}
-              onClick={(e) => handleScroll(e, section.id)}
-              className={cn(
-                "text-sm font-medium transition-colors px-1 py-2",
-                activeId === section.id
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground",
-              )}
+      <div className="container mx-auto flex justify-center">
+        <ul className="flex gap-6 bg-background/90 backdrop-blur border rounded-full px-6 py-2 shadow-lg">
+          {sections.map((section, idx) => (
+            <motion.li
+              key={section.id}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              className="relative"
             >
-              {section.label}
-            </Link>
-          </motion.li>
-        ))}
-      </ul>
+              <Link
+                href={`#${section.id}`}
+                onClick={(e) => handleScroll(e, section.id)}
+                className={cn(
+                  "text-sm font-medium transition-colors px-1 py-2",
+                  activeId === section.id
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground",
+                )}
+              >
+                {section.label}
+              </Link>
+            </motion.li>
+          ))}
+        </ul>
+      </div>
     </motion.nav>
   )
 }
