@@ -2,6 +2,7 @@
 
 import type React from "react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { useScrollSpy } from "@/hooks/use-scroll-spy"
 import { useIsMobile } from "@/components/ui/use-mobile"
 import { cn } from "@/lib/utils"
@@ -34,10 +35,20 @@ export function SideNav({ sections }: SideNavProps) {
 
   if (isMobile) {
     return (
-      <nav className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-background/90 backdrop-blur border rounded-full px-4 py-2 shadow-lg">
+      <motion.nav
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-background/90 backdrop-blur border rounded-full px-4 py-2 shadow-lg"
+      >
         <ul className="flex items-center gap-6">
-          {sections.map((section) => (
-            <li key={section.id} className="relative">
+          {sections.map((section, idx) => (
+            <motion.li
+              key={section.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1 }}
+              className="relative"
+            >
               <Link
                 href={`#${section.id}`}
                 onClick={(e) => handleScroll(e, section.id)}
@@ -45,36 +56,48 @@ export function SideNav({ sections }: SideNavProps) {
                   "text-xs font-medium transition-colors px-1 py-2",
                   activeId === section.id
                     ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {section.label}
               </Link>
-            </li>
+            </motion.li>
           ))}
         </ul>
-      </nav>
+      </motion.nav>
     )
   }
 
   return (
-    <nav className="hidden md:block fixed left-8 top-1/2 -translate-y-1/2 z-50">
-      <ul className="space-y-4">
-        {sections.map((section) => (
-          <li key={section.id} className="relative">
+    <motion.nav
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="hidden md:block fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-background/90 backdrop-blur border rounded-full px-6 py-2 shadow-lg"
+    >
+      <ul className="flex gap-6">
+        {sections.map((section, idx) => (
+          <motion.li
+            key={section.id}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1 }}
+            className="relative"
+          >
             <Link
               href={`#${section.id}`}
               onClick={(e) => handleScroll(e, section.id)}
               className={cn(
-                "text-sm font-medium transition-colors",
-                activeId === section.id ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                "text-sm font-medium transition-colors px-1 py-2",
+                activeId === section.id
+                  ? "text-primary"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {section.label}
             </Link>
-          </li>
+          </motion.li>
         ))}
       </ul>
-    </nav>
+    </motion.nav>
   )
 }
