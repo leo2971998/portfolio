@@ -237,25 +237,6 @@ export default function Page() {
                 certifications demonstrate my commitment to cloud-native engineering and continuous learning.
               </motion.p>
               <motion.div
-                className="flex gap-4 mt-8 justify-center md:justify-start"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <Button
-                size="lg"
-                onClick={() => scrollTo("projects")}
-                className="btn-gradient"
-                >
-                View my work
-                </Button>
-                <Button size="lg" variant="outline" asChild className="btn-ghost-wipe bg-transparent">
-                  <Link href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                    Download Resume
-                  </Link>
-                </Button>
-              </motion.div>
-              <motion.div
                 className="flex gap-2 mt-4 justify-center md:justify-start"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
