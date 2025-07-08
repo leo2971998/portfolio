@@ -438,7 +438,18 @@ export default function Page() {
                       </CardHeader>
                     </Card>
                   )}
-                  icon={<School className="h-4 w-4" />}
+                  iconFn={(idx) => {
+                    const colors = ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]
+                    const color = colors[idx % colors.length]
+                    return (
+                      <div
+                        className="flex items-center justify-center w-8 h-8 rounded-full"
+                        style={{ backgroundColor: `hsl(var(--${color}))` }}
+                      >
+                        <School className="h-4 w-4" />
+                      </div>
+                    )
+                  }}
                 />
               </div>
 
@@ -469,17 +480,15 @@ export default function Page() {
                       </CardHeader>
                     </Card>
                   )}
-                  iconFn={(idx, group) => {
+                  iconFn={(idx) => {
                     const colors = ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"]
                     const color = colors[idx % colors.length]
-                    const Icon = (group[0] as any).icon
-                    const brandColor = (group[0] as any).brandColor
                     return (
                       <div
                         className="flex items-center justify-center w-8 h-8 rounded-full"
                         style={{ backgroundColor: `hsl(var(--${color}))` }}
                       >
-                        <Icon className="h-4 w-4" style={{ color: brandColor }} />
+                        <Award className="h-4 w-4" />
                       </div>
                     )
                   }}
