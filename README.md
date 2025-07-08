@@ -8,21 +8,21 @@ blog and contact message data that can be consumed by the frontend.
 
 Install dependencies (requires Node.js and npm or pnpm):
 
-```bash
+\`\`\`bash
 npm install
-```
+\`\`\`
 
 Generate the Prisma client and start the GraphQL server:
 
-```bash
+\`\`\`bash
 npx prisma generate
 node src/graphql/server.js
-```
+\`\`\`
 
 Run the development server for the frontend:
 
-```bash
+\`\`\`bash
 npm run dev
-```
+\`\`\`
 
 The interface includes a light/dark mode switcher accessible from the navigation bar.

@@ -17,9 +17,11 @@ model Project {
   slug     String   @unique
   tech     String[]
   repoUrl  String
+  liveUrl  String?
   coverImg String
   blurb    String?
   body     String
+  claps    Int      @default(0)
 }
 
 model BlogPost {
@@ -40,4 +42,24 @@ model ContactMessage {
   subject   String?
   body      String
   createdAt DateTime @default(now())
+}
+
+model Education {
+  id           Int      @id @default(autoincrement())
+  institution  String
+  degree       String
+  fieldOfStudy String
+  startDate    DateTime
+  endDate      DateTime?
+  description  String?
+  logoUrl      String?
+}
+
+model Certification {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  issuingOrganization  String
+  issueDate            DateTime
+  credentialId         String?
+  credentialUrl        String?
 }
