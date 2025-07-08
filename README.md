@@ -26,3 +26,13 @@ npm run dev
 \`\`\`
 
 The interface includes a light/dark mode switcher accessible from the navigation bar.
+
+## Deploying to GitHub Pages
+
+When deploying to GitHub Pages, build the site with the `NEXT_PUBLIC_BASE_PATH`
+environment variable set to the repository name. This ensures generated assets
+use the correct base path:
+
+```bash
+NEXT_PUBLIC_BASE_PATH=/portfolio npm run build
+```
