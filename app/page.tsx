@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Github, Linkedin, Mail, ArrowDown, School, ExternalLink, Briefcase, Award } from "lucide-react"
+import { Github, Linkedin, Mail, ArrowDown, School, ExternalLink, Briefcase, Award, FileText } from "lucide-react"
 import { FaAws, FaMicrosoft } from "react-icons/fa"
 import { cn } from "@/lib/utils"
 
@@ -98,14 +98,15 @@ const projects = [
   {
     id: 3,
     title: "COVID-19 Chest X-ray Detection",
-    dates: "Spring 2025",
-    coverImg: "/covid-xray-detection.png",
+    dates: "Spring 2025", // adjust if you want exact dates
+    coverImg: "/covid-xray-detection.png", // put a 1200×840 image in /public for crispness
     problem:
       "Rapid triage of COVID-19 from chest X-rays is high-volume and time-sensitive. Clinicians need automated assistance to flag likely pneumonia cases quickly.",
     solution:
       "Built a transfer-learning classifier with EfficientNetV2-B0 in TensorFlow/Keras on the CoronaHack Chest X-ray dataset. Two-phase training (frozen base → fine-tuning), class weighting, and targeted augmentation improved generalization. Final model reached 89.10% test accuracy, 0.9643 AUC, and 97.7% sensitivity for pneumonia.",
     tech: ["Python", "TensorFlow/Keras", "EfficientNetV2-B0", "Pandas", "NumPy"],
     repoUrl: "https://github.com/leo2971998/COSC-4368-Fundamentals-of-AI_FinalProject",
+    reportUrl: "/Final_Report.pdf", // <-- place the PDF in /public as Final_Report.pdf
     liveUrl: null,
   },
 ]
@@ -378,18 +379,18 @@ export default function Page() {
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6 }}
                 >
-                  {/* FIXED: consistent image sizing */}
+                  {/* CONSISTENT SIZE + FULL IMAGE (no crop): use object-contain */}
                   <div
                     className={`relative rounded-lg overflow-hidden shadow-lg ${
                       index % 2 === 0 ? "md:order-first" : "md:order-last"
-                    }`}
+                    } bg-muted`}
                     style={{ aspectRatio: "600 / 420" }}
                   >
                     <Image
                       src={project.coverImg || "/placeholder.svg"}
                       alt={project.title}
                       fill
-                      className="object-cover transition-transform duration-300 hover:scale-105"
+                      className="object-contain p-2 transition-transform duration-300 hover:scale-105"
                       sizes="(min-width: 768px) 50vw, 100vw"
                     />
                   </div>
@@ -406,12 +407,23 @@ export default function Page() {
                         <Badge key={tech}>{tech}</Badge>
                       ))}
                     </div>
+
                     <div className="flex gap-4">
-                      <Button variant="outline" asChild className="btn-ghost-wipe bg-transparent">
-                        <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
-                          <Github className="mr-2 h-4 w-4" /> Github
-                        </Link>
-                      </Button>
+                      {project.repoUrl && (
+                        <Button variant="outline" asChild className="btn-ghost-wipe bg-transparent">
+                          <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                            <Github className="mr-2 h-4 w-4" /> Github
+                          </Link>
+                        </Button>
+                      )}
+
+                      {project.reportUrl && (
+                        <Button asChild>
+                          <Link href={project.reportUrl} target="_blank" rel="noopener noreferrer">
+                            <FileText className="mr-2 h-4 w-4" /> Read Report
+                          </Link>
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </motion.div>
