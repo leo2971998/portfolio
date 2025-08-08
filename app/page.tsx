@@ -96,18 +96,18 @@ const projects = [
     liveUrl: null,
   },
   {
-  id: 3,
-  title: "COVID-19 Chest X-ray Detection",
-  dates: "Spring 2025", // change to exact dates if you prefer
-  coverImg: "/covid-xray-detection.png", // add a screenshot to /public
-  problem:
-    "Rapid triage of COVID-19 from chest X-rays is high-volume and time-sensitive. Clinicians need automated assistance to flag likely pneumonia cases quickly.",
-  solution:
-    "Built a transfer-learning classifier with EfficientNetV2-B0 in TensorFlow/Keras on the CoronaHack Chest X-ray dataset. Two-phase training (frozen base → fine-tuning), class weighting, and targeted augmentation improved generalization. Final model reached 89.10% test accuracy, 0.9643 AUC, and 97.7% sensitivity for pneumonia.",
-  tech: ["Python", "TensorFlow/Keras", "EfficientNetV2-B0", "Pandas", "NumPy"],
-  repoUrl: "https://github.com/leo2971998/COSC-4368-Fundamentals-of-AI_FinalProject",
-  liveUrl: null
-}
+    id: 3,
+    title: "COVID-19 Chest X-ray Detection",
+    dates: "Spring 2025",
+    coverImg: "/covid-xray-detection.png",
+    problem:
+      "Rapid triage of COVID-19 from chest X-rays is high-volume and time-sensitive. Clinicians need automated assistance to flag likely pneumonia cases quickly.",
+    solution:
+      "Built a transfer-learning classifier with EfficientNetV2-B0 in TensorFlow/Keras on the CoronaHack Chest X-ray dataset. Two-phase training (frozen base → fine-tuning), class weighting, and targeted augmentation improved generalization. Final model reached 89.10% test accuracy, 0.9643 AUC, and 97.7% sensitivity for pneumonia.",
+    tech: ["Python", "TensorFlow/Keras", "EfficientNetV2-B0", "Pandas", "NumPy"],
+    repoUrl: "https://github.com/leo2971998/COSC-4368-Fundamentals-of-AI_FinalProject",
+    liveUrl: null,
+  },
 ]
 
 const education = [
@@ -212,8 +212,6 @@ export default function Page() {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
   }
 
-
-
   return (
     <>
       <main className="flex flex-col items-center">
@@ -222,67 +220,67 @@ export default function Page() {
           <div className="container px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
               <div className="max-w-3xl mx-auto md:mx-0">
-              <motion.h1
-                className="text-3xl sm:text-5xl md:text-6xl font-bold"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-              >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-gradient-accent">
-                  Leo Nguyen
-                </span>
-              </motion.h1>
-              <motion.p
-                className="mt-4 text-xl sm:text-2xl md:text-3xl font-medium text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                Cloud-certified full-stack developer & Computer-Science student
-              </motion.p>
-              <motion.p
-                className="mt-6 text-base sm:text-lg text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
-                I build secure, scalable web solutions with React, Node.js, Python, and PeopleSoft, drawing on experience at IBM
-                Neudesic, Techwave, and the University of Houston Enterprise Systems. Multiple AWS and Microsoft Azure
-                certifications demonstrate my commitment to cloud-native engineering and continuous learning.
-              </motion.p>
+                <motion.h1
+                  className="text-3xl sm:text-5xl md:text-6xl font-bold"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-gradient-accent">
+                    Leo Nguyen
+                  </span>
+                </motion.h1>
+                <motion.p
+                  className="mt-4 text-xl sm:text-2xl md:text-3xl font-medium text-muted-foreground"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  Cloud-certified full-stack developer & Computer-Science student
+                </motion.p>
+                <motion.p
+                  className="mt-6 text-base sm:text-lg text-muted-foreground"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                  I build secure, scalable web solutions with React, Node.js, Python, and PeopleSoft, drawing on experience at IBM
+                  Neudesic, Techwave, and the University of Houston Enterprise Systems. Multiple AWS and Microsoft Azure
+                  certifications demonstrate my commitment to cloud-native engineering and continuous learning.
+                </motion.p>
+              </div>
+              <div className="flex flex-col items-center mt-8 md:mt-0">
+                <Image
+                  src="/placeholder-user.jpg"
+                  alt="Headshot"
+                  width={256}
+                  height={256}
+                  className="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover"
+                />
+                <motion.div
+                  className="flex gap-4 mt-6"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 }}
+                >
+                  <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
+                    <Link href="https://github.com/leo2971998" target="_blank" rel="noopener noreferrer">
+                      <Github className="h-6 w-6" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
+                    <Link href="https://linkedin.com/in/leo-nguyen-84098a219/" target="_blank" rel="noopener noreferrer">
+                      <Linkedin className="h-6 w-6" />
+                    </Link>
+                  </Button>
+                  <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
+                    <Link href="mailto:nanhtu297@gmail.com">
+                      <Mail className="h-6 w-6" />
+                    </Link>
+                  </Button>
+                </motion.div>
+              </div>
             </div>
-            <div className="flex flex-col items-center mt-8 md:mt-0">
-              <Image
-                src="/placeholder-user.jpg"
-                alt="Headshot"
-                width={256}
-                height={256}
-                className="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover"
-              />
-              <motion.div
-                className="flex gap-4 mt-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.8 }}
-              >
-                <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
-                  <Link href="https://github.com/leo2971998" target="_blank" rel="noopener noreferrer">
-                    <Github className="h-6 w-6" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
-                  <Link href="https://linkedin.com/in/leo-nguyen-84098a219/" target="_blank" rel="noopener noreferrer">
-                    <Linkedin className="h-6 w-6" />
-                  </Link>
-                </Button>
-                <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent">
-                  <Link href="mailto:nanhtu297@gmail.com">
-                    <Mail className="h-6 w-6" />
-                  </Link>
-                </Button>
-              </motion.div>
-            </div>
-          </div>
           </div>
           <Button
             variant="ghost"
@@ -380,17 +378,22 @@ export default function Page() {
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 0.6 }}
                 >
+                  {/* FIXED: consistent image sizing */}
                   <div
-                    className={`rounded-lg overflow-hidden shadow-lg ${index % 2 === 0 ? "md:order-first" : "md:order-last"}`}
+                    className={`relative rounded-lg overflow-hidden shadow-lg ${
+                      index % 2 === 0 ? "md:order-first" : "md:order-last"
+                    }`}
+                    style={{ aspectRatio: "600 / 420" }}
                   >
                     <Image
                       src={project.coverImg || "/placeholder.svg"}
                       alt={project.title}
-                      width={600}
-                      height={420}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                      fill
+                      className="object-cover transition-transform duration-300 hover:scale-105"
+                      sizes="(min-width: 768px) 50vw, 100vw"
                     />
                   </div>
+
                   <div className="flex flex-col justify-center">
                     <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                     <p className="text-sm text-muted-foreground mb-4">{project.dates}</p>
