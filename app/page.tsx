@@ -95,6 +95,19 @@ const projects = [
     repoUrl: "https://github.com/leo2971998/MusicBot",
     liveUrl: null,
   },
+  {
+  id: 3,
+  title: "COVID-19 Chest X-ray Detection",
+  dates: "Spring 2025", // change to exact dates if you prefer
+  coverImg: "/covid-xray-detection.png", // add a screenshot to /public
+  problem:
+    "Rapid triage of COVID-19 from chest X-rays is high-volume and time-sensitive. Clinicians need automated assistance to flag likely pneumonia cases quickly.",
+  solution:
+    "Built a transfer-learning classifier with EfficientNetV2-B0 in TensorFlow/Keras on the CoronaHack Chest X-ray dataset. Two-phase training (frozen base → fine-tuning), class weighting, and targeted augmentation improved generalization. Final model reached 89.10% test accuracy, 0.9643 AUC, and 97.7% sensitivity for pneumonia.",
+  tech: ["Python", "TensorFlow/Keras", "EfficientNetV2-B0", "Pandas", "NumPy"],
+  repoUrl: "https://github.com/leo2971998/COSC-4368-Fundamentals-of-AI_FinalProject",
+  liveUrl: null
+}
 ]
 
 const education = [
