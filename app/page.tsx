@@ -73,7 +73,7 @@ const projects = [
   {
     id: 1,
     title: "Museum Management System",
-    dates: "Aug 2024 – Dec 2024",
+    dates: "Fall 2024",
     coverImg: "/museum-management-dashboard.png",
     problem:
       "For a capstone database course, the brief called for a practical full-stack application demonstrating database design, API development, and front-end integration. The challenge was to deliver a comprehensive system from scratch within a single semester.",
@@ -85,7 +85,7 @@ const projects = [
   {
     id: 2,
     title: "COSC 4353 Volunteer Management System",
-    dates: "Sept 2024 – Dec 2024",
+    dates: "Summer 2025",
     coverImg: "/volunteer-management-dashboard.png",
     problem:
       "For a software engineering course, the challenge was to build a comprehensive volunteer management system from scratch with a team. The system needed to handle complex volunteer coordination, event management, and real-time updates while demonstrating full-stack development and deployment skills.",
