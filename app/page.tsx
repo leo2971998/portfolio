@@ -84,6 +84,18 @@ const projects = [
   },
   {
     id: 2,
+    title: "COSC 4353 Volunteer Management System",
+    dates: "Sept 2024 – Dec 2024",
+    coverImg: "/volunteer-management-dashboard.png",
+    problem:
+      "For a software engineering course, the challenge was to build a comprehensive volunteer management system from scratch with a team. The system needed to handle complex volunteer coordination, event management, and real-time updates while demonstrating full-stack development and deployment skills.",
+    solution:
+      "I led the development of the admin dashboard and backend architecture for a complete volunteer management system. The React frontend with Vite provides a responsive interface for volunteer coordination and event management. The Node.js/Express backend, deployed on Vercel, handles volunteer assignments, skill matching, and real-time calendar updates. Key features include an admin dashboard with comprehensive reporting, drag-and-drop event scheduling, skill-based volunteer matching, and live synchronization across the platform.",
+    tech: ["React", "Vite", "Node.js", "Express", "MySQL", "Vercel"],
+    repoUrl: "https://github.com/leo2971998/COSC-4353-Project",
+  },
+  {
+    id: 3,
     title: "MusicBot",
     dates: "Sept 2024 – Present",
     coverImg: "/discord-music-bot-interface.png",
@@ -96,7 +108,7 @@ const projects = [
     liveUrl: null,
   },
   {
-    id: 3,
+    id: 4,
     title: "COVID-19 Chest X-ray Detection",
     dates: "Spring 2025", // adjust if you want exact dates
     coverImg: "/covid-xray-detection.png", // put a 1200×840 image in /public for crispness
