@@ -72,18 +72,6 @@ const experience = [
 const projects = [
   {
     id: 1,
-    title: "Museum Management System",
-    dates: "Fall 2024",
-    coverImg: "/museum-management-dashboard.png",
-    problem:
-      "For a capstone database course, the brief called for a practical full-stack application demonstrating database design, API development, and front-end integration. The challenge was to deliver a comprehensive system from scratch within a single semester.",
-    solution:
-      "I designed and developed a complete museum management system. The back-end, built with Node.js and Express, exposes a robust RESTful API for all CRUD operations against a MySQL database. The React front-end consumes this API to provide an intuitive interface for managing exhibits, staff, and visitors. The entire application is deployed on Azure Static Web Apps for reliable and scalable hosting.",
-    tech: ["React", "Node.js", "MySQL", "Azure", "Express"],
-    repoUrl: "https://github.com/Ephimoon/MuseumDB",
-  },
-  {
-    id: 2,
     title: "COSC 4353 Volunteer Management System",
     dates: "Summer 2025",
     coverImg: "/volunteer-management-dashboard.png",
@@ -93,9 +81,10 @@ const projects = [
       "I led the development of the admin dashboard and backend architecture for a complete volunteer management system. The React frontend with Vite provides a responsive interface for volunteer coordination and event management. The Node.js/Express backend, deployed on Vercel, handles volunteer assignments, skill matching, and real-time calendar updates. Key features include an admin dashboard with comprehensive reporting, drag-and-drop event scheduling, skill-based volunteer matching, and live synchronization across the platform.",
     tech: ["React", "Vite", "Node.js", "Express", "MySQL", "Vercel"],
     repoUrl: "https://github.com/leo2971998/COSC-4353-Project",
+    liveUrl: "https://cosc-4353-project.vercel.app/",
   },
   {
-    id: 3,
+    id: 2,
     title: "MusicBot",
     dates: "Sept 2024 – Present",
     coverImg: "/discord-music-bot-interface.png",
@@ -108,7 +97,7 @@ const projects = [
     liveUrl: null,
   },
   {
-    id: 4,
+    id: 3,
     title: "COVID-19 Chest X-ray Detection",
     dates: "Spring 2025", // adjust if you want exact dates
     coverImg: "/covid-xray-detection.png", // put a 1200×840 image in /public for crispness
@@ -120,6 +109,18 @@ const projects = [
     repoUrl: "https://github.com/leo2971998/COSC-4368-Fundamentals-of-AI_FinalProject",
     reportUrl: "/Final_Report.pdf", // <-- place the PDF in /public as Final_Report.pdf
     liveUrl: null,
+  },
+  {
+    id: 4,
+    title: "Museum Management System",
+    dates: "Fall 2024",
+    coverImg: "/museum-management-dashboard.png",
+    problem:
+      "For a capstone database course, the brief called for a practical full-stack application demonstrating database design, API development, and front-end integration. The challenge was to deliver a comprehensive system from scratch within a single semester.",
+    solution:
+      "I designed and developed a complete museum management system. The back-end, built with Node.js and Express, exposes a robust RESTful API for all CRUD operations against a MySQL database. The React front-end consumes this API to provide an intuitive interface for managing exhibits, staff, and visitors. The entire application is deployed on Azure Static Web Apps for reliable and scalable hosting.",
+    tech: ["React", "Node.js", "MySQL", "Azure", "Express"],
+    repoUrl: "https://github.com/Ephimoon/MuseumDB",
   },
 ]
 
@@ -425,6 +426,14 @@ export default function Page() {
                         <Button variant="outline" asChild className="btn-ghost-wipe bg-transparent">
                           <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
                             <Github className="mr-2 h-4 w-4" /> Github
+                          </Link>
+                        </Button>
+                      )}
+
+                      {project.liveUrl && (
+                        <Button asChild>
+                          <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                            <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
                           </Link>
                         </Button>
                       )}
