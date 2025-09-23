@@ -88,11 +88,11 @@ const projects = [
     title: "Swipe Coach",
     dates: "Sept 2025",
     images: [
-      "/swipe-coach/1.png",
-      "/swipe-coach/2.png",
-      "/swipe-coach/3.png",
-      "/swipe-coach/4.png",
-      "/swipe-coach/5.png",
+      "/1.png",
+      "/2.png",
+      "/3.png",
+      "/4.png",
+      "/5.png",
     ],
     problem:
       "Managing multiple credit cards is confusing: which card maximizes rewards for this purchase? Users also need clear, visual insights into spending habits.",
