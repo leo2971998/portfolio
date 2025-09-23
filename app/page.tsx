@@ -19,7 +19,7 @@ import {
   Award,
   FileText,
   Trophy,
-  AlertTriangle,
+  CircleHelp,
   Lightbulb,
 } from "lucide-react"
 import { FaAws, FaMicrosoft } from "react-icons/fa"
@@ -96,11 +96,17 @@ const projects = [
       "/4.png",
       "/5.png",
     ],
-    problem:
-    "Juggling multiple rewards cards is messy—each has category multipliers, rotating/quarterly bonuses, and fine-print exclusions. In the moment, it's hard to know which card actually maximizes cashback for a specific merchant, and it's even harder to see how those choices affect monthly budgets. Users need real-time guidance at purchase time plus clear visualizations of spending trends and category drift.",
-    solution:
-    "Swipe Coach links your cards, ingests transactions securely, and runs a rules-based recommendation engine that maps each purchase to the highest-reward card in real time. The React + TypeScript front end provides an intuitive, checkout-friendly UI; a Flask + MongoDB backend stores cards, accounts, and normalized transactions; and Auth0 handles authentication and session flow. A Gemini-powered assistant explains why a card is recommended, offers savings tips, and surfaces monthly insights like category momentum and budget adherence—turning guesswork into measurable cashback gains.",
-      tech: ["React", "TypeScript", "Tailwind", "shadcn/ui", "Flask", "MongoDB", "Auth0", "Gemini"],
+    problem: [
+      "Managing multiple rewards cards means juggling multipliers, rotating bonuses, and fine-print exclusions.",
+      "In checkout moments there's no quick way to know which card maximizes cashback.",
+      "Budget impact and category drift stay hidden without clear trend visualizations.",
+    ],
+    solution: [
+      "Securely links cards, normalizes transactions, and recommends the best card in real time.",
+      "Pairs a React + TypeScript front end with a Flask + MongoDB backend and Auth0 auth flow.",
+      "Layers on a Gemini assistant that explains picks, shares savings tips, and tracks monthly insights.",
+    ],
+    tech: ["React", "TypeScript", "Tailwind", "shadcn/ui", "Flask", "MongoDB", "Auth0", "Gemini"],
     repoUrl: "https://github.com/leo2971998/HackRice25",
     liveUrl: "https://hackrice-4afcb.web.app",
     hackathon: {
@@ -128,10 +134,16 @@ const projects = [
     title: "Volunteer Management System",
     dates: "Summer 2025 - COSC 4353 - Software Design",
     coverImg: "/volunteer-management-dashboard.png",
-    problem:
-      "For a software engineering course, the challenge was to build a comprehensive volunteer management system from scratch with a team. The system needed to handle complex volunteer coordination, event management, and real-time updates while demonstrating full-stack development and deployment skills.",
-    solution:
-      "I led the development of the admin dashboard and backend architecture for a complete volunteer management system. The React frontend with Vite provides a responsive interface for volunteer coordination and event management. The Node.js/Express backend, deployed on Vercel, handles volunteer assignments, skill matching, and real-time calendar updates. Key features include an admin dashboard with comprehensive reporting, drag-and-drop event scheduling, skill-based volunteer matching, and live synchronization across the platform.",
+    problem: [
+      "Capstone project required a complete volunteer management platform built from scratch in a semester.",
+      "Team needed to coordinate complex volunteer scheduling, event logistics, and real-time updates.",
+      "Solution had to showcase solid full-stack development and deployment practices.",
+    ],
+    solution: [
+      "Architected a Vite + React admin dashboard with responsive workflows for coordinators.",
+      "Implemented a Node.js/Express backend on Vercel that powers auth, skill matching, and event updates.",
+      "Delivered drag-and-drop scheduling, live synchronization, and reporting for volunteer operations.",
+    ],
     tech: ["React", "Vite", "Node.js", "Express", "MySQL", "Vercel"],
     repoUrl: "https://github.com/leo2971998/COSC-4353-Project",
     liveUrl: "https://cosc-4353-project.vercel.app/",
@@ -151,10 +163,14 @@ const projects = [
     title: "MusicBot",
     dates: "Sept 2024 – Present",
     coverImg: "/discord-music-bot-interface.png",
-    problem:
-      "Music playback in Discord servers often relies on cumbersome text commands and offers limited user convenience.",
-    solution:
-      "I developed a Python-based Discord bot using discord.py and youtube_dl. A key feature is dual interaction support — traditional text commands and interactive buttons — to accommodate users of all experience levels. Asynchronous processing enables the bot to handle concurrent requests with no perceptible latency.",
+    problem: [
+      "Discord music bots lean on clunky text commands that slow down casual listeners.",
+      "Servers need friendlier controls without sacrificing power features.",
+    ],
+    solution: [
+      "Built a discord.py bot with both slash commands and interactive buttons for easy playback control.",
+      "Uses asyncio and youtube_dl to queue, stream, and handle concurrent requests without lag.",
+    ],
     tech: ["Python", "Discord.py", "youtube_dl", "Asyncio"],
     repoUrl: "https://github.com/leo2971998/MusicBot",
     liveUrl: null,
@@ -165,10 +181,15 @@ const projects = [
     title: "COVID-19 Chest X-ray Detection",
     dates: "Spring 2025",
     coverImg: "/covid-xray-detection.png",
-    problem:
-      "Rapid triage of COVID-19 from chest X-rays is high-volume and time-sensitive. Clinicians need automated assistance to flag likely pneumonia cases quickly.",
-    solution:
-      "Built a transfer-learning classifier with EfficientNetV2-B0 in TensorFlow/Keras on the CoronaHack Chest X-ray dataset. Two-phase training (frozen base → fine-tuning), class weighting, and targeted augmentation improved generalization. Final model reached 89.10% test accuracy, 0.9643 AUC, and 97.7% sensitivity for pneumonia.",
+    problem: [
+      "Clinicians must triage high volumes of chest X-rays quickly during COVID-19 surges.",
+      "Manual review alone struggles to flag likely pneumonia cases fast enough.",
+    ],
+    solution: [
+      "Trained an EfficientNetV2-B0 transfer-learning model on the CoronaHack dataset with TensorFlow/Keras.",
+      "Applied phased fine-tuning, class weighting, and targeted augmentation to boost generalization.",
+      "Achieved 89.10% accuracy, 0.9643 AUC, and 97.7% sensitivity for pneumonia detection.",
+    ],
     tech: ["Python", "TensorFlow/Keras", "EfficientNetV2-B0", "Pandas", "NumPy"],
     repoUrl: "https://github.com/leo2971998/COSC-4368-Fundamentals-of-AI_FinalProject",
     reportUrl: "/Final_Report.pdf",
@@ -180,10 +201,15 @@ const projects = [
     title: "Museum Management System",
     dates: "Fall 2024 - COSC 3380 - Database Systems",
     coverImg: "/museum-management-dashboard.png",
-    problem:
-      "For a capstone database course, the brief called for a practical full-stack application demonstrating database design, API development, and front-end integration. The challenge was to deliver a comprehensive system from scratch within a single semester.",
-    solution:
-      "I designed and developed a complete museum management system. The back-end, built with Node.js and Express, exposes a robust RESTful API for all CRUD operations against a MySQL database. The React front-end consumes this API to provide an intuitive interface for managing exhibits, staff, and visitors. The entire application is deployed on Azure Static Web Apps for reliable and scalable hosting.",
+    problem: [
+      "Database systems capstone required a production-style app showcasing solid schema design and APIs.",
+      "Needed an end-to-end build that covered data modeling, backend services, and front-end workflows in one semester.",
+    ],
+    solution: [
+      "Shipped a Node.js + Express backend exposing RESTful CRUD endpoints on top of MySQL.",
+      "Crafted a React frontend that manages exhibits, staff, and visitors against those APIs.",
+      "Deployed the full stack to Azure Static Web Apps for reliable hosting and delivery.",
+    ],
     tech: ["React", "Node.js", "MySQL", "Azure", "Express"],
     repoUrl: "https://github.com/Ephimoon/MuseumDB",
   },
@@ -380,31 +406,43 @@ export default function Page() {
                       <Card className="h-full border border-border/60 bg-background/80 shadow-sm">
                         <CardHeader className="pb-3">
                           <div className="flex items-center gap-2">
-                            <AlertTriangle className="h-4 w-4 text-destructive" aria-hidden />
-                            <CardTitle className="text-sm font-semibold uppercase tracking-wide text-destructive">
+                            <CircleHelp className="h-4 w-4 text-primary" aria-hidden />
+                            <CardTitle className="text-sm font-semibold uppercase tracking-wide text-primary">
                               The Problem
                             </CardTitle>
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-sm leading-relaxed text-muted-foreground">
-                            {(project as any).problem}
-                          </p>
+                          <ul className="list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted-foreground">
+                            {(
+                              Array.isArray((project as any).problem)
+                                ? (project as any).problem
+                                : [(project as any).problem]
+                            ).map((point: string, idx: number) => (
+                              <li key={idx}>{point}</li>
+                            ))}
+                          </ul>
                         </CardContent>
                       </Card>
                       <Card className="h-full border border-border/60 bg-background/80 shadow-sm">
                         <CardHeader className="pb-3">
                           <div className="flex items-center gap-2">
-                            <Lightbulb className="h-4 w-4 text-primary" aria-hidden />
-                            <CardTitle className="text-sm font-semibold uppercase tracking-wide text-primary">
+                            <Lightbulb className="h-4 w-4 text-emerald-600" aria-hidden />
+                            <CardTitle className="text-sm font-semibold uppercase tracking-wide text-emerald-600">
                               The Solution
                             </CardTitle>
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <p className="text-sm leading-relaxed text-muted-foreground">
-                            {(project as any).solution}
-                          </p>
+                          <ul className="list-disc space-y-2 pl-4 text-sm leading-relaxed text-muted-foreground">
+                            {(
+                              Array.isArray((project as any).solution)
+                                ? (project as any).solution
+                                : [(project as any).solution]
+                            ).map((point: string, idx: number) => (
+                              <li key={idx}>{point}</li>
+                            ))}
+                          </ul>
                         </CardContent>
                       </Card>
                     </div>
