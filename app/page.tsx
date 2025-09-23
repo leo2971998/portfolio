@@ -8,7 +8,18 @@ import React, { useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Github, Linkedin, Mail, ArrowDown, School, ExternalLink, Briefcase, Award, FileText, Trophy, Landmark } from "lucide-react"
+import {
+  Github,
+  Linkedin,
+  Mail,
+  ArrowDown,
+  School,
+  ExternalLink,
+  Briefcase,
+  Award,
+  FileText,
+  Trophy,
+} from "lucide-react"
 import { FaAws, FaMicrosoft } from "react-icons/fa"
 import { SiTailwindcss } from "react-icons/si"
 import { cn } from "@/lib/utils"
@@ -69,10 +80,11 @@ const experience = [
   },
 ]
 
-$1[
-  // --- Moved to top: Swipe Coach (with image slider + hackathon + contributions) ---
+// --- PROJECTS (Swipe Coach first) ---
+const projects = [
+  // Swipe Coach — with slider, hackathon badges, and contributions
   {
-    id: 5,
+    id: 1,
     title: "Swipe Coach",
     dates: "Sept 2025",
     images: [
@@ -85,7 +97,7 @@ $1[
     problem:
       "Managing multiple credit cards is confusing: which card maximizes rewards for this purchase? Users also need clear, visual insights into spending habits.",
     solution:
-      "A full-stack app to link cards, track transactions, and recommend the best card per purchase with real-time savings tips. Built a Flask + Mongo backend, secure Auth0 auth, and a React/TypeScript/Tailwind frontend. Added a Gemini-powered chat for natural-language insights (\"Why did I overspend?\") and monthly budgets with momentum views.",
+      'A full-stack app to link cards, track transactions, and recommend the best card per purchase with real-time savings tips. Built a Flask + Mongo backend, secure Auth0 auth, and a React/TypeScript/Tailwind frontend. Added a Gemini-powered chat for natural-language insights ("Why did I overspend?") and monthly budgets with momentum views.',
     tech: ["React", "TypeScript", "Tailwind", "shadcn/ui", "Flask", "MongoDB", "Auth0", "Gemini"],
     repoUrl: "https://github.com/leo2971998/HackRice25",
     liveUrl: "https://hackrice-4afcb.web.app",
@@ -107,8 +119,10 @@ $1[
       "Integration & merges: self-merged feature branches (Mongo integration, budget, secure card flow, email-verification removal, data population, UI enhancements) into main.",
     ],
   },
+
+  // Volunteer Management System — with contributions
   {
-    id: 1,
+    id: 2,
     title: "Volunteer Management System",
     dates: "Summer 2025 - COSC 4353 - Software Design",
     coverImg: "/volunteer-management-dashboard.png",
@@ -129,8 +143,9 @@ $1[
       "DevEx & hygiene: standardized local API URLs, removed tracked lock/coverage artifacts, general cleanup.",
     ],
   },
+
   {
-    id: 2,
+    id: 3,
     title: "MusicBot",
     dates: "Sept 2024 – Present",
     coverImg: "/discord-music-bot-interface.png",
@@ -142,8 +157,9 @@ $1[
     repoUrl: "https://github.com/leo2971998/MusicBot",
     liveUrl: null,
   },
+
   {
-    id: 3,
+    id: 4,
     title: "COVID-19 Chest X-ray Detection",
     dates: "Spring 2025",
     coverImg: "/covid-xray-detection.png",
@@ -156,8 +172,9 @@ $1[
     reportUrl: "/Final_Report.pdf",
     liveUrl: null,
   },
+
   {
-    id: 4,
+    id: 5,
     title: "Museum Management System",
     dates: "Fall 2024 - COSC 3380 - Database Systems",
     coverImg: "/museum-management-dashboard.png",
@@ -168,7 +185,9 @@ $1[
     tech: ["React", "Node.js", "MySQL", "Azure", "Express"],
     repoUrl: "https://github.com/Ephimoon/MuseumDB",
   },
-]$2 [
+]
+
+const education = [
   {
     id: 1,
     institution: "University of Houston",
@@ -339,22 +358,22 @@ export default function Page() {
                   <div className="flex flex-col justify-center">
                     <h3 className="text-2xl font-bold mb-2">{project.title}</h3>
                     <p className="text-sm text-muted-foreground mb-2">{project.dates}</p>
-{(project as any).hackathon && (
-  <div className="flex flex-wrap items-center gap-2 mb-4">
-    <Badge className="flex items-center gap-1">
-      <SiTailwindcss className="h-3.5 w-3.5" />
-      {(project as any).hackathon.name} @ {(project as any).hackathon.host}
-    </Badge>
-    <Badge variant="secondary" className="flex items-center gap-1">
-      <Trophy className="h-3.5 w-3.5" />
-      {(project as any).hackathon.placement}
-    </Badge>
-    <Badge variant="secondary" className="flex items-center gap-1">
-      <Award className="h-3.5 w-3.5" />
-      {(project as any).hackathon.award}
-    </Badge>
-  </div>
-) }
+                    {(project as any).hackathon && (
+                      <div className="flex flex-wrap items-center gap-2 mb-4">
+                        <Badge className="flex items-center gap-1">
+                          <SiTailwindcss className="h-3.5 w-3.5" />
+                          {(project as any).hackathon.name} @ {(project as any).hackathon.host}
+                        </Badge>
+                        <Badge variant="secondary" className="flex items-center gap-1">
+                          <Trophy className="h-3.5 w-3.5" />
+                          {(project as any).hackathon.placement}
+                        </Badge>
+                        <Badge variant="secondary" className="flex items-center gap-1">
+                          <Award className="h-3.5 w-3.5" />
+                          {(project as any).hackathon.award}
+                        </Badge>
+                      </div>
+                    )}
                     <h4 className="font-semibold mt-2 mb-1 text-primary">The Problem</h4>
                     <p className="text-muted-foreground text-sm mb-4">{(project as any).problem}</p>
                     <h4 className="font-semibold mt-2 mb-1 text-primary">The Solution</h4>
