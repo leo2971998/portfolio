@@ -95,10 +95,10 @@ const projects = [
       "/5.png",
     ],
     problem:
-      "Managing multiple credit cards is confusing: which card maximizes rewards for this purchase? Users also need clear, visual insights into spending habits.",
+    "Juggling multiple rewards cards is messy—each has category multipliers, rotating/quarterly bonuses, and fine-print exclusions. In the moment, it's hard to know which card actually maximizes cashback for a specific merchant, and it's even harder to see how those choices affect monthly budgets. Users need real-time guidance at purchase time plus clear visualizations of spending trends and category drift.",
     solution:
-      'A full-stack app to link cards, track transactions, and recommend the best card per purchase with real-time savings tips. Built a Flask + Mongo backend, secure Auth0 auth, and a React/TypeScript/Tailwind frontend. Added a Gemini-powered chat for natural-language insights ("Why did I overspend?") and monthly budgets with momentum views.',
-    tech: ["React", "TypeScript", "Tailwind", "shadcn/ui", "Flask", "MongoDB", "Auth0", "Gemini"],
+    "Swipe Coach links your cards, ingests transactions securely, and runs a rules-based recommendation engine that maps each purchase to the highest-reward card in real time. The React + TypeScript front end provides an intuitive, checkout-friendly UI; a Flask + MongoDB backend stores cards, accounts, and normalized transactions; and Auth0 handles authentication and session flow. A Gemini-powered assistant explains why a card is recommended, offers savings tips, and surfaces monthly insights like category momentum and budget adherence—turning guesswork into measurable cashback gains.",
+      tech: ["React", "TypeScript", "Tailwind", "shadcn/ui", "Flask", "MongoDB", "Auth0", "Gemini"],
     repoUrl: "https://github.com/leo2971998/HackRice25",
     liveUrl: "https://hackrice-4afcb.web.app",
     hackathon: {
