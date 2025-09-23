@@ -19,6 +19,8 @@ import {
   Award,
   FileText,
   Trophy,
+  AlertTriangle,
+  Lightbulb,
 } from "lucide-react"
 import { FaAws, FaMicrosoft } from "react-icons/fa"
 import { SiTailwindcss } from "react-icons/si"
@@ -374,10 +376,38 @@ export default function Page() {
                         </Badge>
                       </div>
                     )}
-                    <h4 className="font-semibold mt-2 mb-1 text-primary">The Problem</h4>
-                    <p className="text-muted-foreground text-sm mb-4">{(project as any).problem}</p>
-                    <h4 className="font-semibold mt-2 mb-1 text-primary">The Solution</h4>
-                    <p className="text-muted-foreground text-sm mb-4">{(project as any).solution}</p>
+                    <div className="grid gap-4 md:grid-cols-2 mb-6">
+                      <Card className="h-full border border-border/60 bg-background/80 shadow-sm">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-center gap-2">
+                            <AlertTriangle className="h-4 w-4 text-destructive" aria-hidden />
+                            <CardTitle className="text-sm font-semibold uppercase tracking-wide text-destructive">
+                              The Problem
+                            </CardTitle>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm leading-relaxed text-muted-foreground">
+                            {(project as any).problem}
+                          </p>
+                        </CardContent>
+                      </Card>
+                      <Card className="h-full border border-border/60 bg-background/80 shadow-sm">
+                        <CardHeader className="pb-3">
+                          <div className="flex items-center gap-2">
+                            <Lightbulb className="h-4 w-4 text-primary" aria-hidden />
+                            <CardTitle className="text-sm font-semibold uppercase tracking-wide text-primary">
+                              The Solution
+                            </CardTitle>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-sm leading-relaxed text-muted-foreground">
+                            {(project as any).solution}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </div>
                     <div className="flex flex-wrap gap-2 mb-2">
                       {(project as any).tech?.map((tech: string) => (
                         <Badge key={tech}>{tech}</Badge>
