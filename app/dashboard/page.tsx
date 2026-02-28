@@ -60,7 +60,7 @@ export default function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle>Key Stats</CardTitle>
-          <CardDescription className="text-xs">This month's performance</CardDescription>
+          <CardDescription className="text-xs">This month&apos;s performance</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
           <div className="flex items-center">

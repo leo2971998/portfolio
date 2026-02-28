@@ -61,6 +61,125 @@
 }
 
 @layer components {
+  @keyframes aurora-drift-a {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(24px, -16px) scale(1.05);
+    }
+    100% {
+      transform: translate(-12px, 20px) scale(0.97);
+    }
+  }
+
+  @keyframes aurora-drift-b {
+    0% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(-20px, 12px) scale(1.04);
+    }
+    100% {
+      transform: translate(16px, -18px) scale(0.98);
+    }
+  }
+
+  @keyframes gradient-shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .text-gradient {
+    @apply text-transparent bg-clip-text;
+    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--gradient-accent)));
+    background-size: 200% 200%;
+  }
+
+  .hero-orb {
+    @apply absolute rounded-full blur-3xl;
+  }
+
+  .hero-orb-a {
+    width: 28rem;
+    height: 28rem;
+    left: -8rem;
+    top: -9rem;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.25), transparent 70%);
+  }
+
+  .hero-orb-b {
+    width: 26rem;
+    height: 26rem;
+    right: -8rem;
+    bottom: -8rem;
+    background: radial-gradient(circle, hsl(var(--gradient-accent) / 0.2), transparent 70%);
+  }
+
+  .hero-grid {
+    @apply absolute inset-0;
+    background-image: linear-gradient(to right, hsl(var(--border) / 0.35) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.35) 1px, transparent 1px);
+    background-size: 3.25rem 3.25rem;
+    mask-image: radial-gradient(circle at center, black 35%, transparent 80%);
+    opacity: 0.2;
+  }
+
+  .hero-ring {
+    box-shadow: 0 0 0 8px hsl(var(--background)), 0 24px 50px -26px hsl(var(--foreground) / 0.65);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-orb-a {
+      animation: aurora-drift-a 14s ease-in-out infinite alternate;
+    }
+
+    .hero-orb-b {
+      animation: aurora-drift-b 18s ease-in-out infinite alternate;
+    }
+
+    .text-gradient {
+      animation: gradient-shimmer 4s ease infinite;
+    }
+  }
+
+  .project-card {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .project-card::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: radial-gradient(
+      400px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+      hsl(var(--primary) / 0.25),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .project-card > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .project-card:hover::before {
+    opacity: 1;
+  }
+
   /* Style for Primary Gradient Buttons */
   .btn-gradient {
     @apply bg-gradient-to-r from-primary to-gradient-accent text-primary-foreground shadow-lg;
@@ -85,17 +204,59 @@
 
   .btn-ghost-wipe::before {
     content: "";
-    @apply absolute top-0 left-0 w-full h-full bg-accent -z-10;
+    @apply absolute top-0 left-0 w-full h-full -z-10;
+    background: linear-gradient(
+      120deg,
+      hsl(var(--primary) / 0.3),
+      hsl(var(--gradient-accent) / 0.24)
+    );
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   .btn-ghost-wipe:hover {
-    @apply text-accent-foreground;
+    @apply text-foreground;
   }
 
   .btn-ghost-wipe:hover::before {
     transform: scaleX(1);
+  }
+
+  /* Bento grid card base */
+  .bento-card {
+    @apply rounded-2xl border border-border/70 bg-card/80 backdrop-blur-sm p-5 transition-all duration-300;
+  }
+
+  .bento-card:hover {
+    @apply shadow-lg border-border;
+  }
+
+  /* Tech icon card */
+  .tech-icon-card {
+    @apply flex flex-col items-center justify-center gap-2 rounded-xl border border-border/50 bg-card/60 p-4 transition-all duration-200;
+  }
+
+  .tech-icon-card:hover {
+    @apply scale-105 border-primary/40 bg-card/90 shadow-md;
+  }
+
+  /* Experience card accent border */
+  .exp-card {
+    @apply rounded-2xl border border-border/70 bg-card/80 backdrop-blur-sm p-5 transition-all duration-300;
+    border-left: 3px solid hsl(var(--primary));
+  }
+
+  .exp-card:hover {
+    @apply shadow-lg;
+  }
+
+  /* Certification card */
+  .cert-card {
+    @apply rounded-xl border bg-card/80 backdrop-blur-sm p-4 transition-all duration-200;
+  }
+
+  .cert-card:hover {
+    @apply shadow-md scale-[1.02];
   }
 }
