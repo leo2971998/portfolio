@@ -1,9 +1,11 @@
 import { createYoga } from "@graphql-yoga/node"
-import { createServer } from "http" // Changed from 'node:http' to fix npm error
-import { schema } from "./schema.js"
-import { authenticate } from "./auth.js"
+import { createServer } from "http"
+import { fileURLToPath } from "url"
 import { PrismaClient } from "@prisma/client"
+
+import { authenticate } from "./auth.js"
 import { createLoaders } from "./dataloader.js"
+import { schema } from "./schema.js"
 
 const prisma = new PrismaClient()
 
@@ -16,15 +18,14 @@ const yoga = createYoga({
   },
 })
 
-// This check ensures the server only runs when you execute this file directly
-// (e.g., `node src/graphql/server.js`)
-const isMainModule = import.meta.url.endsWith(process.argv[1])
+// Run the server only when this file is executed directly.
+const isMainModule = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]
 
 if (isMainModule) {
   const port = process.env.PORT || 4000
   const server = createServer(yoga)
   server.listen(port, () => {
-    console.log(`🚀 GraphQL server running on http://localhost:${port}/graphql`)
+    console.log(`GraphQL server running on http://localhost:${port}/graphql`)
   })
 }
 

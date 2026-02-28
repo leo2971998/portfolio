@@ -11,10 +11,6 @@ const mockProjects = [
   { id: 1, title: "Museum Management System", slug: "museum-system", tech: ["React", "Node.js"] },
   { id: 2, title: "Discord MusicBot", slug: "discord-bot", tech: ["Python", "Discord.py"] },
 ]
-const mockEducation = [{ id: 1, institution: "University of Houston", degree: "B.S. Computer Science" }]
-const mockCertifications = [
-  { id: 1, name: "AWS Certified Cloud Practitioner", issuingOrganization: "Amazon Web Services" },
-]
 
 export default function AdminDashboard() {
   return (

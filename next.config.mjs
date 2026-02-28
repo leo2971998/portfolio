@@ -6,13 +6,6 @@ export default {
   output: 'export',
   distDir: 'dist',
   ...(basePath && { basePath, assetPrefix: basePath }),
-
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   images: {
     unoptimized: true,
   },
