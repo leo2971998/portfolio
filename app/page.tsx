@@ -2,29 +2,30 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { motion } from "framer-motion"
-import React, { useState } from "react"
+import { motion, MotionConfig } from "framer-motion"
+import { useEffect, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
   ArrowUp,
   Award,
-  Briefcase,
-  ChevronDown,
-  ChevronUp,
+  BrainCircuit,
   Cloud,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
   Code2,
+  Database,
   ExternalLink,
   FileText,
   Github,
-  GraduationCap,
+  Layers3,
   Linkedin,
   Mail,
-  MapPin,
-  School,
+  Sparkles,
   Trophy,
-  Zap,
 } from "lucide-react"
 import { FaAws, FaMicrosoft } from "react-icons/fa"
 import {
@@ -43,6 +44,8 @@ import {
 } from "react-icons/si"
 import { cn } from "@/lib/utils"
 import type { IconType } from "react-icons"
+import { PixelCodeBot, type CodeBotMode } from "@/components/pixel-codebot"
+import { PixelCrewMascot, type CrewMascotModel, type CrewMascotMode } from "@/components/pixel-crew-mascot"
 
 // --- TYPES ---
 
@@ -92,13 +95,17 @@ type CertificationItem = {
   brandColor: string
 }
 
+type MissionMascot =
+  | { type: "codebot"; mode: CodeBotMode }
+  | { type: "crew"; model: CrewMascotModel; mode: CrewMascotMode }
+
 // --- DATA ---
 
 const experience: ExperienceItem[] = [
   {
     role: "Student Worker Application Developer",
     company: "University of Houston Enterprise Systems",
-    dates: "June 2024 – Present",
+    dates: "June 2024 - Present",
     location: "Houston, TX",
     description: [
       "Troubleshoot and resolve issues in the PeopleSoft system, supporting university operations.",
@@ -109,7 +116,7 @@ const experience: ExperienceItem[] = [
   {
     role: "Software Engineer Intern",
     company: "Neudesic, an IBM Company",
-    dates: "May 2023 – March 2024",
+    dates: "May 2023 - March 2024",
     location: "Houston, TX",
     description: [
       "Contributed to Agile project management and led software reliability initiatives.",
@@ -120,7 +127,7 @@ const experience: ExperienceItem[] = [
   {
     role: "Software Engineer Intern",
     company: "Techwave Consulting Inc.",
-    dates: "June 2022 – December 2022",
+    dates: "June 2022 - December 2022",
     location: "Houston, TX",
     description: [
       "Led the development of a comprehensive website using Java, JavaScript, Oracle Database, Spring Boot, HTML, and CSS.",
@@ -131,7 +138,7 @@ const experience: ExperienceItem[] = [
   {
     role: "Software Engineer Intern",
     company: "AndTech Solutions LLC",
-    dates: "May 2021 – February 2022",
+    dates: "May 2021 - February 2022",
     location: "Houston, TX",
     description: [
       "Developed a web-based application using Python and JavaScript",
@@ -199,7 +206,7 @@ const projects: Project[] = [
   {
     id: 3,
     title: "MusicBot",
-    dates: "Sept 2024 – Present",
+    dates: "Sept 2024 - Present",
     coverImg: "/discord-music-bot-interface.png",
     problem: ["Discord music bots lean on clunky text commands that slow down casual listeners."],
     solution: ["Built a discord.py bot with slash commands and interactive buttons for easy playback control."],
@@ -238,25 +245,25 @@ const education: EducationItem[] = [
     id: 1,
     institution: "University of Houston",
     degree: "Bachelor of Science in Computer Science",
-    dates: "Aug 2022 – Aug 2025",
+    dates: "Aug 2022 - Aug 2025",
   },
   {
     id: 2,
     institution: "Houston Community College",
     degree: "Associate of Science in Computer Science",
-    dates: "Aug 2020 – May 2022",
+    dates: "Aug 2020 - May 2022",
   },
 ]
 
 const certifications: CertificationItem[] = [
   { name: "AWS Certified Cloud Practitioner", org: "Amazon Web Services", year: "2021", icon: FaAws, brandColor: "#FF9900" },
-  { name: "Azure Administrator Associate", org: "Microsoft", year: "2024", icon: FaMicrosoft, brandColor: "#0078D4" },
-  { name: "Azure Data Engineer Associate", org: "Microsoft", year: "2023", icon: FaMicrosoft, brandColor: "#0078D4" },
-  { name: "Azure AI Engineer Associate", org: "Microsoft", year: "2023", icon: FaMicrosoft, brandColor: "#0078D4" },
-  { name: "Azure Data Scientist Associate", org: "Microsoft", year: "2023", icon: FaMicrosoft, brandColor: "#0078D4" },
-  { name: "Azure Data Fundamentals", org: "Microsoft", year: "2021", icon: FaMicrosoft, brandColor: "#0078D4" },
-  { name: "Azure Fundamentals", org: "Microsoft", year: "2021", icon: FaMicrosoft, brandColor: "#0078D4" },
-  { name: "Azure AI Fundamentals", org: "Microsoft", year: "2021", icon: FaMicrosoft, brandColor: "#0078D4" },
+  { name: "Azure Administrator Associate", org: "Microsoft Azure", year: "2024", icon: FaMicrosoft, brandColor: "#0078D4" },
+  { name: "Azure Data Engineer Associate", org: "Microsoft Azure", year: "2023", icon: FaMicrosoft, brandColor: "#0078D4" },
+  { name: "Azure AI Engineer Associate", org: "Microsoft Azure", year: "2023", icon: FaMicrosoft, brandColor: "#0078D4" },
+  { name: "Azure Data Scientist Associate", org: "Microsoft Azure", year: "2023", icon: FaMicrosoft, brandColor: "#0078D4" },
+  { name: "Azure Data Fundamentals", org: "Microsoft Azure", year: "2021", icon: FaMicrosoft, brandColor: "#0078D4" },
+  { name: "Azure Fundamentals", org: "Microsoft Azure", year: "2021", icon: FaMicrosoft, brandColor: "#0078D4" },
+  { name: "Azure AI Fundamentals", org: "Microsoft Azure", year: "2021", icon: FaMicrosoft, brandColor: "#0078D4" },
 ]
 
 const techStack = [
@@ -266,12 +273,54 @@ const techStack = [
   { name: "Python", icon: SiPython, color: "#3776AB" },
   { name: "Tailwind", icon: SiTailwindcss, color: "#06B6D4" },
   { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
-  { name: "Flask", icon: SiFlask, color: "#000000" },
-  { name: "Express", icon: SiExpress, color: "#000000" },
+  { name: "Flask", icon: SiFlask, color: "#94a3b8" },
+  { name: "Express", icon: SiExpress, color: "#94a3b8" },
   { name: "MySQL", icon: SiMysql, color: "#4479A1" },
   { name: "TensorFlow", icon: SiTensorflow, color: "#FF6F00" },
   { name: "Git", icon: SiGit, color: "#F05032" },
   { name: "Docker", icon: SiDocker, color: "#2496ED" },
+]
+
+const stats = [
+  { value: "Top 5", label: "HackRice 15" },
+  { value: "8", label: "Cloud certs" },
+  { value: "4", label: "SWE roles" },
+]
+
+const missionBriefs = [
+  {
+    title: "Interfaces",
+    detail: "React and TypeScript screens with clean dashboards, auth flows, and project polish.",
+    metric: "front end",
+    icon: Layers3,
+    mascot: { type: "codebot", mode: "present" },
+  },
+  {
+    title: "APIs and data",
+    detail: "Node, Flask, Express, and database work that keep product workflows moving.",
+    metric: "backend",
+    icon: Database,
+    mascot: { type: "crew", model: "bug", mode: "action" },
+  },
+  {
+    title: "Cloud and AI",
+    detail: "Cloud-certified builds with practical ML, Gemini assistants, and deployment practice.",
+    metric: "shipping",
+    icon: BrainCircuit,
+    mascot: { type: "crew", model: "scientist", mode: "present" },
+  },
+] satisfies { title: string; detail: string; metric: string; icon: IconType; mascot: MissionMascot }[]
+
+const commandLog = [
+  { label: "auth routes", value: "online" },
+  { label: "project cards", value: "synced" },
+  { label: "cloud profile", value: "verified" },
+]
+
+const heroSlides = [
+  { label: "Selected", value: "Swipe Coach" },
+  { label: "Stack", value: "React + Flask" },
+  { label: "Focus", value: "Auth, AI, data" },
 ]
 
 const projectLayout: Record<number, { card: string; aspect: string; techLimit: number; summaryClamp: string }> = {
@@ -282,163 +331,396 @@ const projectLayout: Record<number, { card: string; aspect: string; techLimit: n
   5: { card: "md:col-span-3", aspect: "16 / 10", techLimit: 5, summaryClamp: "line-clamp-2" },
 }
 
+const projectGuides: Record<number, MissionMascot> = {
+  1: { type: "codebot", mode: "idle" },
+  2: { type: "crew", model: "bug", mode: "idle" },
+  3: { type: "crew", model: "bug", mode: "idle" },
+  4: { type: "crew", model: "scientist", mode: "idle" },
+  5: { type: "crew", model: "bug", mode: "idle" },
+}
+
+const projectSignals: Record<number, string[]> = {
+  1: ["Auth0", "Gemini", "cashback"],
+  2: ["roles", "matching", "events"],
+  3: ["slash commands", "audio", "async"],
+  4: ["AUC 0.9643", "sensitivity", "medical AI"],
+  5: ["schema", "REST", "Azure"],
+}
+
 // --- ANIMATION HELPERS ---
 const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0.88, y: 16 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, delay },
+  transition: { duration: 0.6, delay, ease: [0.2, 0.7, 0.2, 1] as const },
 })
 
 const fadeUpView = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0.82, y: 18 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, amount: 0.2 as const },
-  transition: { duration: 0.5, delay },
+  transition: { duration: 0.6, delay, ease: [0.2, 0.7, 0.2, 1] as const },
 })
 
-// --- THE PAGE COMPONENT ---
+// --- SHARED ---
+
+function SectionLabel({
+  index,
+  kicker,
+  title,
+  className,
+}: {
+  index: string
+  kicker: string
+  title: string
+  className?: string
+}) {
+  return (
+    <motion.div className={cn("mb-12", className)} {...fadeUpView()}>
+      <div className="mb-4 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.25em]">
+        <span className="text-primary">{index}</span>
+        <span className="h-px w-8 bg-border" />
+        <span className="text-muted-foreground">{kicker}</span>
+      </div>
+      <h2 className="font-display text-3xl font-bold tracking-tight text-balance md:text-4xl">
+        {title}
+      </h2>
+    </motion.div>
+  )
+}
+
+function MissionMascotDisplay({ mascot }: { mascot: MissionMascot }) {
+  if (mascot.type === "codebot") {
+    return <PixelCodeBot mode={mascot.mode} scale={0.86} />
+  }
+
+  return <PixelCrewMascot model={mascot.model} mode={mascot.mode} scale={0.95} />
+}
+
+function ProjectGuideMascot({
+  guide,
+  active,
+  present,
+}: {
+  guide: MissionMascot
+  active: boolean
+  present: boolean
+}) {
+  if (guide.type === "codebot") {
+    const mode: CodeBotMode = present ? "present" : active ? "point" : "idle"
+    return <PixelCodeBot mode={mode} scale={0.56} />
+  }
+
+  const mode: CrewMascotMode = present ? "present" : active ? "action" : "idle"
+  return <PixelCrewMascot model={guide.model} mode={mode} scale={0.58} />
+}
+
+// --- PAGE ---
 
 export default function Page() {
   const [expandedProject, setExpandedProject] = useState<number | null>(null)
+  const [activeProjectId, setActiveProjectId] = useState<number | null>(null)
+  const [mascotMode, setMascotMode] = useState<CodeBotMode>("idle")
+  const mascotTimerRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (mascotTimerRef.current) {
+        window.clearTimeout(mascotTimerRef.current)
+      }
+    }
+  }, [])
+
+  const triggerMascot = (mode: Exclude<CodeBotMode, "idle">, duration = 1150) => {
+    if (mascotTimerRef.current) {
+      window.clearTimeout(mascotTimerRef.current)
+    }
+
+    setMascotMode(mode)
+    mascotTimerRef.current = window.setTimeout(() => {
+      setMascotMode("idle")
+      mascotTimerRef.current = null
+    }, duration)
+  }
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
   }
 
+  const activateProject = (projectId: number) => {
+    setActiveProjectId(projectId)
+    triggerMascot("point", 900)
+  }
+
+  const deactivateProject = (projectId: number) => {
+    setActiveProjectId((current) => (current === projectId ? null : current))
+  }
+
+  const certGroups = certifications.reduce<Record<string, CertificationItem[]>>((acc, cert) => {
+    ;(acc[cert.org] ??= []).push(cert)
+    return acc
+  }, {})
+
   return (
-    <>
-      <main className="flex flex-col items-center">
-        {/* ═══════════════ HERO BENTO GRID ═══════════════ */}
+    <MotionConfig reducedMotion="user">
+      <main id="main-content" tabIndex={-1} className="flex flex-col items-center overflow-x-hidden outline-none">
+        {/* HERO */}
         <section
           id="hero"
-          className="relative w-full min-h-[calc(100vh-3.5rem)] flex items-center px-4 py-16"
+          className="hero-cockpit relative flex w-full items-start overflow-hidden px-4 py-10 md:min-h-[calc(100dvh-3.5rem)] md:items-center md:px-6 md:py-20"
         >
-          {/* Background effects */}
-          <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-            <div className="hero-orb hero-orb-a" />
-            <div className="hero-orb hero-orb-b" />
-            <div className="hero-grid" />
+          <div className="hero-grid" />
+          <div className="ambient-glow left-[12%] top-[8%] h-[28rem] w-[28rem]" />
+          <div className="cockpit-rail cockpit-rail-left" aria-hidden="true" />
+          <div className="cockpit-rail cockpit-rail-right" aria-hidden="true" />
+          <div className="cockpit-readout" aria-hidden="true">
+            <span>React</span>
+            <span>APIs</span>
+            <span>Cloud</span>
+            <span>AI</span>
           </div>
 
-          <div className="container mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
-              {/* Photo Card */}
-              <motion.div className="bento-card flex flex-col items-center justify-center gap-3 md:row-span-2" {...fadeUp(0)}>
-                <div className="relative">
-                  <div className="absolute -inset-3 rounded-full bg-gradient-to-b from-primary/30 to-gradient-accent/20 blur-xl" />
-                  <Image
-                    src="/placeholder-user.png"
-                    alt="Leo Nguyen headshot"
-                    width={200}
-                    height={200}
-                    className="hero-ring relative w-32 h-32 md:w-40 md:h-40 rounded-full object-cover"
-                  />
+          <div className="relative mx-auto w-full max-w-6xl">
+            <div className="mission-shell grid gap-6 sm:p-7 lg:grid-cols-[1.04fr_0.96fr] lg:gap-8 lg:p-8">
+              <div className="hero-brief-panel flex min-h-[31rem] flex-col justify-between rounded-xl border border-border/70 bg-background/35 p-5 md:p-8">
+                <motion.div {...fadeUp(0)}>
+                  <div className="mb-8 flex flex-wrap items-center gap-3">
+                    <Image
+                      src="/placeholder-user.png"
+                      alt="Leo Nguyen headshot"
+                      width={64}
+                      height={64}
+                      priority
+                      className="avatar-ring h-14 w-14 rounded-xl object-cover"
+                    />
+                    <div>
+                      <p className="font-mono text-xs uppercase tracking-[0.22em] text-primary">
+                        Leo Nguyen
+                      </p>
+                      <p className="mt-1 text-sm text-muted-foreground">Houston, TX / full-stack developer</p>
+                    </div>
+                  </div>
+
+                  <div className="inline-flex items-center gap-2 rounded-md border border-primary/30 bg-primary/10 px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-primary">
+                    <span className="h-1.5 w-1.5 rounded-full bg-primary shadow-[0_0_18px_hsl(var(--primary))]" />
+                    Portfolio mission active
+                  </div>
+
+                  <h1 className="mt-6 max-w-3xl font-display text-[2.65rem] font-bold leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl">
+                    I build software that feels calm, capable, and ready to ship.
+                  </h1>
+
+                  <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground text-pretty">
+                    I am a cloud-certified full-stack developer focused on React interfaces,
+                    practical backend systems, and AI-assisted product features that solve real user problems.
+                  </p>
+                </motion.div>
+
+                <motion.div className="mt-10" {...fadeUp(0.18)}>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Button
+                      className="btn-gradient"
+                      onClick={() => {
+                        triggerMascot("point", 1200)
+                        scrollTo("projects")
+                      }}
+                    >
+                      View Projects
+                    </Button>
+                    <Button variant="outline" asChild className="btn-ghost-wipe bg-transparent">
+                      <Link href="mailto:nanhtu297@gmail.com?subject=Resume%20Request">
+                        <FileText className="mr-2 h-4 w-4" />
+                        Request Resume
+                      </Link>
+                    </Button>
+                    <div className="flex items-center gap-1">
+                      <Button variant="ghost" size="icon" asChild className="h-9 w-9 text-muted-foreground hover:text-foreground">
+                        <Link href="https://github.com/leo2971998" target="_blank" rel="noopener noreferrer" aria-label="Leo Nguyen on GitHub">
+                          <Github className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                      <Button variant="ghost" size="icon" asChild className="h-9 w-9 text-muted-foreground hover:text-foreground">
+                        <Link href="https://linkedin.com/in/leo-nguyen-84098a219/" target="_blank" rel="noopener noreferrer" aria-label="Leo Nguyen on LinkedIn">
+                          <Linkedin className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                      <Button variant="ghost" size="icon" asChild className="h-9 w-9 text-muted-foreground hover:text-foreground">
+                        <Link href="mailto:nanhtu297@gmail.com" aria-label="Email Leo Nguyen">
+                          <Mail className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="mt-7 grid gap-3 sm:grid-cols-3">
+                    {stats.map((s) => (
+                      <div key={s.label} className="stat-tile">
+                        <div className="font-display text-2xl font-bold text-primary">{s.value}</div>
+                        <div className="mt-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                          {s.label}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+
+              <motion.aside className="mission-console" {...fadeUp(0.12)}>
+                <div className="mb-5 flex items-center justify-between gap-4 border-b border-border/70 pb-4">
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.22em] text-muted-foreground">
+                      Project controls
+                    </p>
+                    <h2 className="mt-1 font-display text-2xl font-semibold tracking-tight">Portfolio preview</h2>
+                  </div>
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md border border-primary/30 bg-primary/10 text-primary">
+                    <Sparkles className="h-4 w-4" />
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                  <MapPin className="h-3.5 w-3.5" />
-                  Houston, TX
+
+                <div className="mission-stage hero-mascot-stage">
+                  <div className="mission-radar" aria-hidden="true" />
+                  <PixelCodeBot mode={mascotMode} scale={2.35} />
+                  <div className="holo-slide-stack">
+                    {heroSlides.map((slide) => (
+                      <div className="holo-slide" key={slide.label}>
+                        <span>{slide.label}</span>
+                        <strong>{slide.value}</strong>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </motion.div>
 
-              {/* Name + Bio Card */}
-              <motion.div className="bento-card md:col-span-3 md:row-span-2 flex flex-col justify-center" {...fadeUp(0.1)}>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-                  <span className="text-gradient">Leo Nguyen</span>
-                </h1>
-                <p className="mt-3 text-lg sm:text-xl text-muted-foreground font-medium">
-                  Cloud-certified full-stack developer building secure, scalable products
-                </p>
-                <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-xl">
-                  Experience across React, Node.js, Python, and enterprise systems with hands-on
-                  delivery at Neudesic, Techwave, and the University of Houston.
-                </p>
-                <div className="mt-5 flex flex-wrap items-center gap-3">
-                  <Button className="btn-gradient" onClick={() => scrollTo("projects")}>
-                    View Projects
-                  </Button>
-                  <Button variant="outline" asChild className="btn-ghost-wipe bg-transparent">
-                    <Link href="mailto:nanhtu297@gmail.com?subject=Resume%20Request">
-                      <FileText className="mr-2 h-4 w-4" />
-                      Request Resume
-                    </Link>
-                  </Button>
+                <div className="mt-6 grid gap-3">
+                  {commandLog.map((line, index) => (
+                    <div key={line.label} className="console-line">
+                      <span className="font-mono text-primary">0{index + 1}</span>
+                      <span>{line.label}</span>
+                      <span className="ml-auto font-mono text-[11px] uppercase tracking-[0.18em] text-primary/80">
+                        {line.value}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              </motion.div>
 
-              {/* Stat Cards */}
-              <motion.div className="bento-card flex flex-col items-center justify-center text-center" {...fadeUp(0.2)}>
-                <Trophy className="h-6 w-6 text-primary mb-1" />
-                <span className="text-2xl font-bold">Top 5</span>
-                <span className="text-xs text-muted-foreground">HackRice 15</span>
-              </motion.div>
-
-              <motion.div className="bento-card flex flex-col items-center justify-center text-center" {...fadeUp(0.25)}>
-                <Cloud className="h-6 w-6 text-primary mb-1" />
-                <span className="text-2xl font-bold">8</span>
-                <span className="text-xs text-muted-foreground">Cloud Certifications</span>
-              </motion.div>
-
-              <motion.div className="bento-card flex flex-col items-center justify-center text-center" {...fadeUp(0.3)}>
-                <Briefcase className="h-6 w-6 text-primary mb-1" />
-                <span className="text-2xl font-bold">4</span>
-                <span className="text-xs text-muted-foreground">Software Roles</span>
-              </motion.div>
-
-              {/* Social Card */}
-              <motion.div className="bento-card flex flex-col items-center justify-center gap-3" {...fadeUp(0.35)}>
-                <div className="flex gap-3">
-                  <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent h-9 w-9">
-                    <Link href="https://github.com/leo2971998" target="_blank" rel="noopener noreferrer">
-                      <Github className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent h-9 w-9">
-                    <Link href="https://linkedin.com/in/leo-nguyen-84098a219/" target="_blank" rel="noopener noreferrer">
-                      <Linkedin className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button variant="outline" size="icon" asChild className="btn-ghost-wipe bg-transparent h-9 w-9">
-                    <Link href="mailto:nanhtu297@gmail.com">
-                      <Mail className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                <div className="mt-6 grid grid-cols-2 gap-3">
+                  <div className="mini-panel">
+                    <Cloud className="h-4 w-4 text-primary" />
+                    <span>Cloud ready</span>
+                  </div>
+                  <div className="mini-panel">
+                    <Code2 className="h-4 w-4 text-primary" />
+                    <span>React + API</span>
+                  </div>
                 </div>
-                <span className="text-xs text-muted-foreground">Let&apos;s connect</span>
-              </motion.div>
+              </motion.aside>
             </div>
           </div>
         </section>
 
-        {/* ═══════════════ TECH STACK ═══════════════ */}
-        <section className="w-full py-16 px-4">
+        {/* MISSION BRIEF */}
+        <section className="system-map-section w-full px-6 py-16 md:py-24">
+          <div className="container mx-auto max-w-6xl">
+            <div className="system-map-grid grid gap-4 lg:grid-cols-[0.72fr_1.28fr]">
+              <motion.div className="system-map-intro brief-intro surface p-6 md:p-7" {...fadeUpView()}>
+                <p className="font-mono text-xs uppercase tracking-[0.24em] text-primary">Build map</p>
+                <h2 className="mt-4 font-display text-3xl font-bold leading-tight tracking-tight md:text-4xl">
+                  A quick map of what I build.
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  A compact map of the work: interfaces, backend systems, cloud experiments,
+                  and the project details behind each build.
+                </p>
+              </motion.div>
+
+              <div className="system-map-cards grid gap-4 md:grid-cols-3">
+                {missionBriefs.map((brief, index) => {
+                  const Icon = brief.icon
+                  return (
+                    <motion.article
+                      key={brief.title}
+                      className="system-map-card brief-card surface p-5"
+                      {...fadeUpView(0.08 + index * 0.05)}
+                    >
+                      <div className="mb-5 flex items-start justify-between gap-4">
+                        <div className="flex h-11 w-11 items-center justify-center rounded-lg border border-primary/25 bg-primary/10 text-primary">
+                          <Icon className="h-5 w-5" />
+                        </div>
+                        <span className="system-map-index">0{index + 1}</span>
+                        <div className="brief-mascot">
+                          <MissionMascotDisplay mascot={brief.mascot} />
+                        </div>
+                      </div>
+                      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-primary/90">
+                        {brief.metric}
+                      </p>
+                      <h3 className="mt-2 font-display text-xl font-semibold tracking-tight">{brief.title}</h3>
+                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{brief.detail}</p>
+                    </motion.article>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* TECH */}
+        <section className="w-full px-6 py-20">
           <div className="container mx-auto max-w-5xl">
-            <motion.div className="flex items-center gap-3 mb-8" {...fadeUpView()}>
-              <Zap className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">Tech I Work With</h2>
+            <motion.div
+              className="tech-deck mb-8 flex flex-col gap-5 p-5 md:flex-row md:items-center md:justify-between md:p-6"
+              {...fadeUpView()}
+            >
+              <div>
+                <p className="font-mono text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                  Tech I work with
+                </p>
+                <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight md:text-3xl">
+                  Tools behind the builds.
+                </h2>
+              </div>
+              <PixelCrewMascot model="scientist" mode="action" scale={1.32} />
             </motion.div>
             <motion.div
-              className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3"
+              className="flex flex-wrap items-center justify-center gap-x-8 gap-y-6"
               {...fadeUpView(0.1)}
             >
               {techStack.map((tech) => (
-                <div key={tech.name} className="tech-icon-card">
-                  <tech.icon className="h-7 w-7" style={{ color: tech.color }} />
-                  <span className="text-xs font-medium text-muted-foreground">{tech.name}</span>
+                <div
+                  key={tech.name}
+                  className="group flex items-center gap-2.5 text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  <tech.icon
+                    className="h-6 w-6 opacity-60 transition-all duration-300 [filter:grayscale(1)] group-hover:opacity-100 group-hover:[filter:grayscale(0)]"
+                    style={{ color: tech.color }}
+                  />
+                  <span className="text-sm font-medium">{tech.name}</span>
                 </div>
               ))}
             </motion.div>
           </div>
         </section>
 
-        {/* ═══════════════ PROJECTS BENTO GRID ═══════════════ */}
-        <section id="projects" className="w-full py-16 bg-secondary/50 px-4 scroll-mt-14">
+        {/* PROJECTS */}
+        <section id="projects" className="project-deck-section w-full scroll-mt-14 px-6 py-24 md:py-28">
           <div className="container mx-auto max-w-5xl">
-            <motion.div className="flex items-center gap-3 mb-10" {...fadeUpView()}>
-              <Code2 className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">Projects</h2>
-            </motion.div>
+            <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <SectionLabel index="01" kicker="Selected work" title="Projects" className="mb-0" />
+              <div className="project-deck-command">
+                <div>
+                  <span>Build queue</span>
+                  <strong>{projects.length} selected projects</strong>
+                </div>
+                <div className="project-slot-strip" aria-label="Project slots">
+                  {projects.map((project, index) => (
+                    <span className={index === 0 ? "is-active" : undefined} key={project.id}>
+                      0{index + 1}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-[minmax(220px,auto)]">
+            <div className="project-inspection-grid grid auto-rows-[minmax(220px,auto)] grid-cols-1 gap-4 md:grid-cols-6">
               {projects.map((project, index) => {
                 const isFeatured = index === 0
                 const isExpanded = expandedProject === project.id
@@ -449,32 +731,45 @@ export default function Page() {
                   techLimit: 4,
                   summaryClamp: "line-clamp-2",
                 }
+                const guide = projectGuides[project.id] ?? projectGuides[1]
+                const signals = projectSignals[project.id] ?? project.tech.slice(0, 3)
+                const isProjectActive = activeProjectId === project.id || (isFeatured && mascotMode !== "idle")
+                const guideState = isExpanded ? "present" : isProjectActive ? "active" : "idle"
 
                 return (
                   <motion.article
                     key={project.id}
-                    className={cn(
-                      "project-card bento-card overflow-hidden flex h-full flex-col",
-                      layout.card,
-                    )}
-                    {...fadeUpView(index * 0.08)}
+                    className={cn("project-card surface flex h-full flex-col overflow-hidden p-5", layout.card)}
+                    {...fadeUpView(Math.min(index * 0.06, 0.3))}
                     onMouseMove={(e) => {
                       const rect = e.currentTarget.getBoundingClientRect()
                       e.currentTarget.style.setProperty("--glow-x", `${e.clientX - rect.left}px`)
                       e.currentTarget.style.setProperty("--glow-y", `${e.clientY - rect.top}px`)
                     }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.setProperty("--glow-x", "50%")
-                      e.currentTarget.style.setProperty("--glow-y", "50%")
+                    onMouseEnter={() => activateProject(project.id)}
+                    onMouseLeave={() => deactivateProject(project.id)}
+                    onFocus={() => activateProject(project.id)}
+                    onBlur={(e) => {
+                      const nextTarget = e.relatedTarget
+                      if (!(nextTarget instanceof Node) || !e.currentTarget.contains(nextTarget)) {
+                        deactivateProject(project.id)
+                      }
                     }}
                   >
-                    {/* Image */}
                     <div
-                      className="relative rounded-xl overflow-hidden bg-muted mb-4"
+                      className="project-media-frame relative mb-4 overflow-hidden rounded-xl border border-border bg-background/40"
                       style={{ aspectRatio: layout.aspect }}
                     >
+                      <div className="project-scan-sweep" aria-hidden="true" />
                       {project.images && project.images.length > 0 ? (
-                        <ImageDotsSlider images={project.images} alt={project.title} />
+                        <ImageDotsSlider
+                          images={project.images}
+                          alt={project.title}
+                          onSlideAction={() => {
+                            setActiveProjectId(project.id)
+                            triggerMascot("point", 1200)
+                          }}
+                        />
                       ) : (
                         <Image
                           src={project.coverImg || "/placeholder.svg"}
@@ -484,69 +779,101 @@ export default function Page() {
                           sizes="(min-width: 768px) 33vw, 100vw"
                         />
                       )}
+                      <div className="project-card-guide" data-guide-state={guideState}>
+                        <ProjectGuideMascot guide={guide} active={isProjectActive} present={isExpanded} />
+                      </div>
                     </div>
 
-                    {/* Content */}
-                    <div className="flex-1 flex flex-col gap-2">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <h3 className="text-lg font-bold">{project.title}</h3>
-                          <p className="text-xs text-muted-foreground">{project.dates}</p>
+                    <div className="flex flex-1 flex-col gap-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0">
+                          <h3 className="font-display text-lg font-bold tracking-tight">{project.title}</h3>
+                          <p className="font-mono text-xs text-muted-foreground">{project.dates}</p>
                         </div>
                       </div>
 
                       {project.hackathon && (
                         <div className="flex flex-wrap gap-1.5">
-                          <Badge className="text-xs flex items-center gap-1">
+                          <Badge className="flex items-center gap-1 text-xs">
                             <Code2 className="h-3 w-3" />
                             {project.hackathon.name}
                           </Badge>
-                          <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                          <Badge variant="secondary" className="flex items-center gap-1 text-xs">
                             <Trophy className="h-3 w-3" />
                             {project.hackathon.placement}
                           </Badge>
-                          <Badge variant="secondary" className="text-xs flex items-center gap-1">
+                          <Badge variant="secondary" className="flex items-center gap-1 text-xs">
                             <Award className="h-3 w-3" />
                             {project.hackathon.award}
                           </Badge>
                         </div>
                       )}
 
-                      <p className={cn("text-sm text-muted-foreground", layout.summaryClamp)}>
+                      <p className={cn("text-sm leading-relaxed text-muted-foreground", layout.summaryClamp)}>
                         {project.solution[0]}
                       </p>
 
-                      <div className="flex flex-wrap gap-1.5 mt-auto pt-2">
+                      <div className="project-signal-strip">
+                        {signals.map((signal) => (
+                          <span key={signal}>{signal}</span>
+                        ))}
+                      </div>
+
+                      {isFeatured && (
+                        <div className="featured-proof-grid">
+                          <div>
+                            <span>Challenge</span>
+                            <p>{project.problem[0]}</p>
+                          </div>
+                          <div>
+                            <span>Build</span>
+                            <p>{project.solution[1] ?? project.solution[0]}</p>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className={cn("flex flex-wrap gap-1.5 pt-2", isFeatured ? "mt-3" : "mt-auto")}>
                         {project.tech.slice(0, layout.techLimit).map((t) => (
-                          <Badge key={t} variant="secondary" className="text-xs">{t}</Badge>
+                          <Badge
+                            key={t}
+                            variant="outline"
+                            className="border-border text-xs font-normal text-muted-foreground"
+                          >
+                            {t}
+                          </Badge>
                         ))}
                         {!isFeatured && project.tech.length > layout.techLimit && (
-                          <Badge variant="secondary" className="text-xs">+{project.tech.length - layout.techLimit}</Badge>
+                          <Badge variant="outline" className="border-border text-xs font-normal text-muted-foreground">
+                            +{project.tech.length - layout.techLimit}
+                          </Badge>
                         )}
                       </div>
 
-                      {/* Expandable contributions (featured only) */}
                       {isFeatured && contributions.length > 0 && (
                         <div className="mt-2">
                           <button
-                            className="flex items-center gap-1 text-xs font-medium text-primary hover:text-primary/80 transition-colors"
-                            onClick={() => setExpandedProject(isExpanded ? null : project.id)}
+                            className="flex items-center gap-1 rounded-sm text-xs font-medium text-primary transition-colors hover:text-primary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                            onClick={() => {
+                              setExpandedProject(isExpanded ? null : project.id)
+                              triggerMascot("present", 1200)
+                            }}
                           >
                             {isExpanded ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
                             {isExpanded ? "Hide" : "Show"} contributions ({contributions.length})
                           </button>
                           {isExpanded && (
-                            <ul className="mt-2 list-disc pl-4 space-y-1 text-xs text-muted-foreground">
-                              {contributions.map((c) => <li key={c}>{c}</li>)}
+                            <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-muted-foreground">
+                              {contributions.map((c) => (
+                                <li key={c}>{c}</li>
+                              ))}
                             </ul>
                           )}
                         </div>
                       )}
 
-                      {/* Action buttons */}
-                      <div className="flex gap-2 mt-3">
+                      <div className="mt-3 flex gap-2">
                         {project.repoUrl && (
-                          <Button variant="outline" size="sm" asChild className="btn-ghost-wipe bg-transparent h-8 text-xs">
+                          <Button variant="outline" size="sm" asChild className="btn-ghost-wipe h-8 bg-transparent text-xs">
                             <Link href={project.repoUrl} target="_blank" rel="noopener noreferrer">
                               <Github className="mr-1.5 h-3.5 w-3.5" />
                               Code
@@ -578,21 +905,26 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════════ EXPERIENCE ═══════════════ */}
-        <section id="experience" className="w-full py-16 px-4 scroll-mt-14">
-          <div className="container mx-auto max-w-5xl">
-            <motion.div className="flex items-center gap-3 mb-8" {...fadeUpView()}>
-              <Briefcase className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">Experience</h2>
-            </motion.div>
+        {/* EXPERIENCE */}
+        <section id="experience" className="w-full scroll-mt-14 px-6 py-24 md:py-28">
+          <div className="container mx-auto max-w-3xl">
+            <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <SectionLabel index="02" kicker="Where I've worked" title="Experience" className="mb-0" />
+              <motion.div className="section-companion" {...fadeUpView(0.08)}>
+                <PixelCrewMascot model="bug" mode="action" scale={1.3} />
+              </motion.div>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative ml-2 space-y-12 border-l border-border pl-8">
               {experience.map((job, i) => (
-                <motion.div key={`${job.role}-${job.company}`} className="exp-card" {...fadeUpView(i * 0.08)}>
-                  <h3 className="font-semibold">{job.role}</h3>
-                  <p className="text-sm text-primary font-medium mt-0.5">{job.company}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{job.dates} · {job.location}</p>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-muted-foreground mt-3">
+                <motion.div key={`${job.role}-${job.company}`} className="relative" {...fadeUpView(i * 0.06)}>
+                  <span className="absolute -left-[2.6rem] top-1 h-3 w-3 rounded-full bg-primary ring-4 ring-background" />
+                  <p className="font-mono text-xs uppercase tracking-wider text-primary">
+                    {job.dates} - {job.location}
+                  </p>
+                  <h3 className="mt-2 font-display text-lg font-semibold tracking-tight">{job.role}</h3>
+                  <p className="text-sm font-medium text-muted-foreground">{job.company}</p>
+                  <ul className="mt-3 list-disc space-y-1.5 pl-4 text-sm leading-relaxed text-muted-foreground">
                     {job.description.map((point) => (
                       <li key={point}>{point}</li>
                     ))}
@@ -603,84 +935,101 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ═══════════════ CREDENTIALS ═══════════════ */}
-        <section id="credentials" className="w-full py-16 bg-secondary/50 px-4 scroll-mt-14">
-          <div className="container mx-auto max-w-5xl">
-            {/* Education */}
-            <motion.div className="flex items-center gap-3 mb-6" {...fadeUpView()}>
-              <GraduationCap className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">Education</h2>
-            </motion.div>
+        {/* CREDENTIALS */}
+        <section id="credentials" className="w-full scroll-mt-14 px-6 py-24 md:py-28">
+          <div className="container mx-auto max-w-3xl">
+            <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <SectionLabel index="03" kicker="Education & certs" title="Credentials" className="mb-0" />
+              <motion.div className="section-companion" {...fadeUpView(0.08)}>
+                <PixelCrewMascot model="scientist" mode="present" scale={1.3} />
+              </motion.div>
+            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-14">
-              {education.map((item, i) => (
-                <motion.div key={item.id} className="bento-card" {...fadeUpView(i * 0.08)}>
-                  <div className="flex items-start gap-3">
-                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-primary/10 text-primary shrink-0">
-                      <School className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold">{item.institution}</h3>
+            {/* Education: clean rows, no cards */}
+            <motion.div className="mb-16" {...fadeUpView()}>
+              <h3 className="mb-2 font-mono text-sm tracking-tight text-muted-foreground">
+                Education
+              </h3>
+              <div>
+                {education.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-baseline justify-between gap-4 border-b border-border py-4"
+                  >
+                    <div className="min-w-0">
+                      <h4 className="font-medium">{item.institution}</h4>
                       <p className="text-sm text-muted-foreground">{item.degree}</p>
-                      <p className="text-xs text-muted-foreground mt-1">{item.dates}</p>
                     </div>
+                    <span className="shrink-0 font-mono text-xs text-muted-foreground">{item.dates}</span>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Certifications */}
-            <motion.div className="flex items-center gap-3 mb-6" {...fadeUpView()}>
-              <Award className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-bold">Certifications</h2>
+                ))}
+              </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
-              {certifications.map((cert, i) => (
-                <motion.div
-                  key={`${cert.name}-${cert.year}`}
-                  className="cert-card"
-                  style={{ borderLeftColor: cert.brandColor, borderLeftWidth: 3 }}
-                  {...fadeUpView(i * 0.05)}
-                >
-                  <div className="flex items-center gap-2 mb-2">
-                    <div
-                      className="flex items-center justify-center w-7 h-7 rounded-full shrink-0"
-                      style={{ backgroundColor: cert.brandColor }}
-                    >
-                      <cert.icon className="h-3.5 w-3.5 text-white" />
+            {/* Certifications: grouped by issuer, compact chips */}
+            <motion.div {...fadeUpView(0.05)}>
+              <h3 className="mb-5 font-mono text-sm tracking-tight text-muted-foreground">
+                Certifications
+              </h3>
+              <div className="space-y-8">
+                {Object.entries(certGroups).map(([org, certs]) => {
+                  const Icon = certs[0].icon
+                  const color = certs[0].brandColor
+                  return (
+                    <div key={org}>
+                      <div className="mb-3 flex items-center gap-2.5">
+                        <span
+                          className="flex h-6 w-6 items-center justify-center rounded-md"
+                          style={{ backgroundColor: color }}
+                        >
+                          <Icon className="h-3.5 w-3.5 text-white" />
+                        </span>
+                        <h4 className="text-sm font-semibold">{org}</h4>
+                        <span className="font-mono text-xs text-muted-foreground">
+                          {certs.length} {certs.length === 1 ? "cert" : "certs"}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {certs.map((cert) => (
+                          <span
+                            key={cert.name}
+                            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/40 px-3 py-1.5 text-sm"
+                          >
+                            <span className="font-mono text-[11px] text-muted-foreground">{cert.year}</span>
+                            {cert.name}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <span className="text-xs font-medium text-muted-foreground">{cert.year}</span>
-                  </div>
-                  <p className="text-sm font-medium leading-tight">{cert.name}</p>
-                </motion.div>
-              ))}
-            </div>
+                  )
+                })}
+              </div>
+            </motion.div>
           </div>
         </section>
       </main>
 
-      {/* ═══════════════ FOOTER ═══════════════ */}
-      <footer className="w-full border-t bg-background/95">
-        <div className="container px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p>Leo Nguyen · Portfolio</p>
+      {/* FOOTER */}
+      <footer className="w-full border-t border-border">
+        <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-6 py-8 text-sm text-muted-foreground md:flex-row">
+          <p className="font-mono text-xs">Leo Nguyen - Houston, TX</p>
           <div className="flex flex-wrap items-center gap-2">
-            <Button variant="outline" size="sm" asChild className="btn-ghost-wipe bg-transparent">
+            <Button variant="ghost" size="sm" asChild className="text-muted-foreground hover:text-foreground">
               <Link href="https://github.com/leo2971998" target="_blank" rel="noopener noreferrer">
                 <Github className="mr-1.5 h-4 w-4" />
-                Github
+                GitHub
               </Link>
             </Button>
-            <Button variant="outline" size="sm" asChild className="btn-ghost-wipe bg-transparent">
+            <Button variant="ghost" size="sm" asChild className="text-muted-foreground hover:text-foreground">
               <Link href="https://linkedin.com/in/leo-nguyen-84098a219/" target="_blank" rel="noopener noreferrer">
                 <Linkedin className="mr-1.5 h-4 w-4" />
                 LinkedIn
               </Link>
             </Button>
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
-              className="btn-ghost-wipe bg-transparent"
+              className="text-muted-foreground hover:text-foreground"
               onClick={() => scrollTo("hero")}
             >
               <ArrowUp className="mr-1.5 h-4 w-4" />
@@ -689,23 +1038,57 @@ export default function Page() {
           </div>
         </div>
       </footer>
-    </>
+    </MotionConfig>
   )
 }
 
 // ---------- Image slider with dot controls ----------
-function ImageDotsSlider({ images, alt }: { images: string[]; alt: string }) {
+function ImageDotsSlider({
+  images,
+  alt,
+  onSlideAction,
+}: {
+  images: string[]
+  alt: string
+  onSlideAction?: () => void
+}) {
   const [index, setIndex] = useState(0)
 
   const safeIndex = images.length > 0 ? Math.min(Math.max(index, 0), images.length - 1) : 0
   const current = images[safeIndex] ?? "/placeholder.svg"
+  const showControls = images.length > 1
+
+  const showSlide = (nextIndex: number) => {
+    if (!showControls) return
+
+    const normalizedIndex = (nextIndex + images.length) % images.length
+    setIndex(normalizedIndex)
+    onSlideAction?.()
+  }
 
   return (
     <div className="relative h-full w-full">
       <Image src={current} alt={alt} fill className="object-contain p-2" sizes="(min-width: 768px) 50vw, 100vw" />
 
-      {images.length > 1 && (
-        <div className="absolute inset-x-0 bottom-2 flex items-center justify-center gap-2">
+      {showControls && (
+        <>
+          <button
+            type="button"
+            aria-label="Show previous project image"
+            onClick={() => showSlide(safeIndex - 1)}
+            className="absolute left-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-md border border-border bg-background/78 text-foreground shadow-lg shadow-background/20 backdrop-blur transition hover:border-primary/60 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            aria-label="Show next project image"
+            onClick={() => showSlide(safeIndex + 1)}
+            className="absolute right-2 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-md border border-border bg-background/78 text-foreground shadow-lg shadow-background/20 backdrop-blur transition hover:border-primary/60 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
+          <div className="absolute inset-x-0 bottom-2 flex items-center justify-center gap-2">
           {images.map((_, i) => {
             const active = i === safeIndex
             return (
@@ -714,15 +1097,16 @@ function ImageDotsSlider({ images, alt }: { images: string[]; alt: string }) {
                 type="button"
                 aria-label={`Show image ${i + 1}`}
                 aria-current={active}
-                onClick={() => setIndex(i)}
+                onClick={() => showSlide(i)}
                 className={cn(
-                  "h-2.5 w-2.5 rounded-full border border-border transition-transform",
-                  active ? "bg-primary scale-110" : "bg-muted-foreground/30 hover:scale-105"
+                  "h-2.5 w-2.5 rounded-full border border-border transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                  active ? "scale-110 bg-primary" : "bg-muted-foreground/30 hover:scale-105",
                 )}
               />
             )
           })}
-        </div>
+          </div>
+        </>
       )}
     </div>
   )

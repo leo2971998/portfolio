@@ -1,0 +1,84 @@
+{
+  "name": "pixel-codebot-project-mascot",
+  "frameSize": {
+    "width": 64,
+    "height": 64
+  },
+  "anchor": {
+    "x": 32,
+    "y": 56,
+    "name": "bottom-center hover boots"
+  },
+  "palette": [
+    "#101725",
+    "#27364e",
+    "#5f718d",
+    "#9fb2cf",
+    "#dceaff",
+    "#f7fbff",
+    "#071322",
+    "#55d6ff",
+    "#1c8dab",
+    "#45e0a4",
+    "#ffd166",
+    "#b77d27",
+    "#ff8fb7",
+    "#07101c"
+  ],
+  "animations": {
+    "idle": [
+      {
+        "file": "idle/idle-1.png",
+        "durationMs": 190
+      },
+      {
+        "file": "idle/idle-2.png",
+        "durationMs": 190
+      },
+      {
+        "file": "idle/idle-3.png",
+        "durationMs": 190
+      },
+      {
+        "file": "idle/idle-4.png",
+        "durationMs": 190
+      }
+    ],
+    "point": [
+      {
+        "file": "point/point-1.png",
+        "durationMs": 160
+      },
+      {
+        "file": "point/point-2.png",
+        "durationMs": 160
+      },
+      {
+        "file": "point/point-3.png",
+        "durationMs": 160
+      },
+      {
+        "file": "point/point-4.png",
+        "durationMs": 160
+      }
+    ],
+    "present": [
+      {
+        "file": "present/present-1.png",
+        "durationMs": 190
+      },
+      {
+        "file": "present/present-2.png",
+        "durationMs": 190
+      },
+      {
+        "file": "present/present-3.png",
+        "durationMs": 190
+      },
+      {
+        "file": "present/present-4.png",
+        "durationMs": 190
+      }
+    ]
+  }
+}

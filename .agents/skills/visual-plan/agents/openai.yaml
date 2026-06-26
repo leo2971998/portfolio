@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual Plan"
+  short_description: "Plan frontend changes before editing"
+  default_prompt: "Use $visual-plan to prepare a UI change plan before editing files."

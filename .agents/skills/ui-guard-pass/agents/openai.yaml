@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Guard Pass"
+  short_description: "Review UI diffs before finishing"
+  default_prompt: "Use $ui-guard-pass to review a frontend diff before finalizing it."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Visual QA"
+  short_description: "Inspect rendered web UI screenshots"
+  default_prompt: "Use $web-visual-qa to review screenshots for responsive UI issues."

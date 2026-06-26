@@ -1,0 +1,4 @@
+interface:
+  display_name: "Mascot Interaction"
+  short_description: "Design decorative mascot behavior"
+  default_prompt: "Use $mascot-interaction to refine portfolio mascot behavior without making it content."

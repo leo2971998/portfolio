@@ -4,50 +4,55 @@
 
 @layer base {
   :root {
-    --background: 220 13% 98%; /* slate-50 */
-    --foreground: 224 71% 4%; /* slate-950 */
+    --background: 220 13% 98%;
+    --foreground: 224 71% 4%;
     --card: 0 0% 100%;
     --card-foreground: 224 71% 4%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71% 4%;
-    --primary: 162 84% 40%; /* Vibrant Teal */
+    --primary: 162 84% 38%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%; /* slate-100 */
-    --secondary-foreground: 222 47% 11%; /* slate-900 */
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 47% 11%;
     --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%; /* slate-500 */
+    --muted-foreground: 220 9% 46%;
     --accent: 220 14% 96%;
     --accent-foreground: 222 47% 11%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%; /* slate-200 */
+    --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 162 84% 40%;
+    --ring: 162 84% 38%;
     --radius: 0.75rem;
-    --gradient-accent: 325 81% 59%; /* Vibrant Pink */
+    --gradient-accent: 190 90% 50%;
+    --signal: 38 92% 54%;
+    color-scheme: light;
   }
 
   .dark {
-    --background: 224 71% 4%; /* slate-950 */
-    --foreground: 210 20% 98%; /* slate-50 */
-    --card: 222 47% 11%; /* slate-900 */
-    --card-foreground: 210 20% 98%;
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 20% 98%;
-    --primary: 162 75% 55%; /* Brighter Teal for dark mode */
-    --primary-foreground: 162 84% 15%; /* Dark Teal for contrast */
-    --secondary: 215 28% 17%; /* slate-800 */
-    --secondary-foreground: 210 20% 98%;
-    --muted: 215 28% 17%;
-    --muted-foreground: 215 20% 65%; /* slate-400 */
-    --accent: 215 28% 17%;
-    --accent-foreground: 210 20% 98%;
-    --destructive: 0 62.8% 30.6%;
+    /* Refined "dev-tool" dark: deep cool black, hairline borders, one teal accent */
+    --background: 222 24% 7%;
+    --foreground: 210 20% 96%;
+    --card: 220 22% 10%;
+    --card-foreground: 210 20% 96%;
+    --popover: 220 24% 9%;
+    --popover-foreground: 210 20% 96%;
+    --primary: 162 78% 50%;
+    --primary-foreground: 165 90% 8%;
+    --secondary: 220 18% 14%;
+    --secondary-foreground: 210 20% 96%;
+    --muted: 220 18% 14%;
+    --muted-foreground: 218 12% 62%;
+    --accent: 220 18% 16%;
+    --accent-foreground: 210 20% 96%;
+    --destructive: 0 62.8% 45%;
     --destructive-foreground: 210 20% 98%;
-    --border: 215 28% 25%; /* slate-700 - Fixes timeline visibility */
-    --input: 215 28% 25%;
-    --ring: 162 75% 55%;
-    --gradient-accent: 325 81% 59%; /* Vibrant Pink */
+    --border: 220 16% 16%;
+    --input: 220 16% 20%;
+    --ring: 162 78% 50%;
+    --gradient-accent: 190 90% 55%;
+    --signal: 38 92% 58%;
+    color-scheme: dark;
   }
 }
 
@@ -57,102 +62,676 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "ss01", "cv01";
+  }
+  ::selection {
+    background: hsl(var(--primary) / 0.85);
+    color: hsl(var(--primary-foreground));
   }
 }
 
 @layer components {
-  @keyframes aurora-drift-a {
-    0% {
-      transform: translate(0, 0) scale(1);
-    }
-    50% {
-      transform: translate(24px, -16px) scale(1.05);
-    }
-    100% {
-      transform: translate(-12px, 20px) scale(0.97);
-    }
+  /* Single soft ambient glow behind the hero; replaces the busy orbs, grid, and shimmer. */
+  .ambient-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.22), transparent 70%);
   }
 
-  @keyframes aurora-drift-b {
-    0% {
-      transform: translate(0, 0) scale(1);
-    }
-    50% {
-      transform: translate(-20px, 12px) scale(1.04);
-    }
-    100% {
-      transform: translate(16px, -18px) scale(0.98);
-    }
+  /* Faint blueprint grid, masked so it fades into the background */
+  .hero-grid {
+    @apply absolute inset-0 pointer-events-none;
+    background-image: linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+    background-size: 3.5rem 3.5rem;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 75%);
+    opacity: 0.5;
   }
 
-  @keyframes gradient-shimmer {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+  .hero-cockpit {
+    background:
+      linear-gradient(90deg, hsl(var(--background)) 0 7%, transparent 7% 93%, hsl(var(--background)) 93%),
+      linear-gradient(135deg, hsl(var(--background)), hsl(222 30% 5%) 52%, hsl(var(--card)) 100%);
+  }
+
+  .hero-cockpit::before,
+  .hero-cockpit::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.28), hsl(var(--signal) / 0.24), transparent);
+  }
+
+  .hero-cockpit::before {
+    top: 4.75rem;
+    height: 1px;
+  }
+
+  .hero-cockpit::after {
+    bottom: 3.25rem;
+    height: 1px;
+    opacity: 0.65;
+  }
+
+  .cockpit-rail {
+    position: absolute;
+    top: 5.5rem;
+    bottom: 4rem;
+    width: 3.4rem;
+    pointer-events: none;
+    opacity: 0.88;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        hsl(var(--primary) / 0.55) 0 0.7rem,
+        transparent 0.7rem 1.15rem
+      ),
+      linear-gradient(to bottom, transparent, hsl(var(--primary) / 0.16), transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 12%, black 88%, transparent);
+  }
+
+  .cockpit-rail-left {
+    left: max(1.1rem, calc((100vw - 82rem) / 2));
+    clip-path: polygon(0 0, 64% 0, 100% 12%, 100% 88%, 64% 100%, 0 100%);
+  }
+
+  .cockpit-rail-right {
+    right: max(1.1rem, calc((100vw - 82rem) / 2));
+    clip-path: polygon(36% 0, 100% 0, 100% 100%, 36% 100%, 0 88%, 0 12%);
+  }
+
+  .cockpit-readout {
+    position: absolute;
+    left: 50%;
+    bottom: 1.2rem;
+    z-index: 1;
+    display: flex;
+    max-width: min(42rem, calc(100vw - 2rem));
+    transform: translateX(-50%);
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+
+  .cockpit-readout span {
+    border: 1px solid hsl(var(--border) / 0.78);
+    border-radius: 0.35rem;
+    background: hsl(var(--background) / 0.72);
+    padding: 0.4rem 0.7rem;
+    color: hsl(var(--primary));
+    font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 16px hsl(var(--primary) / 0.08);
+  }
+
+  .hero-brief-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.55rem;
+    background:
+      linear-gradient(135deg, hsl(var(--card) / 0.78), hsl(var(--background) / 0.48)),
+      linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px);
+    background-size: auto, 1.35rem 1.35rem;
+    box-shadow: inset 0 0 0 1px hsl(var(--foreground) / 0.025), 0 30px 90px -62px hsl(var(--primary));
+    clip-path: polygon(0 0, calc(100% - 1.2rem) 0, 100% 1.2rem, 100% 100%, 1.2rem 100%, 0 calc(100% - 1.2rem));
+  }
+
+  .hero-brief-panel::before {
+    content: "";
+    position: absolute;
+    inset: 1rem auto 1rem 0.85rem;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, hsl(var(--signal)), hsl(var(--primary)), transparent);
+    opacity: 0.8;
+    pointer-events: none;
   }
 
   .text-gradient {
     @apply text-transparent bg-clip-text;
-    background-image: linear-gradient(120deg, hsl(var(--primary)), hsl(var(--gradient-accent)));
-    background-size: 200% 200%;
+    background-image: linear-gradient(120deg, hsl(var(--foreground)), hsl(var(--primary)) 65%, hsl(var(--gradient-accent)));
   }
 
-  .hero-orb {
-    @apply absolute rounded-full blur-3xl;
+  .mission-shell {
+    position: relative;
   }
 
-  .hero-orb-a {
-    width: 28rem;
-    height: 28rem;
-    left: -8rem;
-    top: -9rem;
-    background: radial-gradient(circle, hsl(var(--primary) / 0.25), transparent 70%);
+  .mission-shell::before {
+    content: "";
+    position: absolute;
+    inset: -1.5rem;
+    pointer-events: none;
+    background:
+      linear-gradient(to right, hsl(var(--primary) / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--primary) / 0.06) 1px, transparent 1px);
+    background-size: 4.25rem 4.25rem;
+    mask-image: linear-gradient(to bottom, transparent, black 24%, black 76%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 24%, black 76%, transparent);
+    opacity: 0.75;
   }
 
-  .hero-orb-b {
-    width: 26rem;
-    height: 26rem;
-    right: -8rem;
-    bottom: -8rem;
-    background: radial-gradient(circle, hsl(var(--gradient-accent) / 0.2), transparent 70%);
+  .mission-shell > * {
+    position: relative;
+    z-index: 1;
   }
 
-  .hero-grid {
-    @apply absolute inset-0;
-    background-image: linear-gradient(to right, hsl(var(--border) / 0.35) 1px, transparent 1px),
-      linear-gradient(to bottom, hsl(var(--border) / 0.35) 1px, transparent 1px);
-    background-size: 3.25rem 3.25rem;
-    mask-image: radial-gradient(circle at center, black 35%, transparent 80%);
-    opacity: 0.2;
+  .mission-console {
+    position: relative;
+    overflow: hidden;
+    min-height: 31rem;
+    border: 1px solid hsl(var(--border) / 0.86);
+    border-radius: 0.55rem;
+    background:
+      linear-gradient(160deg, hsl(var(--card) / 0.86), hsl(var(--background) / 0.58)),
+      linear-gradient(48deg, transparent 0 72%, hsl(var(--signal) / 0.1) 72% 76%, transparent 76%),
+      repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 10px,
+        hsl(var(--primary) / 0.035) 11px
+      );
+    padding: 1.5rem;
+    box-shadow: inset 0 1px 0 hsl(var(--foreground) / 0.05), 0 28px 90px -55px hsl(var(--primary) / 0.65);
   }
 
-  .hero-ring {
-    box-shadow: 0 0 0 8px hsl(var(--background)), 0 24px 50px -26px hsl(var(--foreground) / 0.65);
+  .mission-console::before {
+    content: "";
+    position: absolute;
+    inset: 0.7rem;
+    pointer-events: none;
+    border: 1px solid hsl(var(--primary) / 0.1);
+    clip-path: polygon(0 0, 5.5rem 0, 5.5rem 1px, 1px 1px, 1px 5.5rem, 0 5.5rem, 0 0, 100% 0, 100% 5.5rem, calc(100% - 1px) 5.5rem, calc(100% - 1px) 1px, calc(100% - 5.5rem) 1px, calc(100% - 5.5rem) 0);
+    opacity: 0.9;
   }
 
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-orb-a {
-      animation: aurora-drift-a 14s ease-in-out infinite alternate;
+  .mission-console::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(120deg, transparent 0 55%, hsl(var(--primary) / 0.09), transparent 72%);
+    opacity: 0.8;
+  }
+
+  .mission-console > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mission-stage {
+    position: relative;
+    display: grid;
+    min-height: 15.5rem;
+    place-items: center;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border) / 0.78);
+    border-radius: 0.75rem;
+    background:
+      linear-gradient(90deg, hsl(var(--primary) / 0.08) 1px, transparent 1px),
+      linear-gradient(0deg, hsl(var(--primary) / 0.06) 1px, transparent 1px),
+      hsl(var(--background) / 0.5);
+    background-size: 2.25rem 2.25rem, 2.25rem 2.25rem, auto;
+  }
+
+  .hero-mascot-stage {
+    min-height: 18.5rem;
+    border-radius: 0.45rem;
+    background:
+      linear-gradient(90deg, hsl(var(--primary) / 0.1) 1px, transparent 1px),
+      linear-gradient(0deg, hsl(var(--primary) / 0.08) 1px, transparent 1px),
+      radial-gradient(ellipse at 50% 54%, hsl(var(--primary) / 0.16), transparent 54%),
+      hsl(var(--background) / 0.48);
+    background-size: 2rem 2rem, 2rem 2rem, auto, auto;
+  }
+
+  .hero-mascot-stage > .codebot-mascot {
+    position: relative;
+    z-index: 4;
+  }
+
+  .holo-slide-stack {
+    position: absolute;
+    inset: 0.8rem;
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .holo-slide {
+    position: absolute;
+    width: min(9.2rem, 40%);
+    border: 1px solid hsl(var(--primary) / 0.42);
+    border-radius: 0.4rem;
+    background:
+      linear-gradient(135deg, hsl(var(--background) / 0.82), hsl(var(--card) / 0.58)),
+      linear-gradient(to right, hsl(var(--primary) / 0.08) 1px, transparent 1px);
+    background-size: auto, 0.8rem 0.8rem;
+    padding: 0.58rem 0.66rem;
+    box-shadow: 0 0 28px hsl(var(--primary) / 0.13), inset 0 0 16px hsl(var(--primary) / 0.08);
+  }
+
+  .holo-slide::before {
+    content: "";
+    position: absolute;
+    left: 0.52rem;
+    right: 0.52rem;
+    bottom: -0.45rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--signal) / 0.78), transparent);
+  }
+
+  .holo-slide span,
+  .holo-slide strong {
+    display: block;
+  }
+
+  .holo-slide span {
+    color: hsl(var(--primary));
+    font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+  }
+
+  .holo-slide strong {
+    margin-top: 0.22rem;
+    color: hsl(var(--foreground));
+    font-size: 0.82rem;
+    line-height: 1.18;
+  }
+
+  .holo-slide:nth-child(1) {
+    left: 0.2rem;
+    top: 0.45rem;
+    transform: rotate(-5deg);
+  }
+
+  .holo-slide:nth-child(2) {
+    right: 0.15rem;
+    top: 2.85rem;
+    transform: rotate(5deg);
+  }
+
+  .holo-slide:nth-child(3) {
+    left: 50%;
+    bottom: 0.35rem;
+    transform: translateX(-50%) rotate(-1deg);
+  }
+
+  @media (max-width: 900px) {
+    .cockpit-rail,
+    .cockpit-readout,
+    .system-map-grid::before {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-cockpit::before,
+    .hero-cockpit::after {
+      opacity: 0.4;
     }
 
-    .hero-orb-b {
-      animation: aurora-drift-b 18s ease-in-out infinite alternate;
+    .hero-brief-panel {
+      min-height: auto;
+      clip-path: polygon(0 0, calc(100% - 0.8rem) 0, 100% 0.8rem, 100% 100%, 0 100%);
     }
 
-    .text-gradient {
-      animation: gradient-shimmer 4s ease infinite;
+    .hero-mascot-stage {
+      min-height: 24rem;
+      align-content: center;
+      gap: 0.75rem;
+      padding: 1rem;
+    }
+
+    .holo-slide-stack {
+      position: relative;
+      inset: auto;
+      display: grid;
+      width: 100%;
+      gap: 0.45rem;
+    }
+
+    .holo-slide {
+      position: relative;
+      inset: auto !important;
+      left: auto !important;
+      right: auto !important;
+      top: auto !important;
+      bottom: auto !important;
+      width: 100%;
+      transform: none !important;
     }
   }
 
+  .mission-stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.16), transparent);
+    opacity: 0.4;
+    transform: translateX(-110%);
+    animation: scan-sweep 4.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .mission-radar {
+    position: absolute;
+    inset: 12%;
+    border: 1px dashed hsl(var(--primary) / 0.22);
+    border-radius: 9999px;
+    opacity: 0.8;
+    animation: radar-breathe 3.2s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .mission-radar::before,
+  .mission-radar::after {
+    content: "";
+    position: absolute;
+    inset: 20%;
+    border: 1px solid hsl(var(--primary) / 0.16);
+    border-radius: inherit;
+  }
+
+  .mission-radar::after {
+    inset: 39%;
+  }
+
+  .stat-tile,
+  .console-line,
+  .mini-panel {
+    border: 1px solid hsl(var(--border) / 0.72);
+    border-radius: 0.5rem;
+    background: hsl(var(--card) / 0.38);
+  }
+
+  .stat-tile {
+    padding: 1rem;
+  }
+
+  .console-line,
+  .mini-panel {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 0.9rem;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.875rem;
+  }
+
+  .console-line {
+    position: relative;
+  }
+
+  .console-line::before {
+    content: "";
+    height: 0.45rem;
+    width: 0.45rem;
+    border-radius: 9999px;
+    background: hsl(var(--signal));
+    box-shadow: 0 0 18px hsl(var(--signal) / 0.48);
+  }
+
+  .mini-panel {
+    justify-content: center;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+  }
+
+  .system-map-section {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, hsl(var(--background)), hsl(var(--card) / 0.28) 46%, hsl(var(--background))),
+      linear-gradient(115deg, transparent 0 18%, hsl(var(--primary) / 0.045) 18% 19%, transparent 19% 100%);
+  }
+
+  .system-map-section::before {
+    content: "";
+    position: absolute;
+    inset: 1.5rem 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.2), transparent);
+    pointer-events: none;
+  }
+
+  .system-map-grid {
+    position: relative;
+  }
+
+  .system-map-grid::before {
+    content: "";
+    position: absolute;
+    left: 26%;
+    right: 7%;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--signal) / 0.35), hsl(var(--primary) / 0.28), transparent);
+    pointer-events: none;
+  }
+
+  .brief-intro {
+    min-height: 100%;
+    background:
+      linear-gradient(135deg, hsl(var(--card) / 0.7), hsl(var(--background) / 0.45)),
+      linear-gradient(to right, hsl(var(--primary) / 0.06) 1px, transparent 1px);
+    background-size: auto, 1.25rem 1.25rem;
+  }
+
+  .system-map-intro {
+    border-radius: 0.5rem;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 1.25rem), calc(100% - 1.25rem) 100%, 0 100%);
+  }
+
+  .brief-card {
+    min-height: 15rem;
+    overflow: hidden;
+    transition: transform 220ms cubic-bezier(0.25, 1, 0.5, 1), border-color 200ms ease,
+      background-color 200ms ease;
+  }
+
+  .system-map-card {
+    position: relative;
+    border-radius: 0.5rem;
+    background:
+      linear-gradient(145deg, hsl(var(--card) / 0.68), hsl(var(--background) / 0.4)),
+      linear-gradient(90deg, hsl(var(--primary) / 0.055) 1px, transparent 1px);
+    background-size: auto, 1rem 1rem;
+    clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 0.9rem, 100% 100%, 0.9rem 100%, 0 calc(100% - 0.9rem));
+  }
+
+  .system-map-card::after {
+    content: "";
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    bottom: 0.8rem;
+    height: 1px;
+    background: linear-gradient(90deg, hsl(var(--primary) / 0.58), transparent);
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .system-map-index {
+    min-width: 1.6rem;
+    color: hsl(var(--signal));
+    font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  .brief-mascot {
+    margin-top: -1.25rem;
+    margin-right: -0.75rem;
+    opacity: 0.96;
+  }
+
+  .tech-deck,
+  .section-companion {
+    border: 1px solid hsl(var(--border) / 0.72);
+    border-radius: 0.75rem;
+    background:
+      linear-gradient(135deg, hsl(var(--card) / 0.62), hsl(var(--background) / 0.36)),
+      linear-gradient(to right, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+    background-size: auto, 1.5rem 1.5rem;
+  }
+
+  .section-companion {
+    display: grid;
+    min-height: 7.5rem;
+    min-width: 9rem;
+    place-items: center;
+    overflow: hidden;
+    padding: 0.4rem 0.8rem 0.65rem;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .brief-card:hover,
+    .project-card:hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  @keyframes radar-breathe {
+    0%,
+    100% {
+      transform: scale(0.96);
+      opacity: 0.45;
+    }
+    50% {
+      transform: scale(1.02);
+      opacity: 0.9;
+    }
+  }
+
+  /* Subtle surface: hairline border, faint fill. Used sparingly. */
+  .surface {
+    @apply rounded-2xl border border-border bg-card/40;
+    transition: border-color 0.3s ease, background-color 0.3s ease, transform 220ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .surface:hover {
+    @apply border-border/80 bg-card/70;
+  }
+
+  /* Avatar ring */
+  .avatar-ring {
+    box-shadow: 0 0 0 1px hsl(var(--border)), 0 0 0 6px hsl(var(--background)),
+      0 24px 60px -28px hsl(var(--primary) / 0.7);
+  }
+
+  .project-deck-section {
+    position: relative;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--card) / 0.34) 36%, hsl(var(--background)) 100%),
+      linear-gradient(90deg, transparent 0 10%, hsl(var(--primary) / 0.04) 10% 10.4%, transparent 10.4% 100%);
+  }
+
+  .project-deck-section::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 4.5rem;
+    width: min(76rem, calc(100vw - 2rem));
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.28), hsl(var(--signal) / 0.22), transparent);
+    pointer-events: none;
+  }
+
+  .project-deck-command {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-width: min(100%, 23rem);
+    border: 1px solid hsl(var(--border) / 0.76);
+    border-radius: 0.5rem;
+    background:
+      linear-gradient(135deg, hsl(var(--card) / 0.7), hsl(var(--background) / 0.42)),
+      linear-gradient(to right, hsl(var(--primary) / 0.06) 1px, transparent 1px);
+    background-size: auto, 0.9rem 0.9rem;
+    padding: 0.75rem;
+    clip-path: polygon(0 0, calc(100% - 0.75rem) 0, 100% 0.75rem, 100% 100%, 0 100%);
+  }
+
+  .project-deck-command span,
+  .project-slot-strip span {
+    font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+  }
+
+  .project-deck-command > div:first-child span {
+    display: block;
+    color: hsl(var(--primary));
+  }
+
+  .project-deck-command strong {
+    display: block;
+    margin-top: 0.2rem;
+    color: hsl(var(--foreground));
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+
+  .project-slot-strip {
+    display: flex;
+    gap: 0.35rem;
+  }
+
+  .project-slot-strip span {
+    display: grid;
+    min-height: 1.65rem;
+    min-width: 1.9rem;
+    place-items: center;
+    border: 1px solid hsl(var(--border) / 0.75);
+    border-radius: 0.35rem;
+    color: hsl(var(--muted-foreground));
+    background: hsl(var(--background) / 0.38);
+  }
+
+  .project-slot-strip span.is-active {
+    border-color: hsl(var(--primary) / 0.58);
+    color: hsl(var(--primary));
+    box-shadow: inset 0 0 14px hsl(var(--primary) / 0.1);
+  }
+
+  .project-inspection-grid {
+    position: relative;
+  }
+
+  .project-inspection-grid::before {
+    content: "";
+    position: absolute;
+    left: -1rem;
+    right: -1rem;
+    top: -1rem;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--signal) / 0.34), hsl(var(--primary) / 0.26), transparent);
+    pointer-events: none;
+  }
+
+  /* Signature effect: cursor-following glow on project cards */
   .project-card {
     position: relative;
     isolation: isolate;
+    border-radius: 0.55rem;
+    clip-path: polygon(0 0, calc(100% - 0.9rem) 0, 100% 0.9rem, 100% 100%, 0.9rem 100%, 0 calc(100% - 0.9rem));
+    background:
+      linear-gradient(150deg, hsl(var(--card) / 0.72), hsl(var(--background) / 0.42)),
+      repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 1rem,
+        hsl(var(--primary) / 0.035) 1rem,
+        hsl(var(--primary) / 0.035) calc(1rem + 1px)
+      );
   }
 
   .project-card::before {
@@ -161,8 +740,8 @@
     inset: -1px;
     border-radius: inherit;
     background: radial-gradient(
-      400px circle at var(--glow-x, 50%) var(--glow-y, 50%),
-      hsl(var(--primary) / 0.25),
+      420px circle at var(--glow-x, 50%) var(--glow-y, 50%),
+      hsl(var(--primary) / 0.18),
       transparent 60%
     );
     opacity: 0;
@@ -171,92 +750,439 @@
     z-index: 0;
   }
 
+  .project-card::after {
+    content: "";
+    position: absolute;
+    left: 0.7rem;
+    top: 1rem;
+    bottom: 1rem;
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, hsl(var(--signal)), hsl(var(--primary)), transparent);
+    opacity: 0.42;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 0;
+  }
+
   .project-card > * {
     position: relative;
     z-index: 1;
   }
-
   .project-card:hover::before {
     opacity: 1;
   }
 
-  /* Style for Primary Gradient Buttons */
+  .project-card:hover::after,
+  .project-card:focus-within::after {
+    opacity: 0.88;
+    transform: translateX(0.18rem);
+  }
+
+  .project-media-frame {
+    border-radius: 0.45rem;
+    clip-path: polygon(0 0, calc(100% - 0.65rem) 0, 100% 0.65rem, 100% 100%, 0 100%);
+    box-shadow: inset 0 0 0 1px hsl(var(--foreground) / 0.025);
+  }
+
+  .project-media-frame::before,
+  .project-media-frame::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    height: 2.5rem;
+    width: 2.5rem;
+    pointer-events: none;
+    opacity: 0.78;
+  }
+
+  .project-media-frame::before {
+    left: 0.7rem;
+    top: 0.7rem;
+    border-left: 1px solid hsl(var(--primary) / 0.42);
+    border-top: 1px solid hsl(var(--primary) / 0.42);
+  }
+
+  .project-media-frame::after {
+    bottom: 0.7rem;
+    right: 0.7rem;
+    border-bottom: 1px solid hsl(var(--signal) / 0.42);
+    border-right: 1px solid hsl(var(--signal) / 0.42);
+  }
+
+  .project-scan-sweep {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 0 38%, hsl(var(--primary) / 0.12) 47%, transparent 58% 100%);
+    opacity: 0;
+    transform: translateX(-45%);
+    transition: opacity 220ms ease;
+  }
+
+  .project-card:hover .project-scan-sweep,
+  .project-card:focus-within .project-scan-sweep {
+    opacity: 1;
+    animation: scan-sweep 1.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .project-signal-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    padding-top: 0.25rem;
+  }
+
+  .project-signal-strip span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.45rem;
+    border: 1px solid hsl(var(--border) / 0.76);
+    border-radius: 0.35rem;
+    background: hsl(var(--background) / 0.36);
+    padding: 0.2rem 0.45rem;
+    color: hsl(var(--muted-foreground));
+    font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+    font-size: 0.66rem;
+    line-height: 1;
+  }
+
+  .project-card:hover .project-signal-strip span:first-child,
+  .project-card:focus-within .project-signal-strip span:first-child {
+    border-color: hsl(var(--signal) / 0.45);
+    color: hsl(var(--foreground));
+  }
+
+  .featured-proof-grid {
+    display: grid;
+    gap: 0.65rem;
+    padding-top: 0.55rem;
+  }
+
+  .featured-proof-grid > div {
+    border: 1px solid hsl(var(--border) / 0.66);
+    border-radius: 0.55rem;
+    background:
+      linear-gradient(135deg, hsl(var(--card) / 0.46), hsl(var(--background) / 0.26)),
+      linear-gradient(to right, hsl(var(--primary) / 0.04) 1px, transparent 1px);
+    background-size: auto, 1.1rem 1.1rem;
+    padding: 0.75rem;
+  }
+
+  .featured-proof-grid span {
+    color: hsl(var(--primary));
+    font-family: var(--font-geist-mono, ui-monospace), ui-monospace, monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .featured-proof-grid p {
+    margin-top: 0.35rem;
+    color: hsl(var(--muted-foreground));
+    font-size: 0.78rem;
+    line-height: 1.5;
+  }
+
+  @media (min-width: 640px) {
+    .featured-proof-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .project-card-guide {
+    position: absolute;
+    right: 0.55rem;
+    top: 0.55rem;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.48;
+    transition: opacity 180ms ease, transform 260ms cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .project-card-guide::after {
+    content: "";
+    position: absolute;
+    right: 58%;
+    top: 44%;
+    height: 2px;
+    width: min(7.5rem, 24vw);
+    background: linear-gradient(90deg, transparent, hsl(var(--signal) / 0.74), hsl(var(--primary) / 0.78), transparent);
+    box-shadow: 0 0 18px hsl(var(--primary) / 0.42);
+    opacity: 0;
+    transform: rotate(-5deg) scaleX(0.18);
+    transform-origin: right center;
+    transition: opacity 180ms ease, transform 260ms cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .project-card-guide[data-guide-state="active"],
+  .project-card-guide[data-guide-state="present"] {
+    opacity: 0.96;
+    transform: translateX(-0.18rem);
+  }
+
+  .project-card-guide[data-guide-state="active"]::after,
+  .project-card-guide[data-guide-state="present"]::after {
+    opacity: 1;
+    transform: rotate(-5deg) scaleX(1);
+  }
+
+  .codebot-mascot {
+    --codebot-scale: 2.4;
+    display: grid;
+    width: max-content;
+    place-items: center;
+  }
+
+  .codebot-platform {
+    position: relative;
+    display: grid;
+    height: calc(72px * var(--codebot-scale));
+    width: calc(64px * var(--codebot-scale));
+    place-items: end center;
+    isolation: isolate;
+  }
+
+  .codebot-platform::before {
+    content: "";
+    position: absolute;
+    right: 17%;
+    bottom: 2%;
+    left: 17%;
+    height: calc(5px * var(--codebot-scale));
+    border: 1px solid hsl(var(--primary) / 0.34);
+    background:
+      linear-gradient(90deg, transparent, hsl(var(--primary) / 0.32), transparent),
+      hsl(var(--background) / 0.72);
+    box-shadow: 0 18px 34px -20px hsl(var(--primary) / 0.75);
+    transform: skewX(-12deg);
+    z-index: -1;
+  }
+
+  .codebot-scanline {
+    position: absolute;
+    inset: 18% 10% 5%;
+    border-radius: 0.5rem;
+    background-image: linear-gradient(
+      to bottom,
+      hsl(var(--primary) / 0.08) 1px,
+      transparent 1px
+    );
+    background-size: 100% calc(5px * var(--codebot-scale));
+    mask-image: linear-gradient(to bottom, transparent, black 28%, black 72%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 28%, black 72%, transparent);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .codebot-sprite {
+    height: 64px;
+    width: 64px;
+    background-image: url("/sprites/codebot/sprite-sheet.png");
+    background-repeat: no-repeat;
+    background-size: 256px 192px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    transform: scale(var(--codebot-scale));
+    transform-origin: center bottom;
+    animation: codebot-play var(--codebot-duration, 760ms) steps(4) infinite;
+  }
+
+  .codebot-mascot[data-mode="idle"] .codebot-sprite {
+    --codebot-duration: 760ms;
+    background-position-y: 0;
+  }
+
+  .codebot-mascot[data-mode="point"] .codebot-sprite {
+    --codebot-duration: 640ms;
+    background-position-y: -64px;
+  }
+
+  .codebot-mascot[data-mode="present"] .codebot-sprite {
+    --codebot-duration: 720ms;
+    background-position-y: -128px;
+  }
+
+  .crew-mascot {
+    --crew-scale: 1.75;
+    display: grid;
+    width: max-content;
+    place-items: center;
+  }
+
+  .crew-platform {
+    position: relative;
+    display: grid;
+    height: calc(70px * var(--crew-scale));
+    width: calc(64px * var(--crew-scale));
+    place-items: end center;
+    isolation: isolate;
+  }
+
+  .crew-platform::before {
+    content: "";
+    position: absolute;
+    right: 20%;
+    bottom: 3%;
+    left: 20%;
+    height: calc(4px * var(--crew-scale));
+    border: 1px solid hsl(var(--primary) / 0.26);
+    background: hsl(var(--background) / 0.72);
+    box-shadow: 0 16px 30px -20px hsl(var(--primary) / 0.7);
+    transform: skewX(-10deg);
+    z-index: -1;
+  }
+
+  .crew-orbit {
+    position: absolute;
+    inset: 18% 9% 8%;
+    border: 1px dashed hsl(var(--primary) / 0.16);
+    border-radius: 9999px;
+    opacity: 0.55;
+    animation: crew-orbit-pulse 2.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+
+  .crew-sprite {
+    height: 64px;
+    width: 64px;
+    background-repeat: no-repeat;
+    background-size: 256px 192px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    transform: scale(var(--crew-scale));
+    transform-origin: center bottom;
+    animation: crew-play var(--crew-duration, 760ms) steps(4) infinite;
+  }
+
+  .crew-mascot[data-model="scientist"] .crew-sprite {
+    background-image: url("/sprites/crew/scientist-sheet.png");
+  }
+
+  .crew-mascot[data-model="bug"] .crew-sprite {
+    background-image: url("/sprites/crew/bug-sheet.png");
+  }
+
+  .crew-mascot[data-mode="idle"] .crew-sprite {
+    --crew-duration: 760ms;
+    background-position-y: 0;
+  }
+
+  .crew-mascot[data-mode="action"] .crew-sprite {
+    --crew-duration: 640ms;
+    background-position-y: -64px;
+  }
+
+  .crew-mascot[data-mode="present"] .crew-sprite {
+    --crew-duration: 720ms;
+    background-position-y: -128px;
+  }
+
+  @keyframes codebot-play {
+    from {
+      background-position-x: 0;
+    }
+    to {
+      background-position-x: -256px;
+    }
+  }
+
+  @keyframes crew-play {
+    from {
+      background-position-x: 0;
+    }
+    to {
+      background-position-x: -256px;
+    }
+  }
+
+  @keyframes crew-orbit-pulse {
+    0%,
+    100% {
+      transform: scale(0.96);
+      opacity: 0.36;
+    }
+    50% {
+      transform: scale(1.03);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes scan-sweep {
+    from {
+      transform: translateX(-110%);
+    }
+    to {
+      transform: translateX(110%);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .project-card-guide {
+      right: 0.25rem;
+      top: 0.25rem;
+      transform: scale(0.84);
+      transform-origin: top right;
+    }
+
+    .project-card-guide[data-guide-state="active"],
+    .project-card-guide[data-guide-state="present"] {
+      transform: translateX(-0.1rem) scale(0.84);
+    }
+
+    .project-card-guide::after {
+      width: min(5.5rem, 32vw);
+    }
+  }
+
+  /* Primary gradient button */
   .btn-gradient {
     @apply bg-gradient-to-r from-primary to-gradient-accent text-primary-foreground shadow-lg;
     background-size: 200% auto;
-    transition: background-position 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.1s ease-out, box-shadow 0.1s
-      ease-out;
+    transition: background-position 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.1s ease-out;
   }
-
   .btn-gradient:hover {
     background-position: right center;
   }
-
   .btn-gradient:active {
     transform: translateY(1px);
-    @apply shadow-md;
   }
 
-  /* Style for Outline/Ghost Buttons with Wipe Effect */
+  /* Ghost button with a subtle wipe */
   .btn-ghost-wipe {
-    @apply relative overflow-hidden transition-colors duration-300 z-0;
+    @apply relative overflow-hidden z-0;
+    transition: color 0.3s ease, border-color 0.3s ease;
   }
-
   .btn-ghost-wipe::before {
     content: "";
     @apply absolute top-0 left-0 w-full h-full -z-10;
-    background: linear-gradient(
-      120deg,
-      hsl(var(--primary) / 0.3),
-      hsl(var(--gradient-accent) / 0.24)
-    );
+    background: linear-gradient(120deg, hsl(var(--primary) / 0.18), hsl(var(--gradient-accent) / 0.14));
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
-
-  .btn-ghost-wipe:hover {
-    @apply text-foreground;
-  }
-
   .btn-ghost-wipe:hover::before {
     transform: scaleX(1);
   }
 
-  /* Bento grid card base */
-  .bento-card {
-    @apply rounded-2xl border border-border/70 bg-card/80 backdrop-blur-sm p-5 transition-all duration-300;
-  }
-
-  .bento-card:hover {
-    @apply shadow-lg border-border;
-  }
-
-  /* Tech icon card */
-  .tech-icon-card {
-    @apply flex flex-col items-center justify-center gap-2 rounded-xl border border-border/50 bg-card/60 p-4 transition-all duration-200;
-  }
-
-  .tech-icon-card:hover {
-    @apply scale-105 border-primary/40 bg-card/90 shadow-md;
-  }
-
-  /* Experience card accent border */
-  .exp-card {
-    @apply rounded-2xl border border-border/70 bg-card/80 backdrop-blur-sm p-5 transition-all duration-300;
-    border-left: 3px solid hsl(var(--primary));
-  }
-
-  .exp-card:hover {
-    @apply shadow-lg;
-  }
-
-  /* Certification card */
-  .cert-card {
-    @apply rounded-xl border bg-card/80 backdrop-blur-sm p-4 transition-all duration-200;
-  }
-
-  .cert-card:hover {
-    @apply shadow-md scale-[1.02];
+  @media (prefers-reduced-motion: reduce) {
+    .surface,
+    .project-card::before,
+    .project-card::after,
+    .project-card-guide,
+    .project-card-guide::after,
+    .project-scan-sweep,
+    .mission-stage::after,
+    .brief-card,
+    .mission-radar,
+    .crew-orbit,
+    .crew-sprite,
+    .codebot-sprite,
+    .btn-gradient,
+    .btn-ghost-wipe::before {
+      transition: none;
+      animation: none;
+    }
   }
 }
