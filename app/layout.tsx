@@ -7,7 +7,7 @@ import Header from "@/components/header"
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
 const DESCRIPTION =
-  "Cloud-certified full-stack developer building secure, scalable products with React, Node.js, and Python."
+  "Full-stack developer building React, cloud, and AI-powered products with clean interfaces and reliable APIs."
 const geistSans = Geist({
   subsets: ["latin"],
   variable: "--font-geist",
@@ -26,11 +26,10 @@ const bricolage = Bricolage_Grotesque({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Leo Nguyen - Portfolio",
+  title: "Leo Nguyen - Full-stack Developer",
   description: DESCRIPTION,
-  generator: "v0.dev",
   openGraph: {
-    title: "Leo Nguyen - Portfolio",
+    title: "Leo Nguyen - Full-stack Developer",
     description: DESCRIPTION,
     url: "/",
     siteName: "Leo Nguyen",
@@ -48,11 +47,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  colorScheme: 'light dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f8fafc' },
-    { media: '(prefers-color-scheme: dark)', color: '#020617' },
-  ],
+  colorScheme: 'light',
+  themeColor: '#FAF8F5',
 }
 
 export default function RootLayout({
@@ -63,7 +59,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable}`} suppressHydrationWarning>
       <body className="font-sans antialiased">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false}>
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-primary-foreground"

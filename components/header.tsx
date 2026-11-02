@@ -1,111 +1,147 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet"
-import { FileText, Menu } from "lucide-react"
-import { ThemeToggle } from "./theme-toggle"
-import { useMemo, useState } from "react"
-import { useScrollSpy } from "@/hooks/use-scroll-spy"
+import { usePathname } from "next/navigation"
+import { ArrowUpRight, Menu, X } from "lucide-react"
+
+import { profile } from "@/lib/portfolio-content"
 import { cn } from "@/lib/utils"
 
+// Root-relative hashes so the links also work from other routes.
 const navigationItems = [
-  { label: "About", id: "hero" },
-  { label: "Experience", id: "experience" },
-  { label: "Projects", id: "projects" },
-  { label: "Credentials", id: "credentials" },
+  { id: "projects", label: "Projects" },
+  { id: "experience", label: "Experience" },
+  { id: "skills", label: "Skills" },
+  { id: "contact", label: "Contact" },
 ]
 
 export default function Header() {
-  const [isSheetOpen, setIsSheetOpen] = useState(false)
-  const selectors = useMemo(
-    () => navigationItems.map((item) => `#${item.id}`),
-    [],
-  )
-  const [activeId, setActiveId] = useScrollSpy(selectors, { offset: 0.35 })
+  const pathname = usePathname()
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const [scrolled, setScrolled] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  const handleScroll = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
-    setActiveId(id)
-    setIsSheetOpen(false)
-  }
+  useEffect(() => {
+    // The header outlives route changes, so look sections up on every pass instead of observing them once.
+    // Active = last section whose top has crossed the middle of the viewport; nothing is active over the hero.
+    let frame = 0
+    const update = () => {
+      frame = 0
+      setScrolled(window.scrollY > 8)
+      const middle = window.innerHeight / 2
+      let current: string | null = null
+      for (const { id } of navigationItems) {
+        const el = document.getElementById(id)
+        if (el && el.getBoundingClientRect().top <= middle) current = id
+      }
+      setActiveId(current)
+    }
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+
+    update()
+    // Re-check once the page transition in app/template.tsx (0.4s) has swapped the content.
+    const settle = window.setTimeout(update, 500)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
+
+    return () => {
+      cancelAnimationFrame(frame)
+      window.clearTimeout(settle)
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
+    }
+  }, [pathname])
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center justify-between">
-        <div className="mr-4 flex items-center">
-          <Link href="/" className="mr-6 flex items-center space-x-2">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-primary text-xs font-bold text-primary-foreground">
-              LN
-            </span>
-            <span className="font-bold">Leo Nguyen</span>
-          </Link>
-        </div>
-        <div className="flex items-center justify-end space-x-3">
-          <nav className="hidden md:flex items-center gap-5">
-            {navigationItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleScroll(item.id)}
-                className={cn(
-                  "relative text-sm font-medium transition-colors hover:text-primary",
-                  activeId === item.id
-                    ? "text-primary after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-primary"
-                    : "text-muted-foreground",
-                )}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
-          <Button asChild variant="outline" size="sm" className="hidden sm:inline-flex btn-ghost-wipe bg-transparent">
+    <header
+      className={cn(
+        "sticky top-0 z-40 transition-colors duration-300",
+        scrolled || open ? "border-b border-stone-200/80 bg-background/95 backdrop-blur-md" : "border-b border-transparent",
+      )}
+    >
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:px-8">
+        <Link
+          href="/#hero"
+          onClick={() => setOpen(false)}
+          className="inline-flex shrink-0 items-center gap-2.5 rounded-lg font-display text-lg font-bold tracking-tight text-stone-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+        >
+          <span aria-hidden className="grid size-8 place-items-center rounded-lg bg-orange-700 font-sans text-xs font-bold tracking-normal text-white">
+            LN
+          </span>
+          <span>{profile.name}</span>
+        </Link>
+
+        <nav aria-label="Primary" className="hidden items-center gap-4 md:flex lg:gap-6">
+          {navigationItems.map(({ id, label }) => (
             <Link
-              href="mailto:nanhtu297@gmail.com?subject=Resume%20Request"
-              aria-label="Request resume via email"
+              key={id}
+              href={`/#${id}`}
+              aria-current={activeId === id ? "location" : undefined}
+              className={cn(
+                "relative rounded-sm py-2 text-sm font-medium transition-colors hover:text-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background",
+                activeId === id ? "text-orange-700" : "text-stone-600",
+              )}
             >
-              <FileText className="mr-1.5 h-4 w-4" />
-              Request Resume
+              {label}
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute bottom-0 left-0 h-0.5 w-full rounded-full bg-orange-600 transition-opacity",
+                  activeId === id ? "opacity-100" : "opacity-0",
+                )}
+              />
             </Link>
-          </Button>
-          <ThemeToggle />
-          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="md:hidden bg-transparent">
-                <Menu className="h-5 w-5" />
-                <span className="sr-only">Open menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <Link href="/" className="mr-6 flex items-center space-x-2 mb-6">
-                <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-primary text-xs font-bold text-primary-foreground">
-                  LN
-                </span>
-                <span className="font-bold">Leo Nguyen</span>
-              </Link>
-              <div className="flex flex-col space-y-4">
-                {navigationItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleScroll(item.id)}
-                    className={cn(
-                      "text-left transition-colors",
-                      activeId === item.id ? "text-primary" : "text-muted-foreground hover:text-primary",
-                    )}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-                <Button asChild variant="outline" className="mt-2 justify-start btn-ghost-wipe bg-transparent">
-                  <Link href="mailto:nanhtu297@gmail.com?subject=Resume%20Request">
-                    <FileText className="mr-2 h-4 w-4" />
-                    Request Resume
-                  </Link>
-                </Button>
-              </div>
-            </SheetContent>
-          </Sheet>
-        </div>
+          ))}
+          <a
+            href={profile.resumeHref}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-orange-200 bg-orange-50 px-3 py-2 text-sm font-semibold text-orange-800 transition-colors hover:border-orange-400 hover:bg-orange-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Request résumé
+            <ArrowUpRight className="size-3.5" aria-hidden />
+          </a>
+        </nav>
+
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? "Close menu" : "Open menu"}
+          className="-mr-2 grid size-10 place-items-center rounded-lg text-stone-900 transition-colors hover:bg-orange-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background md:hidden"
+        >
+          {open ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
       </div>
+
+      {open && (
+        <nav id="mobile-nav" aria-label="Mobile" className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-stone-200/80 px-5 pb-6 pt-2 md:hidden">
+          {navigationItems.map(({ id, label }) => (
+            <Link
+              key={id}
+              href={`/#${id}`}
+              onClick={() => setOpen(false)}
+              aria-current={activeId === id ? "location" : undefined}
+              className={cn(
+                "block border-b py-3 font-display text-xl font-semibold transition-colors hover:text-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring",
+                activeId === id ? "border-orange-600 text-orange-700" : "border-stone-200/70 text-stone-900",
+              )}
+            >
+              {label}
+            </Link>
+          ))}
+          <a
+            href={profile.resumeHref}
+            onClick={() => setOpen(false)}
+            className="mt-5 inline-flex items-center gap-1.5 rounded-lg bg-orange-700 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-orange-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Request résumé
+            <ArrowUpRight className="size-3.5" aria-hidden />
+          </a>
+        </nav>
+      )}
     </header>
   )
 }
